@@ -87,3 +87,13 @@
     text-align: center;
     margin-top: 3rem;
 }
+.btn-ocultar-filtros, a{
+    text-decoration: none;
+}
+/* ***************
+        PARA JS
+*************** */
+
+.oculto{
+    display: none;
+}
