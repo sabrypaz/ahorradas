@@ -1,0 +1,89 @@
+:root {
+    --color-primario: rgb(126, 189, 154);
+    --color-focus: rgb(67, 166, 112);
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.my-navbar {
+    padding-top: 0px;
+}
+
+.nav-container {
+    height: 5em;
+    padding-left: 4em;
+    background-color: var(--color-primario);
+}
+
+.nav-title {
+    padding: 0.2em;
+    font-size: 1.7em;
+    border-radius: 5px;
+}
+
+.my-nav-link {
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+.nav-title:hover,
+.nav-title:focus,
+.my-nav-link:hover,
+.my-nav-lin:focus {
+    background-color: var(--color-focus);
+}
+
+/* *****************
+    MAIN
+***************** */
+.main-container {
+    margin-top: 2em;
+    margin-left: 3em;
+}
+
+.my-card-body {
+    margin: 0.5em;
+}
+
+.card-style {
+    box-shadow: 0px 5px 20px -5px rgb(181, 178, 178);
+    padding: 1rem;
+}
+
+.card-filtros {
+    margin-top: 0.5em;
+
+}
+
+/* **************
+    OPERACIONES 
+*************** */
+.card-operaciones {
+    width: 35rem;
+    height: 30rem;
+    padding: 1rem;
+    ;
+}
+
+.btn-operaciones {
+    border-color: var(--color-primario);
+}
+
+.btn-operaciones:hover,
+.btn-operaciones:focus {
+    background-color: var(--color-focus)
+}
+
+.imagen-operaciones {
+    margin-top: 5em;
+    width: 50%;
+}
+
+.operaciones-textos {
+    text-align: center;
+    margin-top: 3rem;
+}
