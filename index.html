@@ -40,14 +40,23 @@
 
     <main class="container main-container d-flex flex-wrap bd-highlight ">
         <div class="my-card-body row">
-            <div class="card col card-style">
+            <div class="card col shadow p-3 mb-5 bg-body rounded card-style">
                 <h5 class="card-title">Balance</h5>
+                <div class="d-flex justify-content-between"> 
                 <p class="card-text">Ganancias</p>
+                <div class="text-success">+$0</div>
+                </div> 
+                <div class="d-flex justify-content-between">
                 <p class="card-text">Gastos</p>
+                <div class="text-danger">-$0</div>
+                </div>
+                <div class="d-flex justify-content-between"> 
                 <p class="card-text">Total</p>
+                <div class="fw-bold">$0</div>
+            </div>
             </div>
             <div class="card-filtros">
-                <div class="card row card-style">
+                <div class="card row shadow p-3 mb-5 bg-body rounded card-style">
                     <div class="container-filtros-ocultar d-flex justify-content-between">
                     <div> 
                     <h5 class="card-title">Filtros</h5>
@@ -106,7 +115,7 @@
 
         </div>
         <div class="my-card-body col" style="width: 10rem;">
-            <div class="card card-operaciones card-style">
+            <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style">
                 <div class="d-flex justify-content-between">
                     <h5 class="card-title">Operaciones</h5>
                     <button type="button" class="btn btn-outline-success btn-operaciones"><i class="fa-solid fa-square-plus"></i> Nueva
@@ -117,7 +126,7 @@
                     <img src="./imagenes/operaciones-modo-claro.svg" alt="imagen de operaciones"
                         class="imagen-operaciones">
                 </div>
-                <div class="operaciones-textos">
+                <div class="operaciones-textos text-center">
                     <h3>Sin resultados</h3>
                     <p>Cambia los filtros o agrega operaciones</p>
                 </div>
