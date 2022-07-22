@@ -40,6 +40,8 @@ balance.addEventListener('click', ()=>{
 });
 
 
+
+
 //DECLARACION VARIABLES DE CONTAINER DE NUEVA OPERACION
 
 /*
