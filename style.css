@@ -77,6 +77,10 @@
 .btn-ocultar-filtros, a{
     text-decoration: none;
 }
+
+.operaciones-insuficientes{
+    text-align: center;
+}
 /* ***************
         PARA JS
 *************** */
