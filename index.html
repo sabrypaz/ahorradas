@@ -39,8 +39,12 @@
         </div>
     </nav>
 
+<<<<<<< HEAD
+    <main class="container main-container d-flex flex-wrap bd-highlight ">
+=======
 
     <main class="container main-container d-flex flex-wrap bd-highlight " >
+>>>>>>> 7f2228fedbcbc5feb3cad71ece34a712c89b04cf
         <div class="my-card-body row" id="primera-pagina">
 
             <div class="card col shadow p-3 mb-5 bg-body rounded card-style">
@@ -149,7 +153,8 @@
                     <h2 class="mb-5 mt-2">Nueva operación</h2>
                     <div class="mb-3">
                         <label for="descripción" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" id="descripcion" aria-describedby="descripcion de operacion">
+                        <input type="text" class="form-control" id="descripcion"
+                            aria-describedby="descripcion de operacion">
                     </div>
 
                     <div class="mb-3">
@@ -158,7 +163,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="tipo" class="form-label" >Tipo</label>
+                        <label for="tipo" class="form-label">Tipo</label>
                         <select class="form-select" aria-label="Tipo" id="tipo">
                             <option value="gasto">Gasto</option>
                             <option value="ganancia">Ganancia</option>
@@ -183,15 +188,47 @@
                     </div>
 
                     <div class="d-flex justify-content-end mt-5">
-                      <button type="submit" class="btn btn-light mx-2" id="btn-cancelar">Cancelar</button>
-                      <button type="submit" class="btn btn-success" id="btn-agregar">Agregar</button>
+                        <button type="submit" class="btn btn-light mx-2" id="btn-cancelar">Cancelar</button>
+                        <button type="submit" class="btn btn-success" id="btn-agregar">Agregar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    
+    <div class="container oculto" id="container-categorias">
+        <div class="row justify-content-center">
+            <form class="col-md-8 shadow p-3 mb-5 bg-body rounded">
+                <h2 class="mb-5 mt-2">Categorias</h2>
+                <div>
+                    <label for="nombre" class="form-label">Nombre</label>
+                </div>
+                <div class="d-flex flex-row">
+                    <input type="text" class="form-control" id="nombre">
+                    <button type="button" class="btn btn-success mx-3" id="btn-agregar">Agregar</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="container oculto" id="container-reportes">
+        <div class="row justify-content-center">
+            <div class=" col-md-8 shadow p-3 mb-5 bg-body rounded">
+                <h2>Reportes</h2>
+                <div id="sin-reportes" class="d-flex justify-content-center flex-column">
+                    <figure class="d-flex justify-content-center">
+                        <img src="imagenes/sinReportes.svg" style="width:50%" alt="imagen sin reportes">
+                    </figure>
+                    <div class="operaciones-insuficientes">
+                        <h4>Operaciones insuficientes</h4>
+                        <p>Prueba agregando más operaciones</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 
