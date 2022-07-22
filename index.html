@@ -31,116 +31,116 @@
             </button>
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav ">
-                    <a id="balance" class="nav-link my-nav-link" aria-current="page" href="#"><i class="fa-solid fa-chart-line"></i> Balance</a>
-                    <a id="categorias" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-folder-tree"></i> Categorías</a>
-                    <a id="reportes" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-chart-pie"></i> Reportes</a>
+                    <a id="balance" class="nav-link my-nav-link" aria-current="page" href="#"><i
+                            class="fa-solid fa-chart-line"></i> Balance</a>
+                    <a id="categorias" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-folder-tree"></i>
+                        Categorías</a>
+                    <a id="reportes" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-chart-pie"></i>
+                        Reportes</a>
                 </div>
             </div>
         </div>
     </nav>
 
+    <div id="primera-pagina">
+        <main class="container main-container d-flex flex-wrap bd-highlight">
 
-    <main class="container main-container d-flex flex-wrap bd-highlight " >
-        <div class="my-card-body row" id="primera-pagina">
+            <div class="my-card-body row">
 
-            <div class="card col shadow p-3 mb-5 bg-body rounded card-style">
-                <h5 class="card-title">Balance</h5>
-                <div class="d-flex justify-content-between">
-                    <p class="card-text">Ganancias</p>
-                    <div class="text-success">+$0</div>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <p class="card-text">Gastos</p>
-                    <div class="text-danger">-$0</div>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <p class="card-text">Total</p>
-                    <div class="fw-bold">$0</div>
-                </div>
-            </div>
-            <div class="card-filtros">
-                <div class="card row shadow p-3 mb-5 bg-body rounded card-style">
-                    <div class="container-filtros-ocultar d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Filtros</h5>
-                        </div>
-                        <div>
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item btn-ocultar-filtros" id="btn-ocultar-filtros"><a
-                                        href="#">Ocultar filtros</a></li>
-                            </ol>
-                        </div>
+                <div class="card col shadow p-3 mb-5 bg-body rounded card-style">
+                    <h5 class="card-title">Balance</h5>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Ganancias</p>
+                        <div class="text-success">+$0</div>
                     </div>
-                    <form id="form-filtros">
-                        <div class="mb-3">
-                            <label for="select-tipo-filtro" class="form-label">Tipo</label>
-                            <select type="select" class="form-select" id="select-tipo-filtro" aria-describedby="">
-                                <option value="TODOS">Todos</option>
-                                <option value="GASTO">Gasto</option>
-                                <option value="GANANCIA">Ganancia</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="select-filtro-categoria" class="form-label">Categoría</label>
-                            <select type="select" class="form-select" id="select-filtro-categoria" aria-describedby="">
-                                <option value="TODAS">Todas</option>
-                                <option value="#">Comida</option>
-                                <option value="#">Salidas</option>
-                                <option value="#">Educación</option>
-                                <option value="#">Transporte</option>
-                                <option value="#">Trabajo</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="input-filtro-fecha" class="form-label">Desde</label>
-                            <input type="date" class="form-select input-filtro-fecha" id="input-filtro-fecha">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Ordenar por</label>
-                            <select type="select" class="form-select" id="" aria-describedby="">
-                                <option value="MAS_RECIENTES">Más reciente</option>
-                                <option value="MENOS_RECIENTES">Menos reciente</option>
-                                <option value="MAYOR_MONTO">Mayor monto</option>
-                                <option value="#">Educación</option>
-                                <option value="MENOR_MONTO">Menor monto</option>
-                                <option value="A/Z">A/Z</option>
-                                <option value="Z/A">Z/A</option>
-                            </select>
-
-                        </div>
-
-
-                    </form>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Gastos</p>
+                        <div class="text-danger">-$0</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Total</p>
+                        <div class="fw-bold">$0</div>
+                    </div>
                 </div>
-
+                <div class="card-filtros">
+                    <div class="card row shadow p-3 mb-5 bg-body rounded card-style">
+                        <div class="container-filtros-ocultar d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">Filtros</h5>
+                            </div>
+                            <div>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item btn-ocultar-filtros" id="btn-ocultar-filtros"><a
+                                            class="text-decoration-none" href="#">Ocultar filtros</a></li>
+                                </ol>
+                            </div>
+                        </div>
+                        <form id="form-filtros">
+                            <div class="mb-3">
+                                <label for="select-tipo-filtro" class="form-label">Tipo</label>
+                                <select type="select" class="form-select" id="select-tipo-filtro" aria-describedby="">
+                                    <option value="TODOS">Todos</option>
+                                    <option value="GASTO">Gasto</option>
+                                    <option value="GANANCIA">Ganancia</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="select-filtro-categoria" class="form-label">Categoría</label>
+                                <select type="select" class="form-select" id="select-filtro-categoria"
+                                    aria-describedby="">
+                                    <option value="TODAS">Todas</option>
+                                    <option value="#">Comida</option>
+                                    <option value="#">Salidas</option>
+                                    <option value="#">Educación</option>
+                                    <option value="#">Transporte</option>
+                                    <option value="#">Trabajo</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-filtro-fecha" class="form-label">Desde</label>
+                                <input type="date" class="form-select input-filtro-fecha" id="input-filtro-fecha">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Ordenar por</label>
+                                <select type="select" class="form-select" id="" aria-describedby="">
+                                    <option value="MAS_RECIENTES">Más reciente</option>
+                                    <option value="MENOS_RECIENTES">Menos reciente</option>
+                                    <option value="MAYOR_MONTO">Mayor monto</option>
+                                    <option value="#">Educación</option>
+                                    <option value="MENOR_MONTO">Menor monto</option>
+                                    <option value="A/Z">A/Z</option>
+                                    <option value="Z/A">Z/A</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
 
 
-        <div class="my-card-body col" style="width: 10rem;" id="card-operaciones">
-            <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style">
-                <div class="d-flex justify-content-between">
-                    <h5 class="card-title">Operaciones</h5>
-                    <button type="button" id="btn-nueva-operacion" class="btn btn-outline-success btn-operaciones"><i
-                            class="fa-solid fa-square-plus"></i> Nueva
-                        operación</button>
-                </div>
+            <div class="my-card-body col" style="width: 10rem;" id="card-operaciones">
+                <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style">
+                    <div class="d-flex justify-content-between">
+                        <h2 class="card-title">Operaciones</h2>
+                        <button type="button" id="btn-nueva-operacion"
+                            class="btn btn-outline-success btn-operaciones"><i class="fa-solid fa-square-plus"></i>
+                            Nueva
+                            operación</button>
+                    </div>
 
-                <div class="d-flex justify-content-center card-operaciones-img">
-                    <img src="./imagenes/operaciones-modo-claro.svg" alt="imagen de operaciones"
-                        class="imagen-operaciones">
-                </div>
-                <div class="operaciones-textos text-center">
-                    <h3>Sin resultados</h3>
-                    <p>Cambia los filtros o agrega operaciones</p>
+                    <div class="d-flex justify-content-center card-operaciones-img">
+                        <img src="./imagenes/operaciones-modo-claro.svg" alt="imagen de operaciones"
+                            class="imagen-operaciones">
+                    </div>
+                    <div class="operaciones-textos text-center">
+                        <h3>Sin resultados</h3>
+                        <p>Cambia los filtros o agrega operaciones</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-
-
-    </main>
-
+        </main>
+    </div>
 
     <div class="container oculto" id="container-nueva-operacion">
         <div class="row justify-content-center">
@@ -195,7 +195,7 @@
     <div class="container oculto" id="container-categorias">
         <div class="row justify-content-center">
             <form class="col-md-8 shadow p-3 mb-5 bg-body rounded">
-                <h2 class="mb-5 mt-2">Categorias</h2>
+                <h2 class="mb-5 mt-2">Categorías</h2>
                 <div>
                     <label for="nombre" class="form-label">Nombre</label>
                 </div>
@@ -203,7 +203,61 @@
                     <input type="text" class="form-control" id="nombre">
                     <button type="button" class="btn btn-success mx-3" id="btn-agregar">Agregar</button>
                 </div>
-
+                <br>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Comida</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-comida-editar text-decoration-none"
+                        id="btn-cat-comida-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-comida-eliminar text-decoration-none"
+                        id="btn-cat-comida-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Servicios</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-servicios-editar text-decoration-none"
+                        id="btn-cat-servicios-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-servicios-eliminar text-decoration-none"
+                        id="btn-cat-servicios-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Salida</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-salidas-editar text-decoration-none"
+                        id="btn-cat-salidas-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-salidas-eliminar text-decoration-none"
+                        id="btn-cat-salidas-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Educación</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-educacion-editar text-decoration-none"
+                        id="btn-cat-educacion-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-educacion-eliminar text-decoration-none"
+                        id="btn-cat-educacion-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Transporte</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-transporte-editar text-decoration-none"
+                        id="btn-cat-transporte-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-transporte-eliminar text-decoration-none"
+                        id="btn-cat-transporte-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Trabajo</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-trabajo-editar text-decoration-none"
+                        id="btn-cat-trabajo-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-trabajo-eliminar text-decoration-none"
+                        id="btn-cat-trabajo-eliminar">Eliminar</button>
+                </div>
             </form>
         </div>
     </div>
@@ -216,7 +270,7 @@
                     <figure class="d-flex justify-content-center">
                         <img src="imagenes/sinReportes.svg" style="width:50%" alt="imagen sin reportes">
                     </figure>
-                    <div class="operaciones-insuficientes">
+                    <div class="operaciones-insuficientes text-center">
                         <h4>Operaciones insuficientes</h4>
                         <p>Prueba agregando más operaciones</p>
                     </div>

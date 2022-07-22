@@ -1,6 +1,7 @@
 :root {
     --color-primario: rgb(126, 189, 154);
     --color-focus: rgb(67, 166, 112);
+    --color-titulo-cat: rgb(212, 244, 227);
 }
 
 * {
@@ -52,11 +53,6 @@
 /* **************
     OPERACIONES 
 *************** */
-.card-operaciones {
-    width: 35rem;
-    padding: 1rem;
-}
-
 .btn-operaciones {
     border-color: var(--color-primario);
 }
@@ -74,13 +70,15 @@
 .operaciones-textos {
     margin-top: 3rem;
 }
-.btn-ocultar-filtros, a{
-    text-decoration: none;
+
+/* ***************
+       CATEGORIAS
+*************** */
+
+.btn-titulo-categorias{
+    background-color: var(--color-titulo-cat);
 }
 
-.operaciones-insuficientes{
-    text-align: center;
-}
 /* ***************
         PARA JS
 *************** */
