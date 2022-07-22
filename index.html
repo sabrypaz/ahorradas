@@ -31,42 +31,43 @@
             </button>
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav ">
-                    <a class="nav-link my-nav-link" aria-current="page" href="#">Balance</a>
-                    <a class="nav-link my-nav-link" href="#">Categorías</a>
-                    <a class="nav-link my-nav-link" href="#">Reportes</a>
+                    <a id="balance" class="nav-link my-nav-link" aria-current="page" href="#">Balance</a>
+                    <a id="categorias" class="nav-link my-nav-link" href="#">Categorías</a>
+                    <a id="reportes" class="nav-link my-nav-link" href="#">Reportes</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="container main-container d-flex flex-wrap bd-highlight ">
-        <div class="my-card-body row">
+    <main class="container main-container d-flex flex-wrap bd-highlight " >
+        <div class="my-card-body row" id="primera-pagina">
             <div class="card col shadow p-3 mb-5 bg-body rounded card-style">
                 <h5 class="card-title">Balance</h5>
-                <div class="d-flex justify-content-between"> 
-                <p class="card-text">Ganancias</p>
-                <div class="text-success">+$0</div>
-                </div> 
                 <div class="d-flex justify-content-between">
-                <p class="card-text">Gastos</p>
-                <div class="text-danger">-$0</div>
+                    <p class="card-text">Ganancias</p>
+                    <div class="text-success">+$0</div>
                 </div>
-                <div class="d-flex justify-content-between"> 
-                <p class="card-text">Total</p>
-                <div class="fw-bold">$0</div>
-            </div>
+                <div class="d-flex justify-content-between">
+                    <p class="card-text">Gastos</p>
+                    <div class="text-danger">-$0</div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p class="card-text">Total</p>
+                    <div class="fw-bold">$0</div>
+                </div>
             </div>
             <div class="card-filtros">
                 <div class="card row shadow p-3 mb-5 bg-body rounded card-style">
                     <div class="container-filtros-ocultar d-flex justify-content-between">
-                    <div> 
-                    <h5 class="card-title">Filtros</h5>
-                    </div>
-                    <div>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item btn-ocultar-filtros" id="btn-ocultar-filtros"><a href="#">Ocultar filtros</a></li>
-                          </ol>
-                    </div>
+                        <div>
+                            <h5 class="card-title">Filtros</h5>
+                        </div>
+                        <div>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item btn-ocultar-filtros" id="btn-ocultar-filtros"><a
+                                        href="#">Ocultar filtros</a></li>
+                            </ol>
+                        </div>
                     </div>
                     <form id="form-filtros">
                         <div class="mb-3">
@@ -114,12 +115,12 @@
         </div>
 
 
-        </div>
-        <div class="my-card-body col" style="width: 10rem;">
+        <div class="my-card-body col" style="width: 10rem;" id="card-operaciones">
             <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style">
                 <div class="d-flex justify-content-between">
                     <h5 class="card-title">Operaciones</h5>
-                    <button type="button" class="btn btn-outline-success btn-operaciones"><i class="fa-solid fa-square-plus"></i> Nueva
+                    <button type="button" id="btn-nueva-operacion" class="btn btn-outline-success btn-operaciones"><i
+                            class="fa-solid fa-square-plus"></i> Nueva
                         operación</button>
                 </div>
 
@@ -137,6 +138,59 @@
 
 
     </main>
+
+
+    <div class="container oculto" id="container-nueva-operacion">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form class="shadow p-3 mb-5 bg-body rounded card-style">
+                    <h2 class="mb-5 mt-2">Nueva operación</h2>
+                    <div class="mb-3">
+                        <label for="descripción" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion" aria-describedby="descripcion de operacion">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="monto" class="form-label">Monto</label>
+                        <input type="number" class="form-control" id="monto">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label" >Tipo</label>
+                        <select class="form-select" aria-label="Tipo" id="tipo">
+                            <option value="gasto">Gasto</option>
+                            <option value="ganancia">Ganancia</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categoria</label>
+                        <select class="form-select" id="categoria" aria-label="Categoria">
+                            <option value="Comida">Comida</option>
+                            <option value="Servicios">Servicios</option>
+                            <option value="Salidas">Salidas</option>
+                            <option value="Educación">Educación</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Trabajo">Trabajo</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="fecha" aria-describedby="fecha">
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-5">
+                      <button type="submit" class="btn btn-light mx-2" id="btn-cancelar">Cancelar</button>
+                      <button type="submit" class="btn btn-success" id="btn-agregar">Agregar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+
 
 
 
