@@ -20,7 +20,7 @@
 
 <body>
     <!-- NAV -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light my-navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
         <div class="container-fluid nav-container">
             <a class="navbar-brand nav-title text-white" href="#">
                 <i class="fa-solid fa-wallet"></i>
@@ -43,9 +43,9 @@
     </nav>
 
     <div id="primera-pagina">
-        <main class="container main-container d-flex flex-wrap bd-highlight">
+        <main class="container d-flex flex-wrap bd-highlight my-4">
 
-            <div class="my-card-body row">
+            <div class="my-card-body row m-2">
                 <!-- ********************************
             BALANCE
 ******************************** -->
@@ -91,14 +91,9 @@
                             </div>
                             <div class="mb-3">
                                 <label for="select-filtro-categoria" class="form-label">Categoría</label>
-                                <select type="select" class="form-select" id="select-filtro-categoria"
+                                <select type="select" class="form-select categorias-select filtro-categoria" id="filtro-categoria"
                                     aria-describedby="">
-                                    <option value="TODAS">Todas</option>
-                                    <option value="#">Comida</option>
-                                    <option value="#">Salidas</option>
-                                    <option value="#">Educación</option>
-                                    <option value="#">Transporte</option>
-                                    <option value="#">Trabajo</option>
+
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -125,7 +120,7 @@
             OPERACIONES
 ******************************** -->
 
-            <div class="my-card-body col" style="width: 10rem;" id="card-operaciones">
+            <div class="my-card-body col m-2" style="width: 10rem;" id="card-operaciones">
                 <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style container-operaciones-uno">
 
                     <div class="d-flex justify-content-between">
@@ -140,7 +135,7 @@
                             <img src="./imagenes/operaciones-modo-claro.svg" alt="imagen de operaciones"
                                 class="imagen-operaciones">
                         </div>
-                        <div class="operaciones-textos text-center">
+                        <div class="operaciones-textos text-center m-3">
                             <h3>Sin resultados</h3>
                             <p>Cambia los filtros o agrega operaciones</p>
                         </div>
@@ -162,7 +157,7 @@
     <!-- ********************************
            + NUEVA OPERACION
 ******************************** -->
-    <div class="container oculto" id="container-nueva-operacion">
+    <div class="container oculto m-5" id="container-nueva-operacion">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <form class="shadow p-3 mb-5 bg-body rounded card-style">
@@ -188,13 +183,7 @@
 
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categorías</label>
-                        <select class="form-select" id="categoria" aria-label="Categoria">
-                            <option value="Comida">Comida</option>
-                            <option value="Servicios">Servicios</option>
-                            <option value="Salidas">Salidas</option>
-                            <option value="Educación">Educación</option>
-                            <option value="Transporte">Transporte</option>
-                            <option value="Trabajo">Trabajo</option>
+                        <select class="form-select categorias-select" id="categoria" aria-label="Categoria">
                         </select>
                     </div>
 
@@ -214,7 +203,7 @@
     <!-- ********************************
             CATEGORIAS
 ******************************** -->
-    <div class="container oculto" id="container-categorias">
+    <div class="container oculto m-5" id="container-categorias">
         <div class="row justify-content-center">
             <form class="col-md-8 shadow p-3 mb-5 bg-body rounded">
                 <h2 class="mb-5 mt-2">Categorías</h2>
@@ -286,7 +275,7 @@
     <!-- ********************************
             REPORTES
     ******************************** -->
-    <div class="container oculto" id="container-reportes">
+    <div class="container oculto m-5" id="container-reportes">
         <div class="row justify-content-center">
             <div class=" col-md-8 shadow p-3 mb-5 bg-body rounded">
                 <h2>Reportes</h2>
