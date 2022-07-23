@@ -10,13 +10,7 @@
     box-sizing: border-box;
 }
 
-.my-navbar {
-    padding-top: 0px;
-}
-
 .nav-container {
-    height: 5em;
-    padding-left: 4em;
     background-color: var(--color-primario);
 }
 
@@ -38,18 +32,6 @@
     background-color: var(--color-focus);
 }
 
-/* *****************
-    MAIN
-***************** */
-.main-container {
-    margin-top: 2em;
-    margin-left: 10em;
-}
-
-.my-card-body {
-    margin: 0.5em;
-}
-
 /* **************
     OPERACIONES 
 *************** */
@@ -65,10 +47,6 @@
 .imagen-operaciones {
     margin-top: 5em;
     width: 50%;
-}
-
-.operaciones-textos {
-    margin-top: 3rem;
 }
 
 /* ***************

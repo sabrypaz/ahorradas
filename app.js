@@ -84,6 +84,32 @@ reportes.addEventListener('click', ()=>{
 
 })
 
+// **************
+// DOM
+// **************
+// FILTRO CATEGORIAS
 
-//*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+const filtroCategorias = [
+    'Comida',
+    'Salidas',
+    'Educación',
+    'Transporte',
+    'Trabajo',
+
+];
+
+
+const generarCategorias = ()=>{
+    const selects = document.getElementsByClassName('categorias-select');
+    for(let i = 0; i < selects.length; i++){
+        const select = selects [i];
+        if(select.classList.contains('filtro-categoria')){
+            select.innerHTML ='<option value="Todas">Todas</option>'
+        }
+        for(let j = 0; j < filtroCategorias.length; j++){
+            select.innerHTML += `<option value=${filtroCategorias[j]}>${filtroCategorias[j]}</option>`
+        }
+    }
+}
+generarCategorias()
 
