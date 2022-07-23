@@ -83,3 +83,7 @@ reportes.addEventListener('click', ()=>{
      cardOperaciones.style = 'display:none';
 
 })
+
+
+//*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+
