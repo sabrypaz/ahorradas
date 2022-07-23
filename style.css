@@ -1,6 +1,7 @@
 :root {
     --color-primario: rgb(126, 189, 154);
     --color-focus: rgb(67, 166, 112);
+    --color-titulo-cat: rgb(212, 244, 227);
 }
 
 * {
@@ -42,33 +43,16 @@
 ***************** */
 .main-container {
     margin-top: 2em;
-    margin-left: 3em;
+    margin-left: 10em;
 }
 
 .my-card-body {
     margin: 0.5em;
 }
 
-.card-style {
-    box-shadow: 0px 5px 20px -5px rgb(181, 178, 178);
-    padding: 1rem;
-}
-
-.card-filtros {
-    margin-top: 0.5em;
-
-}
-
 /* **************
     OPERACIONES 
 *************** */
-.card-operaciones {
-    width: 35rem;
-    height: 30rem;
-    padding: 1rem;
-    ;
-}
-
 .btn-operaciones {
     border-color: var(--color-primario);
 }
@@ -84,6 +68,21 @@
 }
 
 .operaciones-textos {
-    text-align: center;
     margin-top: 3rem;
+}
+
+/* ***************
+       CATEGORIAS
+*************** */
+
+.btn-titulo-categorias{
+    background-color: var(--color-titulo-cat);
+}
+
+/* ***************
+        PARA JS
+*************** */
+
+.oculto{
+    display: none;
 }

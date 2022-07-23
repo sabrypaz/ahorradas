@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="imagenes/favicon.png">
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -30,94 +31,279 @@
             </button>
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav ">
-                    <a class="nav-link my-nav-link" aria-current="page" href="#">Balance</a>
-                    <a class="nav-link my-nav-link" href="#">Categorías</a>
-                    <a class="nav-link my-nav-link" href="#">Reportes</a>
+                    <a id="balance" class="nav-link my-nav-link" aria-current="page" href="#"><i
+                            class="fa-solid fa-chart-line"></i> Balance</a>
+                    <a id="categorias" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-folder-tree"></i>
+                        Categorías</a>
+                    <a id="reportes" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-chart-pie"></i>
+                        Reportes</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="container main-container d-flex flex-wrap bd-highlight ">
-        <div class="my-card-body row">
-            <div class="card col card-style">
-                <h5 class="card-title">Balance</h5>
-                <p class="card-text">Ganancias</p>
-                <p class="card-text">Gastos</p>
-                <p class="card-text">Total</p>
-            </div>
-            <div class="card-filtros">
-                <div class="card row card-style">
-                    <h5 class="card-title">Filtros</h5>
-                    <form>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Tipo</label>
-                            <select type="select" class="form-control" id="" aria-describedby="">
-                                <option value="TODOS">Todos</option>
-                                <option value="GASTO">Gasto</option>
-                                <option value="GANANCIA">Ganancia</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Categoría</label>
-                            <select type="select" class="form-control" id="" aria-describedby="">
-                                <option value="TODAS">Todas</option>
-                                <option value="#">Comida</option>
-                                <option value="#">Salidas</option>
-                                <option value="#">Educación</option>
-                                <option value="#">Transporte</option>
-                                <option value="#">Trabajo</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Desde</label>
-                            <input type="date" class="form-control" id="exampleInputPassword1">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Ordenar por</label>
-                            <select type="select" class="form-control" id="" aria-describedby="">
-                                <option value="MAS_RECIENTES">Más reciente</option>
-                                <option value="MENOS_RECIENTES">Menos reciente</option>
-                                <option value="MAYOR_MONTO">Mayor monto</option>
-                                <option value="#">Educación</option>
-                                <option value="MENOR_MONTO">Menor monto</option>
-                                <option value="A/Z">A/Z</option>
-                                <option value="Z/A">Z/A</option>
-                            </select>
+    <div id="primera-pagina">
+        <main class="container main-container d-flex flex-wrap bd-highlight">
 
-                        </div>
-
-
-                    </form>
+            <div class="my-card-body row">
+                <!-- ********************************
+            BALANCE
+******************************** -->
+                <div class="card col shadow p-3 mb-5 bg-body rounded card-style">
+                    <h5 class="card-title">Balance</h5>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Ganancias</p>
+                        <div class="text-success">+$0</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Gastos</p>
+                        <div class="text-danger">-$0</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text">Total</p>
+                        <div class="fw-bold">$0</div>
+                    </div>
                 </div>
+                <!-- ********************************
+            FILTROS
+******************************** -->
+                <div class="card-filtros">
+                    <div class="card row shadow p-3 mb-5 bg-body rounded card-style">
+                        <div class="container-filtros-ocultar d-flex justify-content-between">
+                            <div>
+                                <h5 class="card-title">Filtros</h5>
+                            </div>
+                            <div>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item btn-ocultar-filtros" id="btn-ocultar-filtros"><a
+                                            class="text-decoration-none" href="#">Ocultar filtros</a></li>
+                                </ol>
+                            </div>
+                        </div>
+                        <form id="form-filtros">
+                            <div class="mb-3">
+                                <label for="select-tipo-filtro" class="form-label">Tipo</label>
+                                <select type="select" class="form-select" id="select-tipo-filtro" aria-describedby="">
+                                    <option value="TODOS">Todos</option>
+                                    <option value="GASTO">Gasto</option>
+                                    <option value="GANANCIA">Ganancia</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="select-filtro-categoria" class="form-label">Categoría</label>
+                                <select type="select" class="form-select" id="select-filtro-categoria"
+                                    aria-describedby="">
+                                    <option value="TODAS">Todas</option>
+                                    <option value="#">Comida</option>
+                                    <option value="#">Salidas</option>
+                                    <option value="#">Educación</option>
+                                    <option value="#">Transporte</option>
+                                    <option value="#">Trabajo</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-filtro-fecha" class="form-label">Desde</label>
+                                <input type="date" class="form-select input-filtro-fecha" id="input-filtro-fecha">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Ordenar por</label>
+                                <select type="select" class="form-select" id="" aria-describedby="">
+                                    <option value="MAS_RECIENTES">Más reciente</option>
+                                    <option value="MENOS_RECIENTES">Menos reciente</option>
+                                    <option value="MAYOR_MONTO">Mayor monto</option>
+                                    <option value="#">Educación</option>
+                                    <option value="MENOR_MONTO">Menor monto</option>
+                                    <option value="A/Z">A/Z</option>
+                                    <option value="Z/A">Z/A</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- ********************************
+            OPERACIONES
+******************************** -->
 
+            <div class="my-card-body col" style="width: 10rem;" id="card-operaciones">
+                <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style container-operaciones-uno">
+
+                    <div class="d-flex justify-content-between">
+                        <h2 class="card-title">Operaciones</h2>
+                        <button type="button" id="btn-nueva-operacion"
+                            class="btn btn-outline-success btn-operaciones"><i class="fa-solid fa-square-plus"></i>
+                            Nueva
+                            operación</button>
+                    </div>
+                    <div class="box-operaciones-uno">
+                        <div class="d-flex justify-content-center card-operaciones-img">
+                            <img src="./imagenes/operaciones-modo-claro.svg" alt="imagen de operaciones"
+                                class="imagen-operaciones">
+                        </div>
+                        <div class="operaciones-textos text-center">
+                            <h3>Sin resultados</h3>
+                            <p>Cambia los filtros o agrega operaciones</p>
+                        </div>
+                    </div>
+                    <div class="box-operaciones-dos d-none">
+                        <div class="my-4">
+                            <div class="d-inline p-5">Descripción</div>
+                            <div class="d-inline p-5">Categoría</div>
+                            <div class="d-inline p-5">Fecha</div>
+                            <div class="d-inline p-5">Monto</div>
+                            <div class="d-inline p-5">Acciones</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <!-- ********************************
+           + NUEVA OPERACION
+******************************** -->
+    <div class="container oculto" id="container-nueva-operacion">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form class="shadow p-3 mb-5 bg-body rounded card-style">
+                    <h2 class="mb-5 mt-2">Nueva operación</h2>
+                    <div class="mb-3">
+                        <label for="descripción" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion"
+                            aria-describedby="descripcion de operacion">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="monto" class="form-label">Monto</label>
+                        <input type="number" value="0" class="form-control" id="monto">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <select class="form-select" aria-label="Tipo" id="tipo">
+                            <option value="gasto">Gasto</option>
+                            <option value="ganancia">Ganancia</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categorías</label>
+                        <select class="form-select" id="categoria" aria-label="Categoria">
+                            <option value="Comida">Comida</option>
+                            <option value="Servicios">Servicios</option>
+                            <option value="Salidas">Salidas</option>
+                            <option value="Educación">Educación</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Trabajo">Trabajo</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="fecha" aria-describedby="fecha">
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-5">
+                        <button type="submit" class="btn btn-light mx-2" id="btn-cancelar">Cancelar</button>
+                        <button type="submit" class="btn btn-success" id="btn-agregar">Agregar</button>
+                    </div>
+                </form>
             </div>
         </div>
-
-
+    </div>
+    <!-- ********************************
+            CATEGORIAS
+******************************** -->
+    <div class="container oculto" id="container-categorias">
+        <div class="row justify-content-center">
+            <form class="col-md-8 shadow p-3 mb-5 bg-body rounded">
+                <h2 class="mb-5 mt-2">Categorías</h2>
+                <div>
+                    <label for="nombre" class="form-label">Nombre</label>
+                </div>
+                <div class="d-flex flex-row">
+                    <input type="text" class="form-control" id="nombre">
+                    <button type="button" class="btn btn-success mx-3" id="btn-agregar">Agregar</button>
+                </div>
+                <br>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Comida</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-comida-editar text-decoration-none"
+                        id="btn-cat-comida-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-comida-eliminar text-decoration-none"
+                        id="btn-cat-comida-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Servicios</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-servicios-editar text-decoration-none"
+                        id="btn-cat-servicios-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-servicios-eliminar text-decoration-none"
+                        id="btn-cat-servicios-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Salida</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-salidas-editar text-decoration-none"
+                        id="btn-cat-salidas-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-salidas-eliminar text-decoration-none"
+                        id="btn-cat-salidas-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Educación</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-educacion-editar text-decoration-none"
+                        id="btn-cat-educacion-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-educacion-eliminar text-decoration-none"
+                        id="btn-cat-educacion-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Transporte</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-transporte-editar text-decoration-none"
+                        id="btn-cat-transporte-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-transporte-eliminar text-decoration-none"
+                        id="btn-cat-transporte-eliminar">Eliminar</button>
+                </div>
+                <div class="d-flex bd-highlight mb-3">
+                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Trabajo</div>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-trabajo-editar text-decoration-none"
+                        id="btn-cat-trabajo-edita">Editar</button>
+                    <button type="button"
+                        class="p-2 bd-highlight btn btn-link btn-cat-trabajo-eliminar text-decoration-none"
+                        id="btn-cat-trabajo-eliminar">Eliminar</button>
+                </div>
+            </form>
         </div>
-        <div class="my-card-body col" style="width: 10rem;">
-            <div class="card card-operaciones card-style">
-                <div class="d-flex justify-content-between">
-                    <h5 class="card-title">Operaciones</h5>
-                    <button type="button" class="btn btn-outline-success btn-operaciones"><i class="fa-solid fa-square-plus"></i> Nueva
-                        operación</button>
-                </div>
-
-                <div class="d-flex justify-content-center card-operaciones-img">
-                    <img src="./imagenes/operaciones-modo-claro.svg" alt="imagen de operaciones"
-                        class="imagen-operaciones">
-                </div>
-                <div class="operaciones-textos">
-                    <h3>Sin resultados</h3>
-                    <p>Cambia los filtros o agrega operaciones</p>
+    </div>
+    <!-- ********************************
+            REPORTES
+    ******************************** -->
+    <div class="container oculto" id="container-reportes">
+        <div class="row justify-content-center">
+            <div class=" col-md-8 shadow p-3 mb-5 bg-body rounded">
+                <h2>Reportes</h2>
+                <div id="sin-reportes" class="d-flex justify-content-center flex-column">
+                    <figure class="d-flex justify-content-center">
+                        <img src="imagenes/sinReportes.svg" style="width:50%" alt="imagen sin reportes">
+                    </figure>
+                    <div class="operaciones-insuficientes text-center">
+                        <h4>Operaciones insuficientes</h4>
+                        <p>Prueba agregando más operaciones</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-
-    </main>
 
 
 
