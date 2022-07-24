@@ -16,6 +16,9 @@ const btnNvaOperacion = document.getElementById('btn-nueva-operacion');
 const primeraPagina = document.getElementById('primera-pagina');
 const containerNvaOperacion = document.getElementById('container-nueva-operacion');
 const cardOperaciones = document.getElementById('card-operaciones');
+const btnAgregar = document.getElementById('btn-agregar');
+const btnCancelar = document.getElementById('btn-cancelar');
+
 
 btnNvaOperacion.addEventListener('click', ()=>{
     primeraPagina.style = 'display:none';
@@ -23,6 +26,16 @@ btnNvaOperacion.addEventListener('click', ()=>{
     cardOperaciones.style = 'display:none';
     containerReportes.style = 'display:none';
 });
+
+
+
+// btnCancelar.addEventListener('click', ()=>{
+//     containerNvaOperacion.classList.toggle('d-none');
+//     primeraPagina.classList.toggle('d-block');
+//     cardOperaciones.classList.toggle('d-block');
+// })
+
+
 
 
 //BALANCE
@@ -84,10 +97,31 @@ reportes.addEventListener('click', ()=>{
 
 })
 
-// **************
-// DOM
-// **************
-// FILTRO CATEGORIAS
+///////////////////
+//const tablaOperaciones = document.getElementById('tabla-operaciones');
+// *****************
+// SELECT FILTRO 
+// *****************
+
+ const filtroMonto = [
+    'Gasto',
+    'Ganancia'
+];
+
+const generarMonto = ()=>{
+    const selects = document.getElementsByClassName('select-monto');
+    for(let i = 0; i < selects.length; i++){
+        const select = selects [i];
+        if(select.classList.contains('select-monto-filtro')){
+            select.innerHTML ='<option value="Todos">Todos</option>'
+        }
+        for(let j = 0; j < filtroMonto.length; j++){
+            select.innerHTML += `<option value=${filtroMonto[j]}>${filtroMonto[j]}</option>`
+        }
+    }
+}
+generarMonto()
+
 
 const filtroCategorias = [
     'Comida',
@@ -95,7 +129,6 @@ const filtroCategorias = [
     'Educación',
     'Transporte',
     'Trabajo',
-
 ];
 
 
@@ -113,3 +146,53 @@ const generarCategorias = ()=>{
 }
 generarCategorias()
 
+
+const filtoOrdenar = [
+    'Más reciente',
+    'Menos reciente',
+    'Mayor monto',
+    'Educación',
+    'Menor monto',
+    'A/Z',
+    'Z/A'
+]
+
+
+const generarOrdenarOperaciones = ()=>{
+    const select = document.getElementById('select-ordenar');
+        for(let i = 0; i < filtoOrdenar.length; i++){
+            select.innerHTML += `<option value=${filtoOrdenar[i]}>${filtoOrdenar[i]}</option>`
+        }
+    }
+
+generarOrdenarOperaciones()
+
+
+// *****************
+//    OPERACIONES
+// ****************
+const operaciones =[]
+
+
+const mostrarOperaciones = (arr) => {
+    if(!arr.length){
+        document.getElementById('sin-operaciones').classList.remove('d-none');
+        document.getElementById('con-operaciones').classList.add('d-none'); 
+    }else{
+        document.getElementById('sin-operaciones').classList.add('d-none');
+        document.getElementById('con-operaciones').classList.remove('d-none');
+    }
+}
+mostrarOperaciones(operaciones)
+
+const descripcionInput = document.getElementById('descripcion-input');
+
+
+
+// tablaOperaciones.innerHTML = `<tr>
+// <td scope="row">${descripcionInput}.value</td>
+// <td>${}</td>
+// <td>${}</td>
+// <td>${}</td>
+// <td>${}</td>
+// </tr>`
