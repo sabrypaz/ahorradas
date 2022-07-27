@@ -151,6 +151,14 @@ const filtoOrdenar = [
 // *****************
 //    OPERACIONES
 // ****************
+const obtenerOperaciones = () =>{
+    return JSON.parse(localStorage.getItem('operaciones'))
+}
+
+// const actualizarOperaciones = (operaciones)=>{
+//     localStorage.setItem('operaciones', JSON.stringify({...obtenerOperaciones(), ...operaciones}))
+//     mostrarOperaciones(operaciones)
+// }
 //const operaciones = JSON.parse(localStorage.getItem('operaciones'));
 const operaciones =[];
 
@@ -248,15 +256,12 @@ tipoOperacion.value = 'Gasto'
 categoriaSelect.value = 'Comida'
 //fechaInput.value = fecha
 mostrarOperaciones(operaciones)
+localStorage.setItem('operaciones', JSON.stringify({...obtenerOperaciones(), ...operaciones}))
 
-localStorage.setItem('operaciones', JSON.stringify(operaciones))
+//localStorage.setItem('operaciones', JSON.stringify(operaciones))
 pintarOperaciones(operaciones)
 
 });
-
-
-
-
 
 const pintarOperaciones = arr =>{
     let str = '';
@@ -278,4 +283,4 @@ const pintarOperaciones = arr =>{
     document.getElementById('tabla-operaciones').innerHTML= str;
 
 }
-pintarOperaciones(operaciones)
+pintarOperaciones(operaciones);
