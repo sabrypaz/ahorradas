@@ -64,3 +64,19 @@
 .oculto{
     display: none;
 }
+
+.ganancia{
+    color: green;
+}
+
+.ganancia::before {
+    content: '+';
+
+}
+.gasto{
+    color:red;
+}
+
+.gasto::before {
+    content: '-';
+}

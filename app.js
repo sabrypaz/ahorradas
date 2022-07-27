@@ -1,3 +1,22 @@
+
+const descripcionInput = document.getElementById('descripcion-input');
+const montoInput = document.getElementById('monto-input');
+const tipoOperacion = document.getElementById('tipo-operacion');
+const categoriaSelect = document.getElementById('categoria-select')
+
+const sinOperaciones = document.getElementById('sin-operaciones');
+const conOperaciones = document.getElementById('con-operaciones');
+
+
+
+const agregarOperacionBtn = document.getElementById('agregar-operacion-btn');
+
+
+const fechaInput = document.getElementById('fecha-input');
+const fechaInputFiltro = document.getElementById('input-filtro-fecha');
+
+
+
 // OCULTAR FILTROS
 
 
@@ -108,6 +127,33 @@ reportes.addEventListener('click', ()=>{
     'Ganancia'
 ];
 
+
+const filtroCategorias = [
+    'Comida',
+    'Salidas',
+    'Educación',
+    'Transporte',
+    'Trabajo'
+];
+
+const filtoOrdenar = [
+    'Más reciente',
+    'Menos reciente',
+    'Mayor monto',
+    'Educación',
+    'Menor monto',
+    'A/Z',
+    'Z/A'
+]
+
+
+
+// *****************
+//    OPERACIONES
+// ****************
+//const operaciones = JSON.parse(localStorage.getItem('operaciones'));
+const operaciones =[];
+
 const generarMonto = ()=>{
     const selects = document.getElementsByClassName('select-monto');
     for(let i = 0; i < selects.length; i++){
@@ -120,16 +166,7 @@ const generarMonto = ()=>{
         }
     }
 }
-generarMonto()
-
-
-const filtroCategorias = [
-    'Comida',
-    'Salidas',
-    'Educación',
-    'Transporte',
-    'Trabajo',
-];
+generarMonto();
 
 
 const generarCategorias = ()=>{
@@ -144,18 +181,8 @@ const generarCategorias = ()=>{
         }
     }
 }
-generarCategorias()
+generarCategorias();
 
-
-const filtoOrdenar = [
-    'Más reciente',
-    'Menos reciente',
-    'Mayor monto',
-    'Educación',
-    'Menor monto',
-    'A/Z',
-    'Z/A'
-]
 
 
 const generarOrdenarOperaciones = ()=>{
@@ -164,35 +191,91 @@ const generarOrdenarOperaciones = ()=>{
             select.innerHTML += `<option value=${filtoOrdenar[i]}>${filtoOrdenar[i]}</option>`
         }
     }
-
-generarOrdenarOperaciones()
-
-
-// *****************
-//    OPERACIONES
-// ****************
-const operaciones =[]
+generarOrdenarOperaciones();
 
 
-const mostrarOperaciones = (arr) => {
-    if(!arr.length){
-        document.getElementById('sin-operaciones').classList.remove('d-none');
-        document.getElementById('con-operaciones').classList.add('d-none'); 
+const mostrarOperaciones = (arreglo) => {
+    if(!arreglo.length){
+        sinOperaciones.classList.remove('d-none');
+        conOperaciones.classList.add('d-none'); 
     }else{
-        document.getElementById('sin-operaciones').classList.add('d-none');
-        document.getElementById('con-operaciones').classList.remove('d-none');
+        sinOperaciones.classList.add('d-none');
+        conOperaciones.classList.remove('d-none');
     }
 }
+mostrarOperaciones(operaciones);
+
+
+
+window.onload = function(){
+    const fecha = new Date(); //Fecha actual
+    let mes = fecha.getMonth()+1; //obteniendo mes
+    let dia = fecha.getDate(); //obteniendo dia
+   let ano = fecha.getFullYear(); //obteniendo año
+    if(dia<10)
+      dia='0'+dia; //agrega cero si el menor de 10
+    if(mes<10)
+      mes='0'+mes //agrega cero si el menor de 10
+
+    fechaInput.value=ano+"-"+mes+"-"+dia;
+    fechaInputFiltro.value=ano+"-"+mes+"-"+dia;
+
+  }
+
+
+agregarOperacionBtn.addEventListener('click', () => {
+    if(descripcionInput.value.trim().length === 0 || montoInput.value == 0){
+       return
+    }
+const operacion = {
+    id: uuidv4(),
+    descripcion: descripcionInput.value,
+    monto: montoInput.value,
+    tipo: tipoOperacion.value,
+    categoria: categoriaSelect.value,
+    fecha: fechaInput.value
+
+}
+operaciones.push(operacion)
+
+primeraPagina.style = 'display:block';
+containerNvaOperacion.style = 'display:none';
+cardOperaciones.style = 'display:block';
+
+descripcionInput.value = ''
+montoInput. value = 0
+tipoOperacion.value = 'Gasto'
+categoriaSelect.value = 'Comida'
+//fechaInput.value = fecha
 mostrarOperaciones(operaciones)
 
-const descripcionInput = document.getElementById('descripcion-input');
+localStorage.setItem('operaciones', JSON.stringify(operaciones))
+pintarOperaciones(operaciones)
+
+});
 
 
 
-// tablaOperaciones.innerHTML = `<tr>
-// <td scope="row">${descripcionInput}.value</td>
-// <td>${}</td>
-// <td>${}</td>
-// <td>${}</td>
-// <td>${}</td>
-// </tr>`
+
+
+const pintarOperaciones = arr =>{
+    let str = '';
+    arr.forEach((operacion) => {
+        const {id, descripcion, categoria, fecha, monto, tipo} = operacion;
+        str = str + `
+        <tr>
+            <td scope="row">${descripcion}</td>
+            <td>${categoria}</td>
+            <td>${fecha}</td>
+            <td class="fw-bold ${tipo === 'Ganancia'?'ganancia':'gasto'}">$${monto}</td>
+            <td><a class="btn-editar text-decoration-none" href="#">Editar</a>
+            <a class="btn-eliminar text-decoration-none" id=${id} href="#">Borrar</a>
+            </td>
+        </th>` 
+        console.log(operaciones)
+    })
+    
+    document.getElementById('tabla-operaciones').innerHTML= str;
+
+}
+pintarOperaciones(operaciones)
