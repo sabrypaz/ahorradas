@@ -116,8 +116,14 @@ reportes.addEventListener('click', ()=>{
 
 })
 
-///////////////////
-//const tablaOperaciones = document.getElementById('tabla-operaciones');
+//BTN HAMBURGUESA
+
+// const navbarToggler = document.getElementById('navbar-toggler');
+
+// navbarToggler.addEventListener('click', ()=>{
+// reportes.classList.add('d-none')
+// })
+
 // *****************
 // SELECT FILTRO 
 // *****************
@@ -151,16 +157,16 @@ const filtoOrdenar = [
 // *****************
 //    OPERACIONES
 // ****************
-const obtenerOperaciones = () =>{
-    return JSON.parse(localStorage.getItem('operaciones'))
-}
+// const obtenerOperaciones = () =>{
+//     return JSON.parse(localStorage.getItem('operaciones'))
+// }
 
 // const actualizarOperaciones = (operaciones)=>{
 //     localStorage.setItem('operaciones', JSON.stringify({...obtenerOperaciones(), ...operaciones}))
 //     mostrarOperaciones(operaciones)
 // }
-//const operaciones = JSON.parse(localStorage.getItem('operaciones'));
-const operaciones =[];
+let operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
+//const operaciones =[];
 
 const generarMonto = ()=>{
     const selects = document.getElementsByClassName('select-monto');
@@ -219,7 +225,7 @@ window.onload = function(){
     const fecha = new Date(); //Fecha actual
     let mes = fecha.getMonth()+1; //obteniendo mes
     let dia = fecha.getDate(); //obteniendo dia
-   let ano = fecha.getFullYear(); //obteniendo año
+    let ano = fecha.getFullYear(); //obteniendo año
     if(dia<10)
       dia='0'+dia; //agrega cero si el menor de 10
     if(mes<10)
@@ -254,16 +260,17 @@ descripcionInput.value = ''
 montoInput. value = 0
 tipoOperacion.value = 'Gasto'
 categoriaSelect.value = 'Comida'
-//fechaInput.value = fecha
+fechaInput.valueAsDate = new Date()
 mostrarOperaciones(operaciones)
-localStorage.setItem('operaciones', JSON.stringify({...obtenerOperaciones(), ...operaciones}))
+//localStorage.setItem('operaciones', JSON.stringify({...obtenerOperaciones(), ...operaciones}))
 
-//localStorage.setItem('operaciones', JSON.stringify(operaciones))
+localStorage.setItem('operaciones', JSON.stringify(operaciones))
 pintarOperaciones(operaciones)
 
 });
 
 const pintarOperaciones = arr =>{
+
     let str = '';
     arr.forEach((operacion) => {
         const {id, descripcion, categoria, fecha, monto, tipo} = operacion;
@@ -273,14 +280,36 @@ const pintarOperaciones = arr =>{
             <td>${categoria}</td>
             <td>${fecha}</td>
             <td class="fw-bold ${tipo === 'Ganancia'?'ganancia':'gasto'}">$${monto}</td>
-            <td><a class="btn-editar text-decoration-none" href="#">Editar</a>
-            <a class="btn-eliminar text-decoration-none" id=${id} href="#">Borrar</a>
+            <td><a class="btn-editar text-decoration-none" data-id=${id} href="#">Editar</a>
+            <a class="btn-borrar text-decoration-none" data-id=${id} href="#">Borrar</a>
             </td>
         </th>` 
         console.log(operaciones)
     })
     
     document.getElementById('tabla-operaciones').innerHTML= str;
+const btnEditar = document.querySelectorAll('.btn-editar');
+
+btnEditar.forEach(btn => {
+    btn.addEventListener('click', e =>{
+console.log(e.target.dataset.id)
+    })
+})
+
+const btnBorrar = document.querySelectorAll('.btn-borrar');
+
+btnBorrar.forEach(btn => {
+    btn.addEventListener('click', e =>{
+const borrado = operaciones.filter(operacion => operacion.id != e.target.dataset.id )
+localStorage.setItem('operaciones',JSON.stringify(borrado))
+operaciones = JSON.parse(localStorage.getItem('operaciones'))
+console.log(borrado)  
+pintarOperaciones(operaciones);
+mostrarOperaciones(operaciones);
+
+})
+})
+
 
 }
 pintarOperaciones(operaciones);
