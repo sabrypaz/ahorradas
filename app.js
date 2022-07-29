@@ -116,14 +116,6 @@ reportes.addEventListener('click', ()=>{
 
 })
 
-//BTN HAMBURGUESA
-
-// const navbarToggler = document.getElementById('navbar-toggler');
-
-// navbarToggler.addEventListener('click', ()=>{
-// reportes.classList.add('d-none')
-// })
-
 // *****************
 // SELECT FILTRO 
 // *****************
@@ -157,16 +149,8 @@ const filtoOrdenar = [
 // *****************
 //    OPERACIONES
 // ****************
-// const obtenerOperaciones = () =>{
-//     return JSON.parse(localStorage.getItem('operaciones'))
-// }
 
-// const actualizarOperaciones = (operaciones)=>{
-//     localStorage.setItem('operaciones', JSON.stringify({...obtenerOperaciones(), ...operaciones}))
-//     mostrarOperaciones(operaciones)
-// }
 let operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
-//const operaciones =[];
 
 const generarMonto = ()=>{
     const selects = document.getElementsByClassName('select-monto');
@@ -262,8 +246,6 @@ tipoOperacion.value = 'Gasto'
 categoriaSelect.value = 'Comida'
 fechaInput.valueAsDate = new Date()
 mostrarOperaciones(operaciones)
-//localStorage.setItem('operaciones', JSON.stringify({...obtenerOperaciones(), ...operaciones}))
-
 localStorage.setItem('operaciones', JSON.stringify(operaciones))
 pintarOperaciones(operaciones)
 
@@ -284,7 +266,7 @@ const pintarOperaciones = arr =>{
             <a class="btn-borrar text-decoration-none" data-id=${id} href="#">Borrar</a>
             </td>
         </th>` 
-        console.log(operaciones)
+      
     })
     
     document.getElementById('tabla-operaciones').innerHTML= str;
@@ -302,8 +284,7 @@ btnBorrar.forEach(btn => {
     btn.addEventListener('click', e =>{
 const borrado = operaciones.filter(operacion => operacion.id != e.target.dataset.id )
 localStorage.setItem('operaciones',JSON.stringify(borrado))
-operaciones = JSON.parse(localStorage.getItem('operaciones'))
-console.log(borrado)  
+operaciones = JSON.parse(localStorage.getItem('operaciones')) 
 pintarOperaciones(operaciones);
 mostrarOperaciones(operaciones);
 
@@ -313,3 +294,12 @@ mostrarOperaciones(operaciones);
 
 }
 pintarOperaciones(operaciones);
+
+
+/// FILTROS
+
+
+// const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === 'Ganancia')
+// console.log(arrFiltroTipo)
+// arrFiltroTipo.push(operaciones)
+
