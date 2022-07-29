@@ -84,7 +84,6 @@ const categoria = document.getElementById('categoria');
 const fecha = document.getElementById('fecha');
 const btnCancelar = document.getElementById('btn-cancelar');
 const btnAgregar= document.getElementById('btn-agregar');
-
 */
 
 //CATEGORÍAS
@@ -302,4 +301,3 @@ pintarOperaciones(operaciones);
 // const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === 'Ganancia')
 // console.log(arrFiltroTipo)
 // arrFiltroTipo.push(operaciones)
-
