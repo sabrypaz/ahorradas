@@ -84,7 +84,6 @@ const categoria = document.getElementById('categoria');
 const fecha = document.getElementById('fecha');
 const btnCancelar = document.getElementById('btn-cancelar');
 const btnAgregar= document.getElementById('btn-agregar');
-
 */
 
 //CATEGORÍAS
