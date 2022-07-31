@@ -138,7 +138,6 @@ const filtoOrdenar = [
     'Más reciente',
     'Menos reciente',
     'Mayor monto',
-    'Educación',
     'Menor monto',
     'A/Z',
     'Z/A'
@@ -269,7 +268,7 @@ const pintarOperaciones = arr =>{
       
     })
     
-    document.getElementById('tabla-operaciones').innerHTML= str;
+document.getElementById('tabla-operaciones').innerHTML= str;
 const btnEditar = document.querySelectorAll('.btn-editar');
 
 btnEditar.forEach(btn => {
@@ -282,12 +281,11 @@ const btnBorrar = document.querySelectorAll('.btn-borrar');
 
 btnBorrar.forEach(btn => {
     btn.addEventListener('click', e =>{
-const borrado = operaciones.filter(operacion => operacion.id != e.target.dataset.id )
-localStorage.setItem('operaciones',JSON.stringify(borrado))
-operaciones = JSON.parse(localStorage.getItem('operaciones')) 
-pintarOperaciones(operaciones);
-mostrarOperaciones(operaciones);
-
+    const borrado = operaciones.filter(operacion => operacion.id != e.target.dataset.id )
+    localStorage.setItem('operaciones',JSON.stringify(borrado))
+    operaciones = JSON.parse(localStorage.getItem('operaciones')) 
+    pintarOperaciones(operaciones);
+    mostrarOperaciones(operaciones);
 })
 })
 
@@ -296,10 +294,128 @@ mostrarOperaciones(operaciones);
 pintarOperaciones(operaciones);
 
 
-/// FILTROS
+// *****************
+//   FILTROS
+// ****************
+
+const selectTipofiltro = document.getElementById('select-tipo-filtro');
+
+selectTipofiltro.addEventListener('change', e => {
+    if(e.target.value !== 'Todos'){
+        const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === e.target.value)
+        localStorage.setItem('operaciones',JSON.stringify(arrFiltroTipo))
+
+        pintarOperaciones(arrFiltroTipo);
+    }else{
+        pintarOperaciones(operaciones);
+    }
+})
 
 
-// const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === 'Ganancia')
-// console.log(arrFiltroTipo)
-// arrFiltroTipo.push(operaciones)
+const filtroCategoria = document.getElementById('filtro-categoria');
+const selectOrdenar = document.getElementById('select-ordenar');
 
+filtroCategoria.addEventListener('change', e =>{
+    if(e.target.value !== 'Todas'){
+        const arrFiltroCategoria = operaciones.filter(operaciones => operaciones.categoria === e.target.value)
+        localStorage.setItem('operaciones',arrFiltroCategoria)
+        localStorage.setItem('operaciones',JSON.stringify(arrFiltroCategoria))
+
+        pintarOperaciones(arrFiltroCategoria);
+    }else{
+        pintarOperaciones(operaciones);
+    }
+})
+
+
+const inputFiltroFecha = document.getElementById('input-filtro-fecha');
+
+//FILTRA POR LA FECHA DE ESE DIA pero falta decirle
+// que es a partir de ese dia en adelante. 
+// y el btn borrar filtro fecha.
+
+// inputFiltroFecha.addEventListener('change', e => {
+//     console.log(e.target.valueAsDate)
+//     if(e.target.valueAsDate !== new Date()){
+//     const arrFiltroFecha= operaciones.filter(operaciones => operaciones.fecha === e.target.value)
+//     localStorage.setItem('operaciones',arrFiltroFecha)
+//     localStorage.setItem('operaciones',JSON.stringify(arrFiltroFecha))
+//       pintarOperaciones(arrFiltroFecha);
+// }else{
+//   pintarOperaciones(operaciones);
+//     }
+
+// })
+
+
+
+// FILTRO MAS RECIENTE = estan las funciones para cada value,
+// falta ver como poner el evento y que cuando se haga change
+// en ese value pase tal cosa. y el de monto falta ver como decir
+// cuando es - gasto y + ganancia. 
+
+// const arrFiltroMasReciente = operaciones.sort((a, b) => {
+//     if(a.fecha > b.fecha){
+//                return -1; 
+//             }
+//             if (a.fecha  < b.fecha){
+//                 return 1;
+//             }
+//             return 0;
+// })
+// console.log(arrFiltroMasReciente)
+
+
+// FILTRO MENOS RECIENTE
+
+// const arrFiltroMenosReciente = operaciones.sort((a, b) => {
+//     if(a.fecha < b.fecha){
+//                return -1; 
+//             }
+//             if (a.fecha  > b.fecha){
+//                 return 1;
+//             }
+//             return 0;
+// })
+// console.log(arrFiltroMenosReciente)
+
+
+
+
+// FILTRO MENOR MONTO 
+// me falta como decirle si es - gasto o + ganancia
+
+// const arrFiltroMenosMonto = operaciones.sort((a, b) => {
+//     return a.monto - b.monto
+// })
+// console.log(arrFiltroMenosMonto)
+
+
+// FILTRO DE LA A / Z
+
+// const arrFiltroOrdenarAz = operaciones.sort((a, b) => {
+//     const descripcionA = a.descripcion.toLowerCase();
+//     const descripcionB = b.descripcion.toLowerCase();
+//     if(descripcionA < descripcionB){
+//        return -1; 
+//     }
+//     if (descripcionA > descripcionB){
+//         return 1;
+//     }
+//     return 0;
+// })
+
+
+// FILTRO DE LA Z / A
+
+// const arrFiltroOrdenarZa = operaciones.reverse((a, b) => {
+//     const descripcionA = a.descripcion.toLowerCase();
+//     const descripcionB = b.descripcion.toLowerCase();
+//     if(descripcionA < descripcionB){
+//        return -1; 
+//     }
+//     if (descripcionA > descripcionB){
+//         return 1;
+//     }
+//     return 0;
+// })
