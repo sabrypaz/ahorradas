@@ -126,6 +126,7 @@ reportes.addEventListener('click', ()=>{
 
 
 const filtroCategorias = [
+    'Todas',
     'Comida',
     'Salidas',
     'Educación',
@@ -297,6 +298,8 @@ pintarOperaciones(operaciones);
 
 /// FILTROS
 
+
+   
 
 // const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === 'Ganancia')
 // console.log(arrFiltroTipo)
