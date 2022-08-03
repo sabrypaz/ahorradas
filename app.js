@@ -483,7 +483,21 @@ selectOrdenar.addEventListener('change', e => {
 operacionMenorMonto= [...operaciones]
 
 // FILTRO DE LA A / Z cambia el objeto oroginal
-
+selectOrdenar.addEventListener('change', e => {
+    if(e.target.value === 'A/Z'){
+     const arrFiltroOrdenarAz  = operaciones.sort((a, b) => 
+         (a.descripcion.toLowerCase() < b.descripcion.toLowerCase()))
+         localStorage.setItem('operacionAz',arrFiltroOrdenarAz)
+         localStorage.setItem('operacionAz',JSON.stringify(arrFiltroOrdenarAz ))
+         pintarOperaciones(arrFiltroOrdenarAz);
+         return -1
+     }else{
+       pintarOperaciones(operaciones);
+       return 0
+         }
+     console.log(arrFiltroOrdenarAz )
+     })
+operacionAz = [...operaciones]
 // const arrFiltroOrdenarAz = operaciones.sort((a, b) => {
 //     const descripcionA = a.descripcion.toLowerCase();
 //     const descripcionB = b.descripcion.toLowerCase();
