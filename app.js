@@ -409,32 +409,44 @@ inputFiltroFecha.addEventListener('change', e => {
 operacionFecha= [...operaciones]
 
 
-// inputFiltroFecha.addEventListener('change', e => {
-//     console.log(e.target.valueAsDate)
-//     if(e.target.valueAsDate !== new Date()){
-//     const arrFiltroFecha= operaciones.filter(operaciones => operaciones.fecha > e.target.valueAsDate)
-//     localStorage.setItem('operaciones',arrFiltroFecha)
-//     localStorage.setItem('operaciones',JSON.stringify(arrFiltroFecha))
-//     pintarOperaciones(arrFiltroFecha);
-// }else{
-//   pintarOperaciones(operaciones);
-//     }
 
-// })
 
 // FILTRO MAS RECIENTE = estan las funciones para cada value,
 // falta ver como poner el evento y que cuando se haga change
 // en ese value pase tal cosa. y el de monto falta ver como decir
 // cuando es - gasto y + ganancia. 
-// selectOrdenar.addEventListener('change', e => {
-// if(e.target.value === 'Más'){
+selectOrdenar.addEventListener('change', e => {
+    console.log(e.target.value)
+if(e.target.value === 'Más'){
+ const arrFiltroMasReciente = operaciones.sort((a, b) => 
+     (new Date(b.fecha) - new Date(a.fecha)))  
+ console.log(arrFiltroMasReciente)
+     localStorage.setItem('operacionMas',arrFiltroMasReciente)
+     localStorage.setItem('operacionMas',JSON.stringify(arrFiltroMasReciente))
+     pintarOperaciones(arrFiltroMasReciente);
+ }else{
+   pintarOperaciones(operaciones);
+     }
  
-// const arrFiltroMasReciente = operaciones.sort((a, b) => {
-//    return (new Date(b.fecha) - new Date(a.fecha))         
-// })
-// console.log(arrFiltroMasReciente)
+ })
+
+ operacionMas= [...operaciones]
 
 
+ selectOrdenar.addEventListener('change', e => {
+    if(e.target.value === 'Menos'){
+     const arrFiltroMenosReciente = operaciones.sort((a, b) => 
+         (new Date(a.fecha) - new Date(b.fecha)))  
+     console.log(arrFiltroMenosReciente )
+         localStorage.setItem('operacionMenos',arrFiltroMenosReciente )
+         localStorage.setItem('operacionMenos',JSON.stringify(arrFiltroMenosReciente ))
+         pintarOperaciones(arrFiltroMenosReciente );
+     }else{
+       pintarOperaciones(operaciones);
+         }
+     
+     })
+     operacionMenos= [...operaciones]
 // FILTRO MENOS RECIENTE
 
 // const arrFiltroMenosReciente = operaciones.sort((a, b) => {
