@@ -357,14 +357,18 @@ window.onload = inicializar
 // *****************
 //   FILTROS
 // ****************
-
+// FILTROS
 const selectTipofiltro = document.getElementById('select-tipo-filtro');
+const filtroCategoria = document.getElementById('filtro-categoria');
+const inputFiltroFecha = document.getElementById('input-filtro-fecha');
+const selectOrdenar = document.getElementById('select-ordenar');
 
+//FILTRO TIPO
 selectTipofiltro.addEventListener('change', e => {
     if(e.target.value !== 'Todos'){
         const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === e.target.value)
-        localStorage.setItem('operaciones',arrFiltroTipo)
-        localStorage.setItem('operaciones',JSON.stringify(arrFiltroTipo))
+        localStorage.setItem('operacionTipo',arrFiltroTipo)
+        localStorage.setItem('operacionTipo',JSON.stringify(arrFiltroTipo))
 
         pintarOperaciones(arrFiltroTipo);
     }else{
@@ -372,17 +376,15 @@ selectTipofiltro.addEventListener('change', e => {
     }
 })
 
-
-const filtroCategoria = document.getElementById('filtro-categoria');
-const inputFiltroFecha = document.getElementById('input-filtro-fecha');
-const selectOrdenar = document.getElementById('select-ordenar');
+operacionTipo = [...operaciones]
 
 
+//FILTRO CATEGORIA
 filtroCategoria.addEventListener('change', e =>{
     if(e.target.value !== 'Todas'){
         const arrFiltroCategoria = operaciones.filter(operaciones => operaciones.categoria === e.target.value)
-        localStorage.setItem('operaciones',arrFiltroCategoria)
-        localStorage.setItem('operaciones',JSON.stringify(arrFiltroCategoria))
+        localStorage.setItem('operacionCategoria',arrFiltroCategoria)
+        localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroCategoria))
 
         pintarOperaciones(arrFiltroCategoria);
     }else{
@@ -390,8 +392,11 @@ filtroCategoria.addEventListener('change', e =>{
     }
 })
 
+operacionCategoria = [...operaciones]
 
-
+//**************
+//FILTRO FECHA
+//**************
 inputFiltroFecha.addEventListener('change', e => {
     console.log(e.target.value)
     if(e.target.valueAsDate !== new Date()){
@@ -407,20 +412,17 @@ inputFiltroFecha.addEventListener('change', e => {
 })
 
 operacionFecha= [...operaciones]
+//**************
+// ORDENAR POR
+//**************
 
+// FILTRO MAS RECIENTE 
 
-
-
-// FILTRO MAS RECIENTE = estan las funciones para cada value,
-// falta ver como poner el evento y que cuando se haga change
-// en ese value pase tal cosa. y el de monto falta ver como decir
-// cuando es - gasto y + ganancia. 
 selectOrdenar.addEventListener('change', e => {
     console.log(e.target.value)
 if(e.target.value === 'Más'){
  const arrFiltroMasReciente = operaciones.sort((a, b) => 
      (new Date(b.fecha) - new Date(a.fecha)))  
- console.log(arrFiltroMasReciente)
      localStorage.setItem('operacionMas',arrFiltroMasReciente)
      localStorage.setItem('operacionMas',JSON.stringify(arrFiltroMasReciente))
      pintarOperaciones(arrFiltroMasReciente);
@@ -432,12 +434,11 @@ if(e.target.value === 'Más'){
 
  operacionMas= [...operaciones]
 
-
- selectOrdenar.addEventListener('change', e => {
+// FILTRO MENOS RECIENTE
+selectOrdenar.addEventListener('change', e => {
     if(e.target.value === 'Menos'){
      const arrFiltroMenosReciente = operaciones.sort((a, b) => 
          (new Date(a.fecha) - new Date(b.fecha)))  
-     console.log(arrFiltroMenosReciente )
          localStorage.setItem('operacionMenos',arrFiltroMenosReciente )
          localStorage.setItem('operacionMenos',JSON.stringify(arrFiltroMenosReciente ))
          pintarOperaciones(arrFiltroMenosReciente );
@@ -446,25 +447,40 @@ if(e.target.value === 'Más'){
          }
      
      })
-     operacionMenos= [...operaciones]
-// FILTRO MENOS RECIENTE
+operacionMenos= [...operaciones]
 
-// const arrFiltroMenosReciente = operaciones.sort((a, b) => {
-//     return (new Date(a.fecha) - new Date(b.fecha))       
-// })
-// console.log(arrFiltroMenosReciente)
+// FILTRO MEYOR MONTO 
 
-
+selectOrdenar.addEventListener('change', e => {
+    if(e.target.value === 'Mayor'){
+     const arrFiltroMayorMonto = operaciones.sort((a, b) => 
+         (b.monto - a.monto))
+         localStorage.setItem('operacionMayorMonto',arrFiltroMayorMonto)
+         localStorage.setItem('operacionMayorrMonto',JSON.stringify(arrFiltroMayorMonto))
+         pintarOperaciones(arrFiltroMayorMonto);
+     }else{
+       pintarOperaciones(operaciones);
+         }
+     
+     })
+operacionMayorMonto= [...operaciones]
 
 
 // FILTRO MENOR MONTO 
-// me falta como decirle si es - gasto o + ganancia
 
-// const arrFiltroMenosMonto = operaciones.sort((a, b) => {
-//     return a.monto - b.monto
-// })
-// console.log(arrFiltroMenosMonto)
-
+selectOrdenar.addEventListener('change', e => {
+    if(e.target.value === 'Menor'){
+     const arrFiltroMenosMonto = operaciones.sort((a, b) => 
+         (a.monto - b.monto))
+         localStorage.setItem('operacionMenorMonto',arrFiltroMenosMonto)
+         localStorage.setItem('operacionMenorMonto',JSON.stringify(arrFiltroMenosMonto))
+         pintarOperaciones(arrFiltroMenosMonto);
+     }else{
+       pintarOperaciones(operaciones);
+         }
+     
+     })
+operacionMenorMonto= [...operaciones]
 
 // FILTRO DE LA A / Z cambia el objeto oroginal
 
