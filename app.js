@@ -167,6 +167,7 @@ const filtoOrdenar = [
 
 let operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
 
+
 const generarMonto = ()=>{
     const selects = document.getElementsByClassName('select-monto');
     for(let i = 0; i < selects.length; i++){
@@ -179,6 +180,7 @@ const generarMonto = ()=>{
         }
     }
 }
+
 
 
 const generarCategorias = ()=>{
@@ -200,8 +202,9 @@ const generarOrdenarOperaciones = ()=>{
         for(let i = 0; i < filtoOrdenar.length; i++){
             select.innerHTML += `<option value=${filtoOrdenar[i]}>${filtoOrdenar[i]}</option>`
         }
-        }
-    
+}
+   
+
 
 const mostrarOperaciones = (arreglo) => {
     if(!arreglo.length){
@@ -265,7 +268,6 @@ const btnEditar = document.querySelectorAll('.btn-editar');
 
 btnEditar.forEach(btn => {
     btn.addEventListener('click', (e) =>{
-        console.log('hola')
         containerEditarOperacion.style = 'display:block';
         containerNvaOperacion.style = 'display:none';
         primeraPagina.style = 'display:none';
@@ -304,7 +306,7 @@ pintarOperaciones(operaciones);
 
 
 const nuevaOperacionpanelEditar = () =>{
-    console.log
+    
     BtnPanelEditarAgregarOperacion.addEventListener('click', (e)=> {
     const operacionPanelEditar = {
         id: uuidv4(),
@@ -313,25 +315,28 @@ const nuevaOperacionpanelEditar = () =>{
         tipo: panelEditarTipoOperacion.value,
         categoria: panelEditarCategoriaSelect.value,
         fecha: panelEeditarFechaInput.value  
-}
+    }
+
 
 console.log(operacionPanelEditar)
+
 
 containerEditarOperacion.style = 'display:none';
 primeraPagina.style = 'display:block';
 containerNvaOperacion.style = 'display:none';
 cardOperaciones.style = 'display:block';
 mostrarOperaciones(operaciones);
-
-
+localStorage.setItem('operacionDePanelEditar',operacionPanelEditar)
+localStorage.setItem('operacionDePanelEditar',JSON.stringify(operacionPanelEditar))
 
 })
 
 }
 
-nuevaOperacionpanelEditar()
+nuevaOperacionpanelEditar(operaciones)
 
 
+operacionDePanelEditar = [...operaciones]
 
 
 
@@ -349,6 +354,7 @@ const inicializar = () => {
     generarOrdenarOperaciones();
     mostrarOperaciones(operaciones);
     pintarOperaciones(operaciones);
+    
 }
 
 window.onload = inicializar
@@ -412,12 +418,10 @@ inputFiltroFecha.addEventListener('change', e => {
 })
 
 operacionFecha= [...operaciones]
+
 //**************
 // ORDENAR POR
 //**************
-
-// FILTRO MAS RECIENTE 
-
 selectOrdenar.addEventListener('change', e => {
     console.log(e.target.value)
 if(e.target.value === 'Más'){
@@ -425,81 +429,54 @@ if(e.target.value === 'Más'){
      (new Date(b.fecha) - new Date(a.fecha)))  
      localStorage.setItem('operacionMas',arrFiltroMasReciente)
      localStorage.setItem('operacionMas',JSON.stringify(arrFiltroMasReciente))
-     pintarOperaciones(arrFiltroMasReciente);
- }else{
-   pintarOperaciones(operaciones);
-     }
- 
- })
+     pintarOperaciones(arrFiltroMasReciente)
+ }
+ if(e.target.value === 'Menos'){
+    const arrFiltroMenosReciente = operaciones.sort((a, b) => 
+        (new Date(a.fecha) - new Date(b.fecha)))  
+        localStorage.setItem('operacionMenos',arrFiltroMenosReciente )
+        localStorage.setItem('operacionMenos',JSON.stringify(arrFiltroMenosReciente ))
+        pintarOperaciones(arrFiltroMenosReciente )
+ }
+ if(e.target.value === 'Mayor'){
+    const arrFiltroMayorMonto = operaciones.sort((a, b) => 
+        (b.monto - a.monto))
+        localStorage.setItem('operacionMayorMonto',arrFiltroMayorMonto)
+        localStorage.setItem('operacionMayorrMonto',JSON.stringify(arrFiltroMayorMonto))
+        pintarOperaciones(arrFiltroMayorMonto);
+ }
+ if(e.target.value === 'Menor'){
+    const arrFiltroMenosMonto = operaciones.sort((a, b) => 
+        (a.monto - b.monto))
+        localStorage.setItem('operacionMenorMonto',arrFiltroMenosMonto)
+        localStorage.setItem('operacionMenorMonto',JSON.stringify(arrFiltroMenosMonto))
+        pintarOperaciones(arrFiltroMenosMonto);
+ }
+   if(e.target.value === 'A/Z'){
+     const arrFiltroOrdenarAz  = operaciones.sort((a, b) => {
+if (a.descripcion.toLowerCase() < b.descripcion.toLowerCase()){
+    return -1  
+}
+})
+    localStorage.setItem('operacionAz',arrFiltroOrdenarAz)
+    localStorage.setItem('operacionAz',JSON.stringify(arrFiltroOrdenarAz))
+    pintarOperaciones(arrFiltroOrdenarAz); 
+}
+if(e.target.value === 'Z/A'){
+    const arrFiltroOrdenarZa  = operaciones.sort((a, b) => {
+if (a.descripcion.toLowerCase() > b.descripcion.toLowerCase()){
+    return -1 
+}
+})
+    localStorage.setItem('operacionZa',arrFiltroOrdenarZa)
+    localStorage.setItem('operacionZa',JSON.stringify(arrFiltroOrdenarZa))
+    pintarOperaciones(arrFiltroOrdenarZa); 
+}
+})
 
- operacionMas= [...operaciones]
-
-// FILTRO MENOS RECIENTE
-selectOrdenar.addEventListener('change', e => {
-    if(e.target.value === 'Menos'){
-     const arrFiltroMenosReciente = operaciones.sort((a, b) => 
-         (new Date(a.fecha) - new Date(b.fecha)))  
-         localStorage.setItem('operacionMenos',arrFiltroMenosReciente )
-         localStorage.setItem('operacionMenos',JSON.stringify(arrFiltroMenosReciente ))
-         pintarOperaciones(arrFiltroMenosReciente );
-     }else{
-       pintarOperaciones(operaciones);
-         }
-     
-     })
-operacionMenos= [...operaciones]
-
-// FILTRO MEYOR MONTO 
-
-selectOrdenar.addEventListener('change', e => {
-    if(e.target.value === 'Mayor'){
-     const arrFiltroMayorMonto = operaciones.sort((a, b) => 
-         (b.monto - a.monto))
-         localStorage.setItem('operacionMayorMonto',arrFiltroMayorMonto)
-         localStorage.setItem('operacionMayorrMonto',JSON.stringify(arrFiltroMayorMonto))
-         pintarOperaciones(arrFiltroMayorMonto);
-     }else{
-       pintarOperaciones(operaciones);
-         }
-     
-     })
-operacionMayorMonto= [...operaciones]
-
-
-// FILTRO MENOR MONTO 
-
-selectOrdenar.addEventListener('change', e => {
-    if(e.target.value === 'Menor'){
-     const arrFiltroMenosMonto = operaciones.sort((a, b) => 
-         (a.monto - b.monto))
-         localStorage.setItem('operacionMenorMonto',arrFiltroMenosMonto)
-         localStorage.setItem('operacionMenorMonto',JSON.stringify(arrFiltroMenosMonto))
-         pintarOperaciones(arrFiltroMenosMonto);
-     }else{
-       pintarOperaciones(operaciones);
-         }
-     
-     })
-operacionMenorMonto= [...operaciones]
-
-// FILTRO DE LA A / Z cambia el objeto oroginal
-
-// const arrFiltroOrdenarAz = operaciones.sort((a, b) => {
-//     const descripcionA = a.descripcion.toLowerCase();
-//     const descripcionB = b.descripcion.toLowerCase();
-//     if(descripcionA < descripcionB){
-//         return -1
-//   }   
-// })
-// console.log(arrFiltroOrdenarAz)
-
-// FILTRO DE LA Z / A
-
-// const arrFiltroOrdenarZa = operaciones.sort((a, b) => {
-//     const descripcionA = a.descripcion.toLowerCase();
-//     const descripcionB = b.descripcion.toLowerCase();
-//     if(descripcionA > descripcionB){
-//        return -1; 
-//     }
-// })
-// console.log(arrFiltroOrdenarZa)
+operacionMas = [...operaciones]
+operacionMenos = [...operaciones]
+operacionMayorMonto = [...operaciones]
+operacionMenorMonto = [...operaciones]  
+operacionAz = [...operaciones]
+operacionZa = [...operaciones]
