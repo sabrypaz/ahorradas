@@ -109,9 +109,9 @@ const containerReportes = document.getElementById('container-reportes');
 reportes.addEventListener('click', ()=>{
     containerReportes.style = 'display:block';
     containerCategorias.style = 'display: none';
-     containerNvaOperacion.style = 'display:none';
-     primeraPagina.style = 'display:none';
-     cardOperaciones.style = 'display:none';
+    containerNvaOperacion.style = 'display:none';
+    primeraPagina.style = 'display:none';
+    cardOperaciones.style = 'display:none';
 
 })
 
@@ -419,3 +419,9 @@ const inputFiltroFecha = document.getElementById('input-filtro-fecha');
 //     }
 //     return 0;
 // })
+
+
+// *****************
+//   CATEGORIAS
+// ****************
+
