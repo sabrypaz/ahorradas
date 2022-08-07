@@ -27,7 +27,6 @@ const BtnPanelEditarAgregarOperacion = document.getElementById('panel-editar-agr
 
 // OCULTAR FILTROS
 
-
 const btnOcultarFiltros = document.getElementById('btn-ocultar-filtros');
 const formFiltros = document.getElementById('form-filtros');
 
@@ -143,7 +142,6 @@ btnPanelEditarCancelar.addEventListener('click', () => {
 
 
 const filtroCategorias = [
-    'Todas',
     'Comida',
     'Salidas',
     'Educación',
