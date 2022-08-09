@@ -25,6 +25,12 @@ const panelEditarCategoriaSelect = document.getElementById('panel-editar-categor
 const panelEeditarFechaInput = document.getElementById('panel-editar-fecha-input');
 const BtnPanelEditarAgregarOperacion = document.getElementById('panel-editar-agregar-operacion-btn');
 
+// FILTROS
+const selectTipofiltro = document.getElementById('select-tipo-filtro');
+const filtroCategoria = document.getElementById('filtro-categoria');
+const inputFiltroFecha = document.getElementById('input-filtro-fecha');
+const selectOrdenar = document.getElementById('select-ordenar');
+
 // OCULTAR FILTROS
 
 const btnOcultarFiltros = document.getElementById('btn-ocultar-filtros');
@@ -161,7 +167,7 @@ const filtroCategorias = [
     'Trabajo'
 ];
 
-const filtoOrdenar = [
+const filtroOrdenar = [
     'Más reciente',
     'Menos reciente',
     'Mayor monto',
@@ -178,7 +184,6 @@ const filtoOrdenar = [
 
 let operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
 
-
 const generarMonto = ()=>{
     const selects = document.getElementsByClassName('select-monto');
     for(let i = 0; i < selects.length; i++){
@@ -190,9 +195,7 @@ const generarMonto = ()=>{
             select.innerHTML += `<option value=${filtroMonto[j]}>${filtroMonto[j]}</option>`
         }
     }
-}
-
-
+};
 
 const generarCategorias = ()=>{
     const selects = document.getElementsByClassName('categorias-select');
@@ -205,18 +208,15 @@ const generarCategorias = ()=>{
             select.innerHTML += `<option value=${filtroCategorias[j]}>${filtroCategorias[j]}</option>`
         }
     }
-}
-
+};
 
 const generarOrdenarOperaciones = ()=>{
     const select = document.getElementById('select-ordenar');
-        for(let i = 0; i < filtoOrdenar.length; i++){
-            select.innerHTML += `<option value=${filtoOrdenar[i]}>${filtoOrdenar[i]}</option>`
+        for(let i = 0; i < filtroOrdenar.length; i++){
+            select.innerHTML += `<option value=${filtroOrdenar[i]}>${filtroOrdenar[i]}</option>`
         }
-}
+};
    
-
-
 const mostrarOperaciones = (arreglo) => {
     if(!arreglo.length){
         sinOperaciones.classList.remove('d-none');
@@ -225,36 +225,36 @@ const mostrarOperaciones = (arreglo) => {
         sinOperaciones.classList.add('d-none');
         conOperaciones.classList.remove('d-none');
     }
-}
+};
 
 agregarOperacionBtn.addEventListener('click', () => {
     if(descripcionInput.value.trim().length === 0 || montoInput.value == 0){
        return
     }
-const operacion = {
-    id: uuidv4(),
-    descripcion: descripcionInput.value,
-    monto: montoInput.value,
-    tipo: tipoOperacion.value,
-    categoria: categoriaSelect.value,
-    fecha: fechaInput.value
+    const operacion = {
+        id: uuidv4(),
+        descripcion: descripcionInput.value,
+        monto: montoInput.value,
+        tipo: tipoOperacion.value,
+        categoria: categoriaSelect.value,
+        fecha: fechaInput.value
 
-}
-operaciones.push(operacion)
+    }
+    operaciones.push(operacion)
 
-primeraPagina.style = 'display:block';
-containerNvaOperacion.style = 'display:none';
-cardOperaciones.style = 'display:block';
+    primeraPagina.style = 'display:block';
+    containerNvaOperacion.style = 'display:none';
+    cardOperaciones.style = 'display:block';
 
-descripcionInput.value = ''
-montoInput.value = 0
-tipoOperacion.value = 'Gasto'
-categoriaSelect.value = 'Comida'
-fechaInput.valueAsDate = new Date()
-mostrarOperaciones(operaciones)
-localStorage.setItem('operaciones', JSON.stringify(operaciones))
-pintarOperaciones(operaciones)
-
+    descripcionInput.value = ''
+    montoInput.value = 0
+    tipoOperacion.value = 'Gasto'
+    categoriaSelect.value = 'Comida'
+    fechaInput.valueAsDate = new Date()
+    mostrarOperaciones(operaciones)
+    localStorage.setItem('operaciones', JSON.stringify(operaciones))
+    pintarOperaciones(operaciones)
+    pintarBalance(operaciones)
 });
 
 const pintarOperaciones = arr =>{
@@ -263,7 +263,7 @@ const pintarOperaciones = arr =>{
         const {id, descripcion, categoria, fecha, monto, tipo} = operacion;
         str = str + `<tr>
             <td scope="row">${descripcion}</td>
-            <td>${categoria}</td>
+            <td><span class="btn-titulo-categorias">${categoria}</span></td>
             <td>${fecha}</td>
             <td class="fw-bold ${tipo === 'Ganancia'?'ganancia':'gasto'}">$${monto}</td>
             <td><a class="btn-editar text-decoration-none" data-id=${id} href="#">Editar</a>
@@ -273,112 +273,153 @@ const pintarOperaciones = arr =>{
       
     })
     
-document.getElementById('tabla-operaciones').innerHTML= str;
-const btnEditar = document.querySelectorAll('.btn-editar');
+    document.getElementById('tabla-operaciones').innerHTML= str;
+
+    const btnEditar = document.querySelectorAll('.btn-editar');
+    const btnBorrar = document.querySelectorAll('.btn-borrar');
+ 
+        btnBorrar.forEach(btn => {
+            btn.addEventListener('click', (e) =>{      
+                const borradoDeoperacion = operaciones.filter(operacion => operacion.id !== e.target.dataset.id )
+                localStorage.setItem('operaciones',JSON.stringify(borradoDeoperacion))
+                operaciones = JSON.parse(localStorage.getItem('operaciones'))
+
+                pintarOperaciones(operaciones);
+                mostrarOperaciones(operaciones);
+                pintarBalance(operaciones)
+            })
+        })
+   
 
 
-btnEditar.forEach(btn => {
-    btn.addEventListener('click', (e) =>{
-        containerEditarOperacion.style = 'display:block';
-        containerNvaOperacion.style = 'display:none';
-        primeraPagina.style = 'display:none';
-        cardOperaciones.style = 'display:none';
-        const editarOperacion = operaciones.filter(operacion => operacion.id === e.target.dataset.id)
-        operacionEditar(editarOperacion)
-   })
-})
+    btnEditar.forEach(btn => {
+        btn.addEventListener('click', (e) =>{
+            containerEditarOperacion.style = 'display:block';
+            containerNvaOperacion.style = 'display:none';
+            primeraPagina.style = 'display:none';
+            cardOperaciones.style = 'display:none';
+            const editarOperacion = operaciones.filter(operacion => operacion.id === e.target.dataset.id)
+            operacionEditar(editarOperacion)
+        })
+    })
 
+};
+
+
+//RECOLECTA LOS VALUE DE LA OPERACION A EDITAR
 const operacionEditar = arr =>{ 
     arr.forEach((element) =>{
+        id = element.id
         panelEditarMontoInput.value = element.monto;
         panelEditarDescripcionInput.value = element.descripcion;
         panelEditarTipoOperacion.value = element.tipo;
         panelEditarCategoriaSelect.value = element.categoria;
         panelEeditarFechaInput.value = element.fecha;
-        })
-    }  
-    
+    })
+}; 
 
-
-const btnBorrar = document.querySelectorAll('.btn-borrar');
-
-btnBorrar.forEach(btn => {
-    btn.addEventListener('click', (e) =>{      
-    const borradoDeoperacion = operaciones.filter(operacion => operacion.id !== e.target.dataset.id )
-    localStorage.setItem('operaciones',JSON.stringify(borradoDeoperacion))
-    operaciones = JSON.parse(localStorage.getItem('operaciones'))
-
-    pintarOperaciones(operaciones);
-    mostrarOperaciones(operaciones);
-})
-})
-}
-pintarOperaciones(operaciones);
-
-
+// AGREGA UNA NUEVA OPERACION
 const nuevaOperacionpanelEditar = () =>{
-    
-    BtnPanelEditarAgregarOperacion.addEventListener('click', (e)=> {
-    const operacionPanelEditar = {
-        id: uuidv4(),
-        descripcion: panelEditarDescripcionInput.value,
-        monto: panelEditarMontoInput.value,
-        tipo: panelEditarTipoOperacion.value,
-        categoria: panelEditarCategoriaSelect.value,
-        fecha: panelEeditarFechaInput.value  
-    }
+    BtnPanelEditarAgregarOperacion.addEventListener('click', () => {
 
-
-console.log(operacionPanelEditar)
-
-
-containerEditarOperacion.style = 'display:none';
-primeraPagina.style = 'display:block';
-containerNvaOperacion.style = 'display:none';
-cardOperaciones.style = 'display:block';
-mostrarOperaciones(operaciones);
-localStorage.setItem('operacionDePanelEditar',operacionPanelEditar)
-localStorage.setItem('operacionDePanelEditar',JSON.stringify(operacionPanelEditar))
-
-})
-
-}
+        const operacionPanelEditar = {
+            id: operaciones[0].id,
+            descripcion: panelEditarDescripcionInput.value,
+            monto: panelEditarMontoInput.value,
+            tipo: panelEditarTipoOperacion.value,
+            categoria: panelEditarCategoriaSelect.value,
+            fecha: panelEeditarFechaInput.value 
+        }
+        operaciones.push(operacionPanelEditar)
+       
+        containerEditarOperacion.style = 'display:none';
+        primeraPagina.style = 'display:block';
+        containerNvaOperacion.style = 'display:none';
+        cardOperaciones.style = 'display:block';
+      
+        localStorage.setItem('operaciones',JSON.stringify(operaciones))
+        operaciones = JSON.parse(localStorage.getItem('operaciones'))
+        
+        pintarOperaciones(operaciones);
+         
+        mostrarOperaciones(operaciones);
+    })
+};
 
 nuevaOperacionpanelEditar(operaciones)
 
+//**************
+// BALANCE
+//**************
 
-operacionDePanelEditar = [...operaciones]
+const pintarBalance = (arr) => {
+    //Arreglos vacios para que se de ganancias y gastos
+    let totalSumaGanancia = [];
+    let totalSumaGastos = [];
+   
+    //Recorre las operaciones y filtra por ganancia y luego las suma y hacemos un push al arreglo totalSumaGanancia
+    const sumaGanancia = arr.filter(operacion => operacion.tipo === 'Ganancia').reduce((prev, current) => 
+    prev + Number(current.monto) ,0)
+
+    totalSumaGanancia.push(sumaGanancia)
+ 
+    //Recorre las operaciones y filtra por ganancia y luego las suma y hacemos un push al arreglo totalSumaGasto
+    const sumaGastos = arr.filter(operacion => operacion.tipo === 'Gasto').reduce((prev, current) => 
+    prev + Number(current.monto) ,0)
+    totalSumaGastos.push(sumaGastos)
+
+    //creo un arreglo nuevo que le vacio. luego le mandamos dos arreglos, el de ganancias y eld e gastos
+    let gananciaGastoBalance = new Array();
+    gananciaGastoBalance.push(totalSumaGanancia)
+    gananciaGastoBalance.push(totalSumaGastos)
+
+    // Este arreglo contiene la resta de las ganancia y las sumas
+    let totalBalance = [];
+  
+
+    //Recorremos el arreglo de gananciaGastoBalance y hacemos uno nuevo con la resta 
+    gananciaGastoBalance.forEach(() =>{
+    return totalBalance.push((gananciaGastoBalance[0] - gananciaGastoBalance[1]))
+    } )
 
 
+    //Pintamos la card de Balance
+    let str = `
+        <div class="d-flex justify-content-between">
+        <p class="card-text">Ganancias</p>
+        <div class="text-success">+$${totalSumaGanancia}</div>
+        </div>
+        <div class="d-flex justify-content-between">
+        <p class="card-text">Gastos</p>
+        <div class="text-danger">-$${totalSumaGastos}</div>
+        </div>
+        <div class="d-flex justify-content-between">
+        <p class="card-text">Total</p>
+        <div class="fw-bold" id="totalBalance">$${totalBalance[0]}</div>
+        </div>`
 
+        document.getElementById('balance-id').innerHTML = str
 
-
-
-
-
-const inicializar = () => {
-    fechaInput.valueAsDate = new Date ()
-    fechaInputFiltro.valueAsDate = new Date ()
-    panelEditarFechaInput.valueAsDate = new Date ()
-    generarMonto();
-    generarCategorias();
-    generarOrdenarOperaciones();
+    //Le damos color al total de balance si da ganancia es rojo y se da gasto es verde
+    const nueva = (arr) =>{
+        if(arr[1] > 0){
+        document.getElementById('totalBalance').classList.add('ganancia');
+        }else if (arr[1] < 0){
+        document.getElementById('totalBalance').classList.add('gasto-balance');
+        }else{
+        } 
+    }
+    nueva(totalBalance)
     mostrarOperaciones(operaciones);
     pintarOperaciones(operaciones);
-    
-}
 
-window.onload = inicializar
+}
+pintarBalance(operaciones)
 
 
 // *****************
 //   FILTROS
 // ****************
-// FILTROS
-const selectTipofiltro = document.getElementById('select-tipo-filtro');
-const filtroCategoria = document.getElementById('filtro-categoria');
-const inputFiltroFecha = document.getElementById('input-filtro-fecha');
-const selectOrdenar = document.getElementById('select-ordenar');
 
 //FILTRO TIPO
 selectTipofiltro.addEventListener('change', e => {
@@ -415,15 +456,13 @@ operacionCategoria = [...operaciones]
 //FILTRO FECHA
 //**************
 inputFiltroFecha.addEventListener('change', e => {
-    console.log(e.target.value)
     if(e.target.valueAsDate !== new Date()){
-    const arrFiltroFecha = operaciones.filter(operaciones =>  new Date(operaciones.fecha) > e.target.valueAsDate )
-    console.log(operaciones.fecha)
-    localStorage.setItem('operacionFecha',arrFiltroFecha)
-    localStorage.setItem('operacionFecha',JSON.stringify(arrFiltroFecha))
-    pintarOperaciones(arrFiltroFecha);
-}else{
-  pintarOperaciones(operaciones);
+        const arrFiltroFecha = operaciones.filter(operaciones =>  new Date(operaciones.fecha) > e.target.valueAsDate )
+        localStorage.setItem('operacionFecha',arrFiltroFecha)
+        localStorage.setItem('operacionFecha',JSON.stringify(arrFiltroFecha))
+        pintarOperaciones(arrFiltroFecha);
+    }else{
+        pintarOperaciones(operaciones);
     }
 
 })
@@ -434,55 +473,54 @@ operacionFecha= [...operaciones]
 // ORDENAR POR
 //**************
 selectOrdenar.addEventListener('change', e => {
-    console.log(e.target.value)
-if(e.target.value === 'Más'){
- const arrFiltroMasReciente = operaciones.sort((a, b) => 
-     (new Date(b.fecha) - new Date(a.fecha)))  
-     localStorage.setItem('operacionMas',arrFiltroMasReciente)
-     localStorage.setItem('operacionMas',JSON.stringify(arrFiltroMasReciente))
-     pintarOperaciones(arrFiltroMasReciente)
- }
- if(e.target.value === 'Menos'){
-    const arrFiltroMenosReciente = operaciones.sort((a, b) => 
+    if(e.target.value === 'Más'){
+        const arrFiltroMasReciente = operaciones.sort((a, b) => 
+        (new Date(b.fecha) - new Date(a.fecha)))  
+        localStorage.setItem('operacionMas',arrFiltroMasReciente)
+        localStorage.setItem('operacionMas',JSON.stringify(arrFiltroMasReciente))
+        pintarOperaciones(arrFiltroMasReciente)
+    }
+    if(e.target.value === 'Menos'){
+        const arrFiltroMenosReciente = operaciones.sort((a, b) => 
         (new Date(a.fecha) - new Date(b.fecha)))  
         localStorage.setItem('operacionMenos',arrFiltroMenosReciente )
         localStorage.setItem('operacionMenos',JSON.stringify(arrFiltroMenosReciente ))
         pintarOperaciones(arrFiltroMenosReciente )
- }
- if(e.target.value === 'Mayor'){
-    const arrFiltroMayorMonto = operaciones.sort((a, b) => 
+    }
+    if(e.target.value === 'Mayor'){
+        const arrFiltroMayorMonto = operaciones.sort((a, b) => 
         (b.monto - a.monto))
         localStorage.setItem('operacionMayorMonto',arrFiltroMayorMonto)
         localStorage.setItem('operacionMayorrMonto',JSON.stringify(arrFiltroMayorMonto))
         pintarOperaciones(arrFiltroMayorMonto);
- }
- if(e.target.value === 'Menor'){
-    const arrFiltroMenosMonto = operaciones.sort((a, b) => 
+    }
+    if(e.target.value === 'Menor'){
+        const arrFiltroMenosMonto = operaciones.sort((a, b) => 
         (a.monto - b.monto))
         localStorage.setItem('operacionMenorMonto',arrFiltroMenosMonto)
         localStorage.setItem('operacionMenorMonto',JSON.stringify(arrFiltroMenosMonto))
         pintarOperaciones(arrFiltroMenosMonto);
- }
-   if(e.target.value === 'A/Z'){
-     const arrFiltroOrdenarAz  = operaciones.sort((a, b) => {
-if (a.descripcion.toLowerCase() < b.descripcion.toLowerCase()){
-    return -1  
-}
-})
-    localStorage.setItem('operacionAz',arrFiltroOrdenarAz)
-    localStorage.setItem('operacionAz',JSON.stringify(arrFiltroOrdenarAz))
-    pintarOperaciones(arrFiltroOrdenarAz); 
-}
-if(e.target.value === 'Z/A'){
-    const arrFiltroOrdenarZa  = operaciones.sort((a, b) => {
-if (a.descripcion.toLowerCase() > b.descripcion.toLowerCase()){
-    return -1 
-}
-})
-    localStorage.setItem('operacionZa',arrFiltroOrdenarZa)
-    localStorage.setItem('operacionZa',JSON.stringify(arrFiltroOrdenarZa))
-    pintarOperaciones(arrFiltroOrdenarZa); 
-}
+    }
+    if(e.target.value === 'A/Z'){
+        const arrFiltroOrdenarAz  = operaciones.sort((a, b) => {
+            if (a.descripcion.toLowerCase() < b.descripcion.toLowerCase()){
+            return -1  
+        }
+        })
+        localStorage.setItem('operacionAz',arrFiltroOrdenarAz)
+        localStorage.setItem('operacionAz',JSON.stringify(arrFiltroOrdenarAz))
+        pintarOperaciones(arrFiltroOrdenarAz); 
+    }
+    if(e.target.value === 'Z/A'){
+        const arrFiltroOrdenarZa  = operaciones.sort((a, b) => {
+    if (a.descripcion.toLowerCase() > b.descripcion.toLowerCase()){
+        return -1 
+    }
+    })
+        localStorage.setItem('operacionZa',arrFiltroOrdenarZa)
+        localStorage.setItem('operacionZa',JSON.stringify(arrFiltroOrdenarZa))
+        pintarOperaciones(arrFiltroOrdenarZa); 
+    }
 })
 
 operacionMas = [...operaciones]
@@ -490,4 +528,21 @@ operacionMenos = [...operaciones]
 operacionMayorMonto = [...operaciones]
 operacionMenorMonto = [...operaciones]  
 operacionAz = [...operaciones]
+
 operacionZa = [...operaciones]
+
+
+
+
+const inicializar = () => {
+    fechaInput.valueAsDate = new Date ()
+    fechaInputFiltro.valueAsDate = new Date ()
+    panelEditarFechaInput.valueAsDate = new Date ()
+    generarMonto();
+    generarCategorias();
+    generarOrdenarOperaciones();
+    mostrarOperaciones(operaciones);
+    pintarOperaciones(operaciones);
+}
+
+window.onload = inicializar
