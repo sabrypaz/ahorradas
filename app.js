@@ -33,7 +33,6 @@ const selectOrdenar = document.getElementById('select-ordenar');
 
 // OCULTAR FILTROS
 
-
 const btnOcultarFiltros = document.getElementById('btn-ocultar-filtros');
 const formFiltros = document.getElementById('form-filtros');
 
@@ -118,6 +117,8 @@ categorias.addEventListener('click', ()=>{
 
 const reportes = document.getElementById('reportes');
 const containerReportes = document.getElementById('container-reportes');
+const conReportes = document.getElementById('con-reportes') 
+const sinReportes = document.getElementById('sin-reportes')
 
 reportes.addEventListener('click', ()=>{
     containerReportes.style = 'display:block';
@@ -125,8 +126,18 @@ reportes.addEventListener('click', ()=>{
     containerNvaOperacion.style = 'display:none';
     primeraPagina.style = 'display:none';
     cardOperaciones.style = 'display:none';
+    if(!operaciones.length){
+        conReportes.style ='display:none';
+        sinReportes.style = 'display:block';
+    }else{
+        conReportes.style ='display:block';
+        sinReportes.style = 'display:none';
+        
+    }
 
-})
+    }
+
+)
 //EDITAR OPERACION
 const btnPanelEditarCancelar = document.getElementById('panel-editar-btn-cancelar');
 
@@ -517,7 +528,10 @@ operacionMenos = [...operaciones]
 operacionMayorMonto = [...operaciones]
 operacionMenorMonto = [...operaciones]  
 operacionAz = [...operaciones]
+
 operacionZa = [...operaciones]
+
+
 
 
 const inicializar = () => {
@@ -532,4 +546,3 @@ const inicializar = () => {
 }
 
 window.onload = inicializar
-
