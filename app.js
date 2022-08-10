@@ -380,7 +380,7 @@ const pintarBalance = (arr) => {
     //Recorremos el arreglo de gananciaGastoBalance y hacemos uno nuevo con la resta 
     gananciaGastoBalance.forEach(() =>{
     return totalBalance.push((gananciaGastoBalance[0] - gananciaGastoBalance[1]))
-    } )
+    });
 
 
     //Pintamos la card de Balance
@@ -528,8 +528,66 @@ operacionMenos = [...operaciones]
 operacionMayorMonto = [...operaciones]
 operacionMenorMonto = [...operaciones]  
 operacionAz = [...operaciones]
-
 operacionZa = [...operaciones]
+
+//******************
+// PANEL CATEGORIA
+//******************
+
+// CUANDO HAGO EL EVENTO CLICK EN EL BTN AGREGAR, SE TOMA EL VALUE Y SE PUSH AL filtroCategorias
+const inputAgregarCategoria = document.getElementById('input-agregar-categoria');
+const btnAgregarCategoria = document.getElementById('btn-agregar-categoria');
+
+
+
+const panelCategoria = (arr) =>{
+    console.log(arr[0])
+    let str = `
+    <div class="d-flex bd-highlight mb-3">
+        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[0]}</div>
+        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
+        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none" >Eliminar</button>  
+    </div>
+
+    <div class="d-flex bd-highlight mb-3">
+        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[1]}</div>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-servicios-editar text-decoration-none" id="btn-cat-servicios-edita">Editar</button>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-servicios-eliminar text-decoration-none" id="btn-cat-servicios-eliminar">Eliminar</button>
+    </div>
+
+    <div class="d-flex bd-highlight mb-3">
+        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[2]}</div>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-salidas-editar text-decoration-none" id="btn-cat-salidas-edita">Editar</button>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-salidas-eliminar text-decoration-none" id="btn-cat-salidas-eliminar">Eliminar</button>
+    </div>
+
+    <div class="d-flex bd-highlight mb-3">
+        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[3]}</div>
+        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
+        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none">Eliminar</button>  
+    </div>
+
+    <div class="d-flex bd-highlight mb-3">
+        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[4]}</div>
+        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
+        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none">Eliminar</button>  
+    </div>
+    `
+
+document.getElementById('pintar-categorias').innerHTML = str
+
+// PARA ELIMIAR Y EDITAR PRIMERO TENGO QUE VER COMO DEFINIR / AGREGAR EL ID
+// const btnCategoriaEliminar = document.getElementsByClassName('btn-categoria-eliminar');
+// console.log(btnCategoriaEliminar)
+
+
+
+}
+
+
+
+
+panelCategoria(filtroCategorias)
 
 
 
