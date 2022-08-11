@@ -81,9 +81,7 @@
 .gasto::before {
     content: '-';
 }
-.gasto-balance{
-    color:red;
-}
+
 /* ********************
         RESPONSIVE
 ************************/

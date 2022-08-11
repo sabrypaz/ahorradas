@@ -160,11 +160,31 @@ btnPanelEditarCancelar.addEventListener('click', () => {
 
 
 const filtroCategorias = [
-    'Comida',
-    'Salidas',
-    'Educación',
-    'Transporte',
-    'Trabajo'
+    {
+    categoria: 'Comida',
+    id: uuidv4(),
+    },
+    {
+    categoria: 'Salidas',
+    id: uuidv4(),
+    },
+    {
+    categoria:'Educación',
+    id: uuidv4(),
+    },
+    {
+    categoria: 'Educación',
+    id: uuidv4(),
+    },
+    {
+    categoria: 'Transporte',
+    id: uuidv4(),
+    },
+    {
+    categoria:'Trabajo',
+    id: uuidv4(),
+    }
+  
 ];
 
 const filtroOrdenar = [
@@ -205,7 +225,7 @@ const generarCategorias = ()=>{
             select.innerHTML ='<option value="Todas">Todas</option>'
         }
         for(let j = 0; j < filtroCategorias.length; j++){
-            select.innerHTML += `<option value=${filtroCategorias[j]}>${filtroCategorias[j]}</option>`
+            select.innerHTML += `<option value=${filtroCategorias[j].categoria}>${filtroCategorias[j].categoria}</option>`
         }
     }
 };
@@ -263,7 +283,7 @@ const pintarOperaciones = arr =>{
         const {id, descripcion, categoria, fecha, monto, tipo} = operacion;
         str = str + `<tr>
             <td scope="row">${descripcion}</td>
-            <td><span class="btn-titulo-categorias">${categoria}</span></td>
+            <td><span class="btn-titulo-categorias p-2">${categoria}</span></td>
             <td>${fecha}</td>
             <td class="fw-bold ${tipo === 'Ganancia'?'ganancia':'gasto'}">$${monto}</td>
             <td><a class="btn-editar text-decoration-none" data-id=${id} href="#">Editar</a>
@@ -272,7 +292,7 @@ const pintarOperaciones = arr =>{
         </th>` 
       
     })
-    
+
     document.getElementById('tabla-operaciones').innerHTML= str;
 
     const btnEditar = document.querySelectorAll('.btn-editar');
@@ -299,7 +319,10 @@ const pintarOperaciones = arr =>{
             primeraPagina.style = 'display:none';
             cardOperaciones.style = 'display:none';
             const editarOperacion = operaciones.filter(operacion => operacion.id === e.target.dataset.id)
+        
+
             operacionEditar(editarOperacion)
+
         })
     })
 
@@ -330,14 +353,18 @@ const nuevaOperacionpanelEditar = () =>{
             categoria: panelEditarCategoriaSelect.value,
             fecha: panelEeditarFechaInput.value 
         }
-        operaciones.push(operacionPanelEditar)
        
         containerEditarOperacion.style = 'display:none';
         primeraPagina.style = 'display:block';
         containerNvaOperacion.style = 'display:none';
         cardOperaciones.style = 'display:block';
       
-        localStorage.setItem('operaciones',JSON.stringify(operaciones))
+        const nuevaOperacionEditada = operaciones.map((operacion) =>
+        operacion.id === operaciones[0].id
+        ? operacionPanelEditar
+        : operacion
+        )
+        localStorage.setItem('operaciones',JSON.stringify(nuevaOperacionEditada))
         operaciones = JSON.parse(localStorage.getItem('operaciones'))
         
         pintarOperaciones(operaciones);
@@ -352,50 +379,41 @@ nuevaOperacionpanelEditar(operaciones)
 // BALANCE
 //**************
 
+
 const pintarBalance = (arr) => {
-    //Arreglos vacios para que se de ganancias y gastos
-    let totalSumaGanancia = [];
-    let totalSumaGastos = [];
    
-    //Recorre las operaciones y filtra por ganancia y luego las suma y hacemos un push al arreglo totalSumaGanancia
     const sumaGanancia = arr.filter(operacion => operacion.tipo === 'Ganancia').reduce((prev, current) => 
     prev + Number(current.monto) ,0)
 
-    totalSumaGanancia.push(sumaGanancia)
- 
-    //Recorre las operaciones y filtra por ganancia y luego las suma y hacemos un push al arreglo totalSumaGasto
     const sumaGastos = arr.filter(operacion => operacion.tipo === 'Gasto').reduce((prev, current) => 
     prev + Number(current.monto) ,0)
-    totalSumaGastos.push(sumaGastos)
 
-    //creo un arreglo nuevo que le vacio. luego le mandamos dos arreglos, el de ganancias y eld e gastos
+    //creo un arreglo vacio. luego le mandamos dos arreglos, el de ganancias y el de gastos
     let gananciaGastoBalance = new Array();
-    gananciaGastoBalance.push(totalSumaGanancia)
-    gananciaGastoBalance.push(totalSumaGastos)
+    gananciaGastoBalance.push(sumaGanancia)
+    gananciaGastoBalance.push(sumaGastos)
 
     // Este arreglo contiene la resta de las ganancia y las sumas
     let totalBalance = [];
   
-
     //Recorremos el arreglo de gananciaGastoBalance y hacemos uno nuevo con la resta 
     gananciaGastoBalance.forEach(() =>{
     return totalBalance.push((gananciaGastoBalance[0] - gananciaGastoBalance[1]))
     });
 
-
     //Pintamos la card de Balance
     let str = `
         <div class="d-flex justify-content-between">
         <p class="card-text">Ganancias</p>
-        <div class="text-success">+$${totalSumaGanancia}</div>
+        <div class="text-success">+$${sumaGanancia}</div>
         </div>
         <div class="d-flex justify-content-between">
         <p class="card-text">Gastos</p>
-        <div class="text-danger">-$${totalSumaGastos}</div>
+        <div class="text-danger">-$${sumaGastos}</div>
         </div>
         <div class="d-flex justify-content-between">
         <p class="card-text">Total</p>
-        <div class="fw-bold" id="totalBalance">$${totalBalance[0]}</div>
+        <div class="fw-bold" id="totalBalance">$${Math.abs(totalBalance[0])}</div>
         </div>`
 
         document.getElementById('balance-id').innerHTML = str
@@ -405,7 +423,7 @@ const pintarBalance = (arr) => {
         if(arr[1] > 0){
         document.getElementById('totalBalance').classList.add('ganancia');
         }else if (arr[1] < 0){
-        document.getElementById('totalBalance').classList.add('gasto-balance');
+        document.getElementById('totalBalance').classList.add('gasto');
         }else{
         } 
     }
@@ -416,12 +434,6 @@ const pintarBalance = (arr) => {
 }
 pintarBalance(operaciones)
 
-
-// *****************
-//   FILTROS
-// ****************
-
-//FILTRO TIPO
 selectTipofiltro.addEventListener('change', e => {
     if(e.target.value !== 'Todos'){
         const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === e.target.value)
@@ -541,55 +553,52 @@ const btnAgregarCategoria = document.getElementById('btn-agregar-categoria');
 
 
 const panelCategoria = (arr) =>{
-    console.log(arr[0])
-    let str = `
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[0]}</div>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none" >Eliminar</button>  
-    </div>
+    let str = '';
+    arr.forEach((arr) =>{
+        str += `
+            <div class="d-flex bd-highlight mb-3">
+            <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr.categoria}</div>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none" data-id=${arr.id}>Eliminar</button>  
+        </div>`   
+    })
+            
 
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[1]}</div>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-servicios-editar text-decoration-none" id="btn-cat-servicios-edita">Editar</button>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-servicios-eliminar text-decoration-none" id="btn-cat-servicios-eliminar">Eliminar</button>
-    </div>
+    document.getElementById('pintar-categorias').innerHTML = str
 
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[2]}</div>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-salidas-editar text-decoration-none" id="btn-cat-salidas-edita">Editar</button>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-salidas-eliminar text-decoration-none" id="btn-cat-salidas-eliminar">Eliminar</button>
-    </div>
-
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[3]}</div>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none">Eliminar</button>  
-    </div>
-
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[4]}</div>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none">Eliminar</button>  
-    </div>
-    `
-
-document.getElementById('pintar-categorias').innerHTML = str
-
-// PARA ELIMIAR Y EDITAR PRIMERO TENGO QUE VER COMO DEFINIR / AGREGAR EL ID
-// const btnCategoriaEliminar = document.getElementsByClassName('btn-categoria-eliminar');
-// console.log(btnCategoriaEliminar)
+    // PARA ELIMIAR Y EDITAR PRIMERO TENGO QUE VER COMO DEFINIR / AGREGAR EL ID
+    const btnEliminarCategoria = document.querySelectorAll('.btn-categoria-eliminar');
 
 
+    btnEliminarCategoria.forEach(btn =>{
+        btn.addEventListener('click', (e) =>{
+            console.log('mostrar click')
+            const eliminarCategoria = filtroCategorias.filter(categoria => categoria.id !== e.target.dataset.id)
+            console.log(eliminarCategoria)
+            // localStorage.setItem('operaciones',JSON.stringify(eliminarCategoria))
+            // operaciones = JSON.parse(localStorage.getItem('operaciones'))
+            // pintarOperaciones(operaciones);
+            // mostrarOperaciones(operaciones);
+        })
+    })
 
 }
-
-
-
+// primero agarrar el valor del imput y pintar la nueva categoria
+// eliminar categorias
+// editar categorias.
 
 panelCategoria(filtroCategorias)
 
 
+// const cargarNuevaCategoria = () =>{
+//     inputAgregarCategoria.addEventListener('change', (e)=>{
+//         console.log(e.target.value)
+//     })
+        
+   
+// }
+
+// cargarNuevaCategoria()
 
 
 const inicializar = () => {
