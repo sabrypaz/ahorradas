@@ -275,6 +275,7 @@ agregarOperacionBtn.addEventListener('click', () => {
     localStorage.setItem('operaciones', JSON.stringify(operaciones))
     pintarOperaciones(operaciones)
     pintarBalance(operaciones)
+
 });
 
 const pintarOperaciones = arr =>{
@@ -298,19 +299,16 @@ const pintarOperaciones = arr =>{
     const btnEditar = document.querySelectorAll('.btn-editar');
     const btnBorrar = document.querySelectorAll('.btn-borrar');
  
-        btnBorrar.forEach(btn => {
-            btn.addEventListener('click', (e) =>{      
-                const borradoDeoperacion = operaciones.filter(operacion => operacion.id !== e.target.dataset.id )
-                localStorage.setItem('operaciones',JSON.stringify(borradoDeoperacion))
-                operaciones = JSON.parse(localStorage.getItem('operaciones'))
-
-                pintarOperaciones(operaciones);
-                mostrarOperaciones(operaciones);
-                pintarBalance(operaciones)
-            })
+    btnBorrar.forEach(btn => {
+        btn.addEventListener('click', (e) =>{      
+            const borradoDeoperacion = operaciones.filter(operacion => operacion.id !== e.target.dataset.id )
+            localStorage.setItem('operaciones',JSON.stringify(borradoDeoperacion))
+            operaciones = JSON.parse(localStorage.getItem('operaciones'))
+            pintarOperaciones(operaciones);
+            mostrarOperaciones(operaciones);
+            pintarBalance(operaciones)
         })
-   
-
+    })
 
     btnEditar.forEach(btn => {
         btn.addEventListener('click', (e) =>{
@@ -319,10 +317,7 @@ const pintarOperaciones = arr =>{
             primeraPagina.style = 'display:none';
             cardOperaciones.style = 'display:none';
             const editarOperacion = operaciones.filter(operacion => operacion.id === e.target.dataset.id)
-        
-
             operacionEditar(editarOperacion)
-
         })
     })
 
@@ -367,18 +362,18 @@ const nuevaOperacionpanelEditar = () =>{
         localStorage.setItem('operaciones',JSON.stringify(nuevaOperacionEditada))
         operaciones = JSON.parse(localStorage.getItem('operaciones'))
         
-        pintarOperaciones(operaciones);
-         
         mostrarOperaciones(operaciones);
+        pintarOperaciones(operaciones);
+        pintarBalance(operaciones)
     })
 };
 
 nuevaOperacionpanelEditar(operaciones)
 
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
 //**************
 // BALANCE
 //**************
-
 
 const pintarBalance = (arr) => {
    
@@ -388,18 +383,9 @@ const pintarBalance = (arr) => {
     const sumaGastos = arr.filter(operacion => operacion.tipo === 'Gasto').reduce((prev, current) => 
     prev + Number(current.monto) ,0)
 
-    //creo un arreglo vacio. luego le mandamos dos arreglos, el de ganancias y el de gastos
-    let gananciaGastoBalance = new Array();
-    gananciaGastoBalance.push(sumaGanancia)
-    gananciaGastoBalance.push(sumaGastos)
-
     // Este arreglo contiene la resta de las ganancia y las sumas
     let totalBalance = [];
-  
-    //Recorremos el arreglo de gananciaGastoBalance y hacemos uno nuevo con la resta 
-    gananciaGastoBalance.forEach(() =>{
-    return totalBalance.push((gananciaGastoBalance[0] - gananciaGastoBalance[1]))
-    });
+    totalBalance.push((sumaGanancia - sumaGastos))
 
     //Pintamos la card de Balance
     let str = `
@@ -413,33 +399,36 @@ const pintarBalance = (arr) => {
         </div>
         <div class="d-flex justify-content-between">
         <p class="card-text">Total</p>
-        <div class="fw-bold" id="totalBalance">$${Math.abs(totalBalance[0])}</div>
+        <div class="fw-bold" id="totalBalance">$${Math.abs(totalBalance)}</div>
         </div>`
 
         document.getElementById('balance-id').innerHTML = str
 
     //Le damos color al total de balance si da ganancia es rojo y se da gasto es verde
-    const nueva = (arr) =>{
-        if(arr[1] > 0){
+    const pintarTotalColor = (arr) =>{
+        if(arr > 0){
         document.getElementById('totalBalance').classList.add('ganancia');
-        }else if (arr[1] < 0){
+        }else {
         document.getElementById('totalBalance').classList.add('gasto');
-        }else{
-        } 
+        }
     }
-    nueva(totalBalance)
+    pintarTotalColor(totalBalance)
     mostrarOperaciones(operaciones);
     pintarOperaciones(operaciones);
 
 }
 pintarBalance(operaciones)
 
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+//****************
+//  FILTRO TIPO
+//****************
+
 selectTipofiltro.addEventListener('change', e => {
     if(e.target.value !== 'Todos'){
         const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === e.target.value)
         localStorage.setItem('operacionTipo',arrFiltroTipo)
         localStorage.setItem('operacionTipo',JSON.stringify(arrFiltroTipo))
-
         pintarOperaciones(arrFiltroTipo);
     }else{
         pintarOperaciones(operaciones);
@@ -448,8 +437,10 @@ selectTipofiltro.addEventListener('change', e => {
 
 operacionTipo = [...operaciones]
 
+//********************
+//  FILTRO CATEGORIA
+//********************
 
-//FILTRO CATEGORIA
 filtroCategoria.addEventListener('change', e =>{
     if(e.target.value !== 'Todas'){
         const arrFiltroCategoria = operaciones.filter(operaciones => operaciones.categoria === e.target.value)
@@ -464,9 +455,9 @@ filtroCategoria.addEventListener('change', e =>{
 
 operacionCategoria = [...operaciones]
 
-//**************
-//FILTRO FECHA
-//**************
+//*****************
+//  FILTRO FECHA
+//*****************
 inputFiltroFecha.addEventListener('change', e => {
     if(e.target.valueAsDate !== new Date()){
         const arrFiltroFecha = operaciones.filter(operaciones =>  new Date(operaciones.fecha) > e.target.valueAsDate )
@@ -541,7 +532,7 @@ operacionMayorMonto = [...operaciones]
 operacionMenorMonto = [...operaciones]  
 operacionAz = [...operaciones]
 operacionZa = [...operaciones]
-
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 //******************
 // PANEL CATEGORIA
 //******************
