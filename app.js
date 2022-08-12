@@ -134,10 +134,9 @@ reportes.addEventListener('click', ()=>{
         sinReportes.style = 'display:none';
         
     }
+    totalPorMes(operaciones);
 
-    }
-
-)
+})
 //EDITAR OPERACION
 const btnPanelEditarCancelar = document.getElementById('panel-editar-btn-cancelar');
 
@@ -160,11 +159,31 @@ btnPanelEditarCancelar.addEventListener('click', () => {
 
 
 const filtroCategorias = [
-    'Comida',
-    'Salidas',
-    'Educación',
-    'Transporte',
-    'Trabajo'
+    {
+    categoria: 'Comida',
+    id: uuidv4(),
+    },
+    {
+    categoria: 'Salidas',
+    id: uuidv4(),
+    },
+    {
+    categoria:'Educación',
+    id: uuidv4(),
+    },
+    {
+    categoria: 'Educación',
+    id: uuidv4(),
+    },
+    {
+    categoria: 'Transporte',
+    id: uuidv4(),
+    },
+    {
+    categoria:'Trabajo',
+    id: uuidv4(),
+    }
+  
 ];
 
 const filtroOrdenar = [
@@ -205,7 +224,7 @@ const generarCategorias = ()=>{
             select.innerHTML ='<option value="Todas">Todas</option>'
         }
         for(let j = 0; j < filtroCategorias.length; j++){
-            select.innerHTML += `<option value=${filtroCategorias[j]}>${filtroCategorias[j]}</option>`
+            select.innerHTML += `<option value=${filtroCategorias[j].categoria}>${filtroCategorias[j].categoria}</option>`
         }
     }
 };
@@ -255,6 +274,7 @@ agregarOperacionBtn.addEventListener('click', () => {
     localStorage.setItem('operaciones', JSON.stringify(operaciones))
     pintarOperaciones(operaciones)
     pintarBalance(operaciones)
+
 });
 
 const pintarOperaciones = arr =>{
@@ -263,7 +283,7 @@ const pintarOperaciones = arr =>{
         const {id, descripcion, categoria, fecha, monto, tipo} = operacion;
         str = str + `<tr>
             <td scope="row">${descripcion}</td>
-            <td><span class="btn-titulo-categorias">${categoria}</span></td>
+            <td><span class="btn-titulo-categorias p-2">${categoria}</span></td>
             <td>${fecha}</td>
             <td class="fw-bold ${tipo === 'Ganancia'?'ganancia':'gasto'}">$${monto}</td>
             <td><a class="btn-editar text-decoration-none" data-id=${id} href="#">Editar</a>
@@ -272,25 +292,22 @@ const pintarOperaciones = arr =>{
         </th>` 
       
     })
-    
+
     document.getElementById('tabla-operaciones').innerHTML= str;
 
     const btnEditar = document.querySelectorAll('.btn-editar');
     const btnBorrar = document.querySelectorAll('.btn-borrar');
  
-        btnBorrar.forEach(btn => {
-            btn.addEventListener('click', (e) =>{      
-                const borradoDeoperacion = operaciones.filter(operacion => operacion.id !== e.target.dataset.id )
-                localStorage.setItem('operaciones',JSON.stringify(borradoDeoperacion))
-                operaciones = JSON.parse(localStorage.getItem('operaciones'))
-
-                pintarOperaciones(operaciones);
-                mostrarOperaciones(operaciones);
-                pintarBalance(operaciones)
-            })
+    btnBorrar.forEach(btn => {
+        btn.addEventListener('click', (e) =>{      
+            const borradoDeoperacion = operaciones.filter(operacion => operacion.id !== e.target.dataset.id )
+            localStorage.setItem('operaciones',JSON.stringify(borradoDeoperacion))
+            operaciones = JSON.parse(localStorage.getItem('operaciones'))
+            pintarOperaciones(operaciones);
+            mostrarOperaciones(operaciones);
+            pintarBalance(operaciones)
         })
-   
-
+    })
 
     btnEditar.forEach(btn => {
         btn.addEventListener('click', (e) =>{
@@ -330,104 +347,87 @@ const nuevaOperacionpanelEditar = () =>{
             categoria: panelEditarCategoriaSelect.value,
             fecha: panelEeditarFechaInput.value 
         }
-        operaciones.push(operacionPanelEditar)
        
         containerEditarOperacion.style = 'display:none';
         primeraPagina.style = 'display:block';
         containerNvaOperacion.style = 'display:none';
         cardOperaciones.style = 'display:block';
       
-        localStorage.setItem('operaciones',JSON.stringify(operaciones))
+        const nuevaOperacionEditada = operaciones.map((operacion) =>
+        operacion.id === operaciones[0].id
+        ? operacionPanelEditar
+        : operacion
+        )
+        localStorage.setItem('operaciones',JSON.stringify(nuevaOperacionEditada))
         operaciones = JSON.parse(localStorage.getItem('operaciones'))
         
-        pintarOperaciones(operaciones);
-         
         mostrarOperaciones(operaciones);
+        pintarOperaciones(operaciones);
+        pintarBalance(operaciones)
     })
 };
 
 nuevaOperacionpanelEditar(operaciones)
 
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
 //**************
 // BALANCE
 //**************
 
 const pintarBalance = (arr) => {
-    //Arreglos vacios para que se de ganancias y gastos
-    let totalSumaGanancia = [];
-    let totalSumaGastos = [];
    
-    //Recorre las operaciones y filtra por ganancia y luego las suma y hacemos un push al arreglo totalSumaGanancia
     const sumaGanancia = arr.filter(operacion => operacion.tipo === 'Ganancia').reduce((prev, current) => 
     prev + Number(current.monto) ,0)
 
-    totalSumaGanancia.push(sumaGanancia)
- 
-    //Recorre las operaciones y filtra por ganancia y luego las suma y hacemos un push al arreglo totalSumaGasto
     const sumaGastos = arr.filter(operacion => operacion.tipo === 'Gasto').reduce((prev, current) => 
     prev + Number(current.monto) ,0)
-    totalSumaGastos.push(sumaGastos)
-
-    //creo un arreglo nuevo que le vacio. luego le mandamos dos arreglos, el de ganancias y eld e gastos
-    let gananciaGastoBalance = new Array();
-    gananciaGastoBalance.push(totalSumaGanancia)
-    gananciaGastoBalance.push(totalSumaGastos)
 
     // Este arreglo contiene la resta de las ganancia y las sumas
     let totalBalance = [];
-  
-
-    //Recorremos el arreglo de gananciaGastoBalance y hacemos uno nuevo con la resta 
-    gananciaGastoBalance.forEach(() =>{
-    return totalBalance.push((gananciaGastoBalance[0] - gananciaGastoBalance[1]))
-    });
-
+    totalBalance.push((sumaGanancia - sumaGastos))
 
     //Pintamos la card de Balance
     let str = `
         <div class="d-flex justify-content-between">
         <p class="card-text">Ganancias</p>
-        <div class="text-success">+$${totalSumaGanancia}</div>
+        <div class="text-success">+$${sumaGanancia}</div>
         </div>
         <div class="d-flex justify-content-between">
         <p class="card-text">Gastos</p>
-        <div class="text-danger">-$${totalSumaGastos}</div>
+        <div class="text-danger">-$${sumaGastos}</div>
         </div>
         <div class="d-flex justify-content-between">
         <p class="card-text">Total</p>
-        <div class="fw-bold" id="totalBalance">$${totalBalance[0]}</div>
+        <div class="fw-bold" id="totalBalance">$${Math.abs(totalBalance)}</div>
         </div>`
 
         document.getElementById('balance-id').innerHTML = str
 
     //Le damos color al total de balance si da ganancia es rojo y se da gasto es verde
-    const nueva = (arr) =>{
-        if(arr[1] > 0){
+    const pintarTotalColor = (arr) =>{
+        if(arr > 0){
         document.getElementById('totalBalance').classList.add('ganancia');
-        }else if (arr[1] < 0){
-        document.getElementById('totalBalance').classList.add('gasto-balance');
-        }else{
-        } 
+        }else {
+        document.getElementById('totalBalance').classList.add('gasto');
+        }
     }
-    nueva(totalBalance)
+    pintarTotalColor(totalBalance)
     mostrarOperaciones(operaciones);
     pintarOperaciones(operaciones);
 
 }
 pintarBalance(operaciones)
 
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+//****************
+//  FILTRO TIPO
+//****************
 
-// *****************
-//   FILTROS
-// ****************
-
-//FILTRO TIPO
 selectTipofiltro.addEventListener('change', e => {
     if(e.target.value !== 'Todos'){
         const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === e.target.value)
         localStorage.setItem('operacionTipo',arrFiltroTipo)
         localStorage.setItem('operacionTipo',JSON.stringify(arrFiltroTipo))
-
         pintarOperaciones(arrFiltroTipo);
     }else{
         pintarOperaciones(operaciones);
@@ -436,8 +436,10 @@ selectTipofiltro.addEventListener('change', e => {
 
 operacionTipo = [...operaciones]
 
+//********************
+//  FILTRO CATEGORIA
+//********************
 
-//FILTRO CATEGORIA
 filtroCategoria.addEventListener('change', e =>{
     if(e.target.value !== 'Todas'){
         const arrFiltroCategoria = operaciones.filter(operaciones => operaciones.categoria === e.target.value)
@@ -452,9 +454,9 @@ filtroCategoria.addEventListener('change', e =>{
 
 operacionCategoria = [...operaciones]
 
-//**************
-//FILTRO FECHA
-//**************
+//*****************
+//  FILTRO FECHA
+//*****************
 inputFiltroFecha.addEventListener('change', e => {
     if(e.target.valueAsDate !== new Date()){
         const arrFiltroFecha = operaciones.filter(operaciones =>  new Date(operaciones.fecha) > e.target.valueAsDate )
@@ -529,7 +531,7 @@ operacionMayorMonto = [...operaciones]
 operacionMenorMonto = [...operaciones]  
 operacionAz = [...operaciones]
 operacionZa = [...operaciones]
-
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 //******************
 // PANEL CATEGORIA
 //******************
@@ -541,56 +543,93 @@ const btnAgregarCategoria = document.getElementById('btn-agregar-categoria');
 
 
 const panelCategoria = (arr) =>{
-    console.log(arr[0])
-    let str = `
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[0]}</div>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none" >Eliminar</button>  
-    </div>
+    let str = '';
+    arr.forEach((arr) =>{
+        str += `
+            <div class="d-flex bd-highlight mb-3">
+            <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr.categoria}</div>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none" data-id=${arr.id}>Eliminar</button>  
+        </div>`   
+    })
+            
 
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[1]}</div>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-servicios-editar text-decoration-none" id="btn-cat-servicios-edita">Editar</button>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-servicios-eliminar text-decoration-none" id="btn-cat-servicios-eliminar">Eliminar</button>
-    </div>
+    document.getElementById('pintar-categorias').innerHTML = str
 
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[2]}</div>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-salidas-editar text-decoration-none" id="btn-cat-salidas-edita">Editar</button>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-cat-salidas-eliminar text-decoration-none" id="btn-cat-salidas-eliminar">Eliminar</button>
-    </div>
-
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[3]}</div>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none">Eliminar</button>  
-    </div>
-
-    <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highligh btn-titulo-categorias">${arr[4]}</div>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none">Editar</button>
-        <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none">Eliminar</button>  
-    </div>
-    `
-
-document.getElementById('pintar-categorias').innerHTML = str
-
-// PARA ELIMIAR Y EDITAR PRIMERO TENGO QUE VER COMO DEFINIR / AGREGAR EL ID
-// const btnCategoriaEliminar = document.getElementsByClassName('btn-categoria-eliminar');
-// console.log(btnCategoriaEliminar)
+    // PARA ELIMIAR Y EDITAR PRIMERO TENGO QUE VER COMO DEFINIR / AGREGAR EL ID
+    const btnEliminarCategoria = document.querySelectorAll('.btn-categoria-eliminar');
 
 
+    btnEliminarCategoria.forEach(btn =>{
+        btn.addEventListener('click', (e) =>{
+            console.log('mostrar click')
+            const eliminarCategoria = filtroCategorias.filter(categoria => categoria.id !== e.target.dataset.id)
+            console.log(eliminarCategoria)
+            // localStorage.setItem('operaciones',JSON.stringify(eliminarCategoria))
+            // operaciones = JSON.parse(localStorage.getItem('operaciones'))
+            // pintarOperaciones(operaciones);
+            // mostrarOperaciones(operaciones);
+        })
+    })
 
 }
-
-
-
+// primero agarrar el valor del imput y pintar la nueva categoria
+// eliminar categorias
+// editar categorias.
 
 panelCategoria(filtroCategorias)
 
 
+// const cargarNuevaCategoria = () =>{
+//     inputAgregarCategoria.addEventListener('change', (e)=>{
+//         console.log(e.target.value)
+//     })
+        
+   
+// }
 
+// cargarNuevaCategoria()
+
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
+//                    ******************
+//                      PANEL REPORTES
+//                    ******************
+
+//******************
+// TOTALES POR MES
+//******************
+const totalPorMes = arr => { 
+    let str = ''
+    const doceMeses = [...new Set(arr.map(operacion => operacion.fecha.split('-')[1]))]
+    for (let i = 0; i < doceMeses.length; i++) {
+    //une las operaciones en un objeto por mes
+    const objetoPorMes = arr.filter(operacion => 
+        operacion.fecha.split('-')[1] === doceMeses[i])
+        const filtradoGanancia = objetoPorMes.filter(operacion => 
+            operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto), 0)
+        const filtradoGasto = objetoPorMes.filter(operacion => 
+            operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto), 0)
+    
+    str += `
+    <tr>
+        <td scope="row">${objetoPorMes[0].fecha.split('-')[1]}</td>
+        <td class="text-success ">+$${filtradoGanancia}</td>
+        <td class="text-danger ">-$${filtradoGasto}</td>
+        <td  id="total-mes-id">$${(filtradoGanancia - filtradoGasto)}</td>
+        
+    </th>` 
+
+    document.getElementById('reporte-por-mes').innerHTML = str
+
+ }
+
+}
+totalPorMes(operaciones)
+
+
+
+
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 
 const inicializar = () => {
     fechaInput.valueAsDate = new Date ()
