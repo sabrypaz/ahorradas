@@ -134,10 +134,9 @@ reportes.addEventListener('click', ()=>{
         sinReportes.style = 'display:none';
         
     }
+    totalPorMes(operaciones);
 
-    }
-
-)
+})
 //EDITAR OPERACION
 const btnPanelEditarCancelar = document.getElementById('panel-editar-btn-cancelar');
 
@@ -591,6 +590,46 @@ panelCategoria(filtroCategorias)
 
 // cargarNuevaCategoria()
 
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
+//                    ******************
+//                      PANEL REPORTES
+//                    ******************
+
+//******************
+// TOTALES POR MES
+//******************
+const totalPorMes = arr => { 
+    let str = ''
+    const doceMeses = [...new Set(arr.map(operacion => operacion.fecha.split('-')[1]))]
+    for (let i = 0; i < doceMeses.length; i++) {
+    //une las operaciones en un objeto por mes
+    const objetoPorMes = arr.filter(operacion => 
+        operacion.fecha.split('-')[1] === doceMeses[i])
+        const filtradoGanancia = objetoPorMes.filter(operacion => 
+            operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto), 0)
+        const filtradoGasto = objetoPorMes.filter(operacion => 
+            operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto), 0)
+    
+    str += `
+    <tr>
+        <td scope="row">${objetoPorMes[0].fecha.split('-')[1]}</td>
+        <td class="text-success ">+$${filtradoGanancia}</td>
+        <td class="text-danger ">-$${filtradoGasto}</td>
+        <td  id="total-mes-id">$${(filtradoGanancia - filtradoGasto)}</td>
+        
+    </th>` 
+
+    document.getElementById('reporte-por-mes').innerHTML = str
+
+ }
+
+}
+totalPorMes(operaciones)
+
+
+
+
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 
 const inicializar = () => {
     fechaInput.valueAsDate = new Date ()
