@@ -1,9 +1,12 @@
 :root {
-    --color-primario: rgb(126, 189, 154);
-    --color-focus: rgb(67, 166, 112);
-    --color-titulo-cat: rgb(212, 244, 227);
+    --color-primario: rgb(127, 179, 213);
+    --color-focus: rgb(115, 198, 182);
+    --color-titulo-cat: rgb(127, 179, 213);
 }
-
+body{
+    background-color: rgb(214, 234, 248); 
+    background-image: linear-gradient(-90deg, rgb(214, 234, 248), rgb(171, 235, 198 ), rgb(252, 243, 207));
+}
 * {
     margin: 0px;
     padding: 0px;
@@ -54,7 +57,7 @@
        CATEGORIAS
 *************** */
 
-.btn-titulo-categorias{
+.btn-titulo-categorias {
     background-color: var(--color-titulo-cat);
 }
 
@@ -62,11 +65,11 @@
         PARA JS
 *************** */
 
-.oculto{
+.oculto {
     display: none;
 }
 
-.ganancia{
+.ganancia {
     color: green;
 }
 
@@ -74,8 +77,9 @@
     content: '+';
 
 }
-.gasto{
-    color:red;
+
+.gasto {
+    color: red;
 }
 
 .gasto::before {
@@ -86,9 +90,15 @@
         RESPONSIVE
 ************************/
 
-@media (min-width:820px) and (max-width: 1700px){
-    .nav-flex{
+@media (min-width:820px) and (max-width: 1700px) {
+    .nav-flex {
         display: flex;
         justify-content: flex-end;
     }
+}
+
+@media (min-width:100px) and (max-width: 819px) {
+
+   
+
 }
