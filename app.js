@@ -51,6 +51,12 @@ const cardOperaciones = document.getElementById('card-operaciones');
 const btnAgregar = document.getElementById('btn-agregar');
 const btnCancelar = document.getElementById('btn-cancelar');
 
+// PANEL CATEGORIA
+const categoriaParaEditar = document.getElementById('container-categorias-editar');
+const inputAgregarCategoriaEditada =document.getElementById('input-agregar-categoria-editada');
+const btnCancelarCategoriaEditar = document.getElementById('btn-cancelar-categoria-editar');
+const btnAgregarCategoriaEditar = document.getElementById('btn-agregar-categoria-editar');
+
 
 btnNvaOperacion.addEventListener('click', ()=>{
     primeraPagina.style = 'display:none';
@@ -527,6 +533,7 @@ const generarSelectCategorias = ()=>{
         for(let j = 0; j < objetoCategorias.length; j++){
             select.innerHTML += `<option value=${objetoCategorias[j].categoria}>${objetoCategorias[j].categoria}</option>`
         }
+
     }
 };
 
@@ -553,7 +560,9 @@ btnAgregarCategoria.addEventListener('click', () => {
     localStorage.setItem('categorias', JSON.stringify(objetoCategorias));
     categoriaEditada = JSON.parse(localStorage.getItem('categorias'));
     generarSelectCategorias(categoriaEditada);
+   
 });
+
 
 const pintarPanelCategoria = arr =>{
     let str = '';
@@ -572,28 +581,67 @@ const pintarPanelCategoria = arr =>{
 
 
     const btnEliminarCategoria = document.querySelectorAll('.btn-categoria-eliminar');
-
+    const btnEditarCategoria = document.querySelectorAll('.btn-categoria-editar');
 
     btnEliminarCategoria.forEach(btn =>{
         btn.addEventListener('click', (e) =>{
         const eliminarCategoria = objetoCategorias.filter(categoria => categoria.id !== e.target.dataset.id)
-        console.log(eliminarCategoria)
-        localStorage.setItem('categorias',JSON.stringify(eliminarCategoria))
-        objetoCategorias = JSON.parse(localStorage.getItem('categorias'))
+        localStorage.setItem('categorias',JSON.stringify(eliminarCategoria));
+        objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
         pintarPanelCategoria(objetoCategorias);
-
         })
-
     })
-   
+
+    btnEditarCategoria.forEach(btn => {
+        btn.addEventListener('click', (e)=>{
+            // containerNvaOperacion.style = 'display:none';
+            containerCategorias.classList.add('d-none');
+            categoriaParaEditar.classList.remove('d-none');
+            const editarCategorias = objetoCategorias.filter(categoria => categoria.id === e.target.dataset.id) 
+            editarCategorias.forEach((element) =>{
+                id = element.id
+                inputAgregarCategoriaEditada.value = element.categoria
+            })
+        })
+    })
 
 };
+
 pintarPanelCategoria(objetoCategorias)
 
+btnCancelarCategoriaEditar.addEventListener('click', () =>{
+    containerCategorias.classList.remove('d-none');
+    categoriaParaEditar.classList.add('d-none');
+})
 
-   
+const agregarCategoriaEditada = () =>{
+    btnAgregarCategoriaEditar.addEventListener('click', () =>{
+
+        const categoriaEditada = {
+            id: objetoCategorias[0].id,
+            categoria: inputAgregarCategoriaEditada.value,
+        }
+
+        containerCategorias.classList.remove('d-none');
+        categoriaParaEditar.classList.add('d-none');
 
 
+        const agregarCategoriaEditada = objetoCategorias.map((objetoCategorias) =>
+        objetoCategorias.id === categoriaEditada.id
+        ? categoriaEditada
+        : objetoCategorias
+        )
+
+        localStorage.setItem('categorias',JSON.stringify(agregarCategoriaEditada));
+        objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
+        pintarPanelCategoria(objetoCategorias); 
+
+    })
+
+
+}
+    
+agregarCategoriaEditada(objetoCategorias)
 
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 //                    ******************
