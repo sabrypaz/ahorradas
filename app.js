@@ -526,8 +526,6 @@ const generarSelectCategorias = ()=>{
         }
         for(let j = 0; j < objetoCategorias.length; j++){
             select.innerHTML += `<option value=${objetoCategorias[j].categoria}>${objetoCategorias[j].categoria}</option>`
-        console.log(objetoCategorias[j])
-
         }
     }
 };
@@ -571,6 +569,23 @@ const pintarPanelCategoria = arr =>{
             
 
     document.getElementById('pintar-categorias').innerHTML = str;
+
+
+    const btnEliminarCategoria = document.querySelectorAll('.btn-categoria-eliminar');
+
+
+    btnEliminarCategoria.forEach(btn =>{
+        btn.addEventListener('click', (e) =>{
+        const eliminarCategoria = objetoCategorias.filter(categoria => categoria.id !== e.target.dataset.id)
+        console.log(eliminarCategoria)
+        localStorage.setItem('categorias',JSON.stringify(eliminarCategoria))
+        objetoCategorias = JSON.parse(localStorage.getItem('categorias'))
+        pintarPanelCategoria(objetoCategorias);
+
+        })
+
+    })
+   
 
 };
 pintarPanelCategoria(objetoCategorias)
@@ -716,19 +731,3 @@ const inicializar = () => {
 
 window.onload = inicializar
 
-
-
-
-
-    // PARA ELIMIAR Y EDITAR PRIMERO TENGO QUE VER COMO DEFINIR / AGREGAR EL ID
-    // const btnEliminarCategoria = document.querySelectorAll('.btn-categoria-eliminar');
-
-
-    // btnEliminarCategoria.forEach(btn =>{
-    //     btn.addEventListener('click', (e) =>{
-    //     const eliminarCategoria = objetoCategorias.filter(categoria => categoria.id === e.target.dataset.id)
-
-    //     })
-
-    // })
-   
