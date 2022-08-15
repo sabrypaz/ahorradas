@@ -85,19 +85,6 @@ balance.addEventListener('click', ()=>{
 
 
 
-
-//DECLARACION VARIABLES DE CONTAINER DE NUEVA OPERACION
-
-/*
-const descripcion = document.getElementById('descripcion');
-const monto = document.getElementById('monto');
-const tipo = document.getElementById('tipo');
-const categoria = document.getElementById('categoria');
-const fecha = document.getElementById('fecha');
-const btnCancelar = document.getElementById('btn-cancelar');
-const btnAgregar= document.getElementById('btn-agregar');
-*/
-
 //CATEGORÍAS
 
 
@@ -110,6 +97,7 @@ categorias.addEventListener('click', ()=>{
      primeraPagina.style = 'display:none';
      cardOperaciones.style = 'display:none';
      containerReportes.style = 'display:none';
+     pintarPanelCategoria(objetoCategorias)
 });
 
 
@@ -158,35 +146,6 @@ btnPanelEditarCancelar.addEventListener('click', () => {
 ];
 
 
-const filtroCategorias = [
-    {
-    categoria: 'Comida',
-    id: uuidv4(),
-    },
-    {
-    categoria: 'Servicios',
-    id: uuidv4(),
-    },
-    {
-    categoria: 'Salidas',
-    id: uuidv4(),
-    },
-    {
-    categoria:'Educación',
-    id: uuidv4(),
-    },
-    {
-    categoria: 'Transporte',
-    id: uuidv4(),
-    },
-    {
-    categoria:'Trabajo',
-    id: uuidv4(),
-    }
-  
-];
-
-
 
 const filtroOrdenar = [
     'Más reciente',
@@ -205,6 +164,7 @@ const filtroOrdenar = [
 
 let operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
 
+
 const generarMonto = ()=>{
     const selects = document.getElementsByClassName('select-monto');
     for(let i = 0; i < selects.length; i++){
@@ -218,18 +178,7 @@ const generarMonto = ()=>{
     }
 };
 
-const generarCategorias = ()=>{
-    const selects = document.getElementsByClassName('categorias-select');
-    for(let i = 0; i < selects.length; i++){
-        const select = selects [i];
-        if(select.classList.contains('filtro-categoria')){
-            select.innerHTML ='<option value="Todas">Todas</option>'
-        }
-        for(let j = 0; j < filtroCategorias.length; j++){
-            select.innerHTML += `<option value=${filtroCategorias[j].categoria}>${filtroCategorias[j].categoria}</option>`
-        }
-    }
-};
+
 
 const generarOrdenarOperaciones = ()=>{
     const select = document.getElementById('select-ordenar');
@@ -407,9 +356,9 @@ const pintarBalance = (arr) => {
 
     //Le damos color al total de balance si da ganancia es rojo y se da gasto es verde
     const pintarTotalColor = (arr) =>{
-        if(arr > 0){
+        if(arr >= 1){
         document.getElementById('totalBalance').classList.add('ganancia');
-        }else {
+        }else if (arr <= -1){
         document.getElementById('totalBalance').classList.add('gasto');
         }
     }
@@ -534,47 +483,100 @@ operacionMenorMonto = [...operaciones]
 operacionAz = [...operaciones]
 operacionZa = [...operaciones]
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
+//                              CATEGORIAS
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
+let objetoCategorias = JSON.parse(localStorage.getItem('categorias')) || [
+    {
+    categoria: 'Comida',
+    id: uuidv4(),
+    },
+    {
+    categoria: 'Servicios',
+    id: uuidv4(),
+    },
+    {
+    categoria: 'Salidas',
+    id: uuidv4(),
+    },
+    {
+    categoria:'Educación',
+    id: uuidv4(),
+    },
+    {
+    categoria: 'Transporte',
+    id: uuidv4(),
+    },
+    {
+    categoria:'Trabajo',
+    id: uuidv4(),
+    }
+  
+];
+
+//*****************************
+// GENERAR SELECTS CATEGORIA
+//*****************************
+
+const generarSelectCategorias = ()=>{
+    const selects = document.getElementsByClassName('categorias-select');
+    for(let i = 0; i < selects.length; i++){
+        const select = selects[i];
+        if(select.classList.contains('filtro-categoria')){
+            select.innerHTML ='<option value="Todas">Todas</option>'
+        }
+        for(let j = 0; j < objetoCategorias.length; j++){
+            select.innerHTML += `<option value=${objetoCategorias[j].categoria}>${objetoCategorias[j].categoria}</option>`
+        console.log(objetoCategorias[j])
+
+        }
+    }
+};
+
 //******************
 // PANEL CATEGORIA
 //******************
 
-// CUANDO HAGO EL EVENTO CLICK EN EL BTN AGREGAR, SE TOMA EL VALUE Y SE PUSH AL filtroCategorias
 const inputAgregarCategoria = document.getElementById('input-agregar-categoria');
 const btnAgregarCategoria = document.getElementById('btn-agregar-categoria');
 
-const panelCategoria = (arr) =>{
+btnAgregarCategoria.addEventListener('click', () => {
+    if(inputAgregarCategoria.value.trim().length === 0){
+        return
+    };
+
+    const categoriaAdicional = {
+        categoria: inputAgregarCategoria.value,
+        id: uuidv4()
+    };
+    objetoCategorias.push(categoriaAdicional);
+    pintarPanelCategoria(objetoCategorias);
+
+    inputAgregarCategoria.value = '';
+    localStorage.setItem('categorias', JSON.stringify(objetoCategorias));
+    categoriaEditada = JSON.parse(localStorage.getItem('categorias'));
+    generarSelectCategorias(categoriaEditada);
+});
+
+const pintarPanelCategoria = arr =>{
     let str = '';
-    arr.forEach((arr) =>{
+    arr.forEach((objetoCategoria) =>{
+        const {id, categoria} = objetoCategoria;
         str += `
             <div class="d-flex bd-highlight mb-3">
-            <div class="me-auto"><span class="p-2 bd-highligh btn-titulo-categorias">${arr.categoria}</span></div>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none link-secondary" data-id=${arr.id}>Editar</button>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none link-secondary" data-id=${arr.id}>Eliminar</button>  
-        </div>`   
-    })
+            <div class="me-auto"><span class="p-2 bd-highligh btn-titulo-categorias">${categoria}</span></div>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none link-secondary" data-id=${id}>Editar</button>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none link-secondary" data-id=${id}>Eliminar</button>  
+        </div>` 
+    });
             
 
-    document.getElementById('pintar-categorias').innerHTML = str
+    document.getElementById('pintar-categorias').innerHTML = str;
 
-    // PARA ELIMIAR Y EDITAR PRIMERO TENGO QUE VER COMO DEFINIR / AGREGAR EL ID
-    const btnEliminarCategoria = document.querySelectorAll('.btn-categoria-eliminar');
+};
+pintarPanelCategoria(objetoCategorias)
 
 
-    btnEliminarCategoria.forEach(btn =>{
-        btn.addEventListener('click', (e) =>{
-        console.log('mostrar click')
-        const eliminarCategoria = filtroCategorias.filter(categoria => categoria.id !== e.target.dataset.id)
-        localStorage.setItem('operaciones',JSON.stringify(eliminarCategoria))
-        operaciones = JSON.parse(localStorage.getItem('operaciones'))
-        })
-    })
-
-}
-// primero agarrar el valor del imput y pintar la nueva categoria
-// eliminar categorias
-// editar categorias.
-
-panelCategoria(filtroCategorias)
+   
 
 
 
@@ -585,50 +587,86 @@ panelCategoria(filtroCategorias)
 //***********************
 //RESUMEN
 //***********************
-// const resumenGanancia = arr =>{
+//  const resumenGanancia = arr =>{
+
+//     arr.forEach((operaciones) => { 
+
+//       const operacionesGanancia =  arr.filter(operacion => 
+//         console.log(operacion.tipo === 'Ganancia'))
+
+//     })
+
+
+
+
+
+
+
+// for (const key in operaciones) {
+//     if (Object.hasOwnProperty.call(operaciones, key)) {
+//         const element = operaciones[key];
+//  const ganancia = element.tipo === 'Ganancia'
+//  console.log()
+//        // console.log(operaciones)
+//     }
+// }
+
+// 1-filtrar por CATEGORIA con MAYOR GANANCIA
+
+// 2-filtrar por CATEGORIA con MAYOR GASTO
+
+// 3-filtrar por CATEGORIA con MAYOR BALANCE
+
+// 4-filtrar por MES con MAYOR GANANCIA
+
+// 5-filtrar por MEScon MAYOR GANANCIA
+
 
 
 
 
 // }
 
-// resumenGanancia(operaciones)
+//  resumenGanancia(operaciones)
 
 
 //***********************
 // TOTALES POR CATEGORIA
 //***********************
 
-const totalPorCategoria = (operaciones, categorias) =>{
 
-    let str = '';
+// const totalPorCategoria = (operaciones, categorias) =>{
+
+//     let str = '';
    
-    categorias.forEach(categorias => {  
-        const filtraPorCategoria =  operaciones.filter(operacion => 
-           operacion.categoria === categorias.categoria)
-        const filtradoGananciaCategoria = filtraPorCategoria.filter(operacion => 
-            operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto) ,0)
-        const filtradoGastoCategoria = filtraPorCategoria.filter(operacion => 
-            operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto) ,0)
+//     categorias.forEach(categorias => {  
+//         const filtraPorCategoria =  operaciones.filter(operacion => 
+//            operacion.categoria === categorias.categoria)
+        
+//         const filtradoGananciaCategoria = filtraPorCategoria.filter(operacion => 
+//             operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto) ,0)
+//         const filtradoGastoCategoria = filtraPorCategoria.filter(operacion => 
+//             operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto) ,0)
             
-
-        str += `
-            <tr>
-                <td scope="row">${filtraPorCategoria}</td>
-                <td class="text-success ">+$${filtradoGananciaCategoria}</td>
-                <td class="text-danger ">-$${filtradoGastoCategoria}</td>
-                <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
-            </th>` 
+//         str += `
+//             <tr>
+//                 <td scope="row">${filtraPorCategoria}</td>
+//                 <td class="text-success ">+$${filtradoGananciaCategoria}</td>
+//                 <td class="text-danger ">-$${filtradoGastoCategoria}</td>
+//                 <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
+//             </th>` 
             
+//             // localStorage.setItem('nueva',filtraPorCategoria)
+//             // localStorage.setItem('nueva',JSON.stringify(filtraPorCategoria))
+//             pintarOperaciones(filtraPorCategoria); 
 
-    })
+//     })
 
-    document.getElementById('reporte-por-categoria').innerHTML = str
-    pintarOperaciones(operaciones);
+//     document.getElementById('reporte-por-categoria').innerHTML = str
+//     pintarOperaciones(operaciones);
 
-}
-totalPorCategoria(operaciones, filtroCategorias)
-
+// }
+// totalPorCategoria(operaciones, objetoCategorias)
 
 //******************
 // TOTALES POR MES
@@ -670,10 +708,27 @@ const inicializar = () => {
     fechaInputFiltro.valueAsDate = new Date ()
     panelEditarFechaInput.valueAsDate = new Date ()
     generarMonto();
-    generarCategorias();
+    generarSelectCategorias();
     generarOrdenarOperaciones();
     mostrarOperaciones(operaciones);
     pintarOperaciones(operaciones);
 }
 
 window.onload = inicializar
+
+
+
+
+
+    // PARA ELIMIAR Y EDITAR PRIMERO TENGO QUE VER COMO DEFINIR / AGREGAR EL ID
+    // const btnEliminarCategoria = document.querySelectorAll('.btn-categoria-eliminar');
+
+
+    // btnEliminarCategoria.forEach(btn =>{
+    //     btn.addEventListener('click', (e) =>{
+    //     const eliminarCategoria = objetoCategorias.filter(categoria => categoria.id === e.target.dataset.id)
+
+    //     })
+
+    // })
+   
