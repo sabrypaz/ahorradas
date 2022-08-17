@@ -180,7 +180,7 @@
 
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categorías</label>
-                        <select class="form-select categorias-select" id="categoria-select" aria-label="Categoria">
+                        <select class="form-select categorias-select categorias-select-operaciones" id="categoria-select" aria-label="Categoria">
                         </select>
                     </div>
 
@@ -225,7 +225,7 @@
 
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categorías</label>
-                        <select class="form-select categorias-select" id="panel-editar-categoria-select"
+                        <select class="form-select categorias-select categorias-select-operaciones" id="panel-editar-categoria-select"
                             aria-label="Categoria">
                         </select>
                     </div>
@@ -307,19 +307,19 @@
                 </div>
 
                 <div id="con-reportes">
-                    <div class="d-flex justify-content-center flex-column mx-4">
+                    <div class="d-flex justify-content-center flex-column mx-3">
                         <h4 class="my-5">Resumen</h4>
+
 
                         <div class="row justify-content-start text-start my-3">
                             <div class="col-6">Categoria con mayor ganancia</div>
-                            <div class="col-3 text-end" style="background:rgb(207, 238, 207);"></div>
-                            <div class="col-3 text-end">m</div>
+                            <div class="col-3 text-center" id="id-categoria-mayor-ganancia"></div>
+                            <div class="col-3 text-end text-success" id="id-monto-mayor-ganancia"></div>
                         </div>
-
                         <div class="row justify-content-start text-start my-3">
                             <div class="col-6">Categoria con mayor gasto</div>
-                            <div class="col-3 text-end text-success" style="background:rgb(207, 238, 207);"></div>
-                            <div class="col-3 text-end">m</div>
+                            <div class="col-3 text-center " id="id-categoria-mayor-gasto"></div>
+                            <div class="col-3 text-end text-danger" id="id-monto-mayor-gasto"></div>
                         </div>
                         <div class="row justify-content-start text-start my-3">
                             <div class="col-6">Categoria con mayor balance</div>

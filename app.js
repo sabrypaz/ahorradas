@@ -2,7 +2,7 @@
 const descripcionInput = document.getElementById('descripcion-input');
 const montoInput = document.getElementById('monto-input');
 const tipoOperacion = document.getElementById('tipo-operacion');
-const categoriaSelect = document.getElementById('categoria-select')
+const categoriaSelect = document.getElementById('categoria-select');
 
 const sinOperaciones = document.getElementById('sin-operaciones');
 const conOperaciones = document.getElementById('con-operaciones');
@@ -529,13 +529,17 @@ const generarSelectCategorias = ()=>{
         const select = selects[i];
         if(select.classList.contains('filtro-categoria')){
             select.innerHTML ='<option value="Todas">Todas</option>'
+        }else if (select.classList.contains('categorias-select-operaciones')){
+            select.innerHTML =''
         }
         for(let j = 0; j < objetoCategorias.length; j++){
             select.innerHTML += `<option value=${objetoCategorias[j].categoria}>${objetoCategorias[j].categoria}</option>`
+        
         }
-
     }
+   
 };
+
 
 //******************
 // PANEL CATEGORIA
@@ -554,14 +558,16 @@ btnAgregarCategoria.addEventListener('click', () => {
         id: uuidv4()
     };
     objetoCategorias.push(categoriaAdicional);
-    pintarPanelCategoria(objetoCategorias);
 
     inputAgregarCategoria.value = '';
     localStorage.setItem('categorias', JSON.stringify(objetoCategorias));
-    categoriaEditada = JSON.parse(localStorage.getItem('categorias'));
-    generarSelectCategorias(categoriaEditada);
-   
+    objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
+
+    pintarPanelCategoria(objetoCategorias);
+    generarSelectCategorias( )
 });
+
+
 
 
 const pintarPanelCategoria = arr =>{
@@ -589,7 +595,9 @@ const pintarPanelCategoria = arr =>{
         localStorage.setItem('categorias',JSON.stringify(eliminarCategoria));
         objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
         pintarPanelCategoria(objetoCategorias);
-        })
+        generarSelectCategorias(objetoCategorias)
+
+    })
     })
 
     btnEditarCategoria.forEach(btn => {
@@ -597,17 +605,19 @@ const pintarPanelCategoria = arr =>{
             // containerNvaOperacion.style = 'display:none';
             containerCategorias.classList.add('d-none');
             categoriaParaEditar.classList.remove('d-none');
-            const editarCategorias = objetoCategorias.filter(categoria => categoria.id === e.target.dataset.id) 
+            const editarCategorias = objetoCategorias.filter(categoria => categoria.id === e.target.dataset.id)
+
             editarCategorias.forEach((element) =>{
                 id = element.id
                 inputAgregarCategoriaEditada.value = element.categoria
             })
         })
     })
+    
 
 };
 
-pintarPanelCategoria(objetoCategorias)
+// pintarPanelCategoria(objetoCategorias)
 
 btnCancelarCategoriaEditar.addEventListener('click', () =>{
     containerCategorias.classList.remove('d-none');
@@ -634,14 +644,12 @@ const agregarCategoriaEditada = () =>{
 
         localStorage.setItem('categorias',JSON.stringify(agregarCategoriaEditada));
         objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
-        pintarPanelCategoria(objetoCategorias); 
+        //pintarPanelCategoria(objetoCategorias); 
 
     })
-
-
 }
     
-agregarCategoriaEditada(objetoCategorias)
+// agregarCategoriaEditada(objetoCategorias)
 
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 //                    ******************
@@ -650,86 +658,62 @@ agregarCategoriaEditada(objetoCategorias)
 //***********************
 //RESUMEN
 //***********************
-//  const resumenGanancia = arr =>{
 
-//     arr.forEach((operaciones) => { 
+//? SI ESTA VACIO SE ROMPE. 
+// const resumenReporte = (operaciones, objetoCategorias) =>{
+//     // categoria con mayor ganancia
+//     const resumenFiltroGanancia = operaciones.filter(operacion =>
+//         operacion.tipo === 'Ganancia' )
 
-//       const operacionesGanancia =  arr.filter(operacion => 
-//         console.log(operacion.tipo === 'Ganancia'))
+//     const mayorGanancia = resumenFiltroGanancia.sort(function(a, b){return b.monto - a.monto})
+//     document.getElementById('id-categoria-mayor-ganancia').innerHTML = `<div class="btn-titulo-categorias p-2">${mayorGanancia[0].categoria}</div> ` 
+//     document.getElementById('id-monto-mayor-ganancia').innerHTML =  `<div>+$${mayorGanancia[0].monto}</div>`
 
-//     })
+//     //CATEGORIA CON MAYOR GASTO
+//     const resumenFiltroGasto = operaciones.filter(operacion =>
+//     operacion.tipo === 'Gasto')
 
-
-
-
-
-
-
-// for (const key in operaciones) {
-//     if (Object.hasOwnProperty.call(operaciones, key)) {
-//         const element = operaciones[key];
-//  const ganancia = element.tipo === 'Ganancia'
-//  console.log()
-//        // console.log(operaciones)
-//     }
+//     const mayorGasto = resumenFiltroGasto.sort(function(a, b){return b.monto - a.monto})
+//     document.getElementById('id-categoria-mayor-gasto').innerHTML = `<div class="btn-titulo-categorias p-2">${mayorGasto[0].categoria}</div> ` 
+//     document.getElementById('id-monto-mayor-gasto').innerHTML =  `<div>-$${mayorGasto[0].monto}</div>`
 // }
-
-// 1-filtrar por CATEGORIA con MAYOR GANANCIA
-
-// 2-filtrar por CATEGORIA con MAYOR GASTO
-
-// 3-filtrar por CATEGORIA con MAYOR BALANCE
-
-// 4-filtrar por MES con MAYOR GANANCIA
-
-// 5-filtrar por MEScon MAYOR GANANCIA
-
-
-
-
-
-// }
-
-//  resumenGanancia(operaciones)
-
-
+// resumenReporte(operaciones, objetoCategorias)
 //***********************
 // TOTALES POR CATEGORIA
 //***********************
 
 
-// const totalPorCategoria = (operaciones, categorias) =>{
+const totalPorCategoria = (operaciones, categorias) =>{
 
-//     let str = '';
+    let str = '';
    
-//     categorias.forEach(categorias => {  
-//         const filtraPorCategoria =  operaciones.filter(operacion => 
-//            operacion.categoria === categorias.categoria)
+    categorias.forEach(categorias => {  
+        const filtraPorCategoria =  operaciones.filter(operacion => 
+           operacion.categoria === categorias.categoria)
         
-//         const filtradoGananciaCategoria = filtraPorCategoria.filter(operacion => 
-//             operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto) ,0)
-//         const filtradoGastoCategoria = filtraPorCategoria.filter(operacion => 
-//             operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto) ,0)
+        const filtradoGananciaCategoria = filtraPorCategoria.filter(operacion => 
+            operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto) ,0)
+        const filtradoGastoCategoria = filtraPorCategoria.filter(operacion => 
+            operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto) ,0)
             
-//         str += `
-//             <tr>
-//                 <td scope="row">${filtraPorCategoria}</td>
-//                 <td class="text-success ">+$${filtradoGananciaCategoria}</td>
-//                 <td class="text-danger ">-$${filtradoGastoCategoria}</td>
-//                 <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
-//             </th>` 
+        str += `
+            <tr>
+                <td scope="row">${filtraPorCategoria}</td>
+                <td class="text-success ">+$${filtradoGananciaCategoria}</td>
+                <td class="text-danger ">-$${filtradoGastoCategoria}</td>
+                <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
+            </th>` 
             
-//             // localStorage.setItem('nueva',filtraPorCategoria)
-//             // localStorage.setItem('nueva',JSON.stringify(filtraPorCategoria))
-//             pintarOperaciones(filtraPorCategoria); 
+    
+       
 
-//     })
+    })
 
-//     document.getElementById('reporte-por-categoria').innerHTML = str
-//     pintarOperaciones(operaciones);
+    document.getElementById('reporte-por-categoria').innerHTML = str
+    pintarOperaciones(operaciones);
 
-// }
-// totalPorCategoria(operaciones, objetoCategorias)
+}
+totalPorCategoria(operaciones, objetoCategorias)
 
 //******************
 // TOTALES POR MES
@@ -755,7 +739,6 @@ const totalPorMes = arr => {
     </th>` 
 
     document.getElementById('reporte-por-mes').innerHTML = str
-
  }
 
 }
