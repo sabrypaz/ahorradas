@@ -140,6 +140,7 @@ reportes.addEventListener('click', ()=>{
     totalPorMes(operaciones);
     resumenReporteMayorGanancia(operaciones);
     resumenReporteMayorGasto(operaciones)
+    mesMayorOperacion(operaciones)
 })
 
 
@@ -715,16 +716,10 @@ const mesMayorOperacion = arr => {
     document.getElementById('id-mes-mayor-gasto').innerHTML = `${mayorGasto[0].fecha.split('-')[1]}`
     document.getElementById('id-mes-manto-gasto').innerHTML = `-$${mayorGasto[0].monto}`
 
-console.log(mayorGasto)
+//console.log(mayorGasto)
 
 
 }
- mesMayorOperacion(operaciones)
-
-
-
-
-
 
 
 
@@ -741,12 +736,17 @@ const totalPorCategoria = (operaciones, categorias) =>{
     categorias.forEach(categorias => {  
         const filtraPorCategoria =  operaciones.filter(operacion => 
            operacion.categoria === categorias.categoria)
-        
+       
         const filtradoGananciaCategoria = filtraPorCategoria.filter(operacion => 
             operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto) ,0)
+
+     
+
         const filtradoGastoCategoria = filtraPorCategoria.filter(operacion => 
             operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto) ,0)
-            
+            // const categoriaConOperacion =  filtraPorCategoria.filter(operacion => 
+            //  operacion.length !== 0 )
+            //     console.log(categoriaConOperacion )
         str += `
             <tr>
                 <td scope="row">${filtraPorCategoria}</td>
@@ -754,7 +754,27 @@ const totalPorCategoria = (operaciones, categorias) =>{
                 <td class="text-danger ">-$${filtradoGastoCategoria}</td>
                 <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
             </th>` 
-            
+        //     let totalBalance = []
+        //     totalBalance.push([{ 
+        //     categoria: filtraPorCategoria,
+        //     balance: filtradoGananciaCategoria - filtradoGastoCategoria
+        //     }])
+           
+      
+        //   totalBalance.forEach((element) => {
+
+        //     const balance = element[0].balance
+        //    //console.log(element)
+     
+        //})
+      
+       // object.assign(filtraPorCategoria) 
+ 
+            //localStorage.setItem('operaciones',JSON.stringify(nuevaOperacionEditada))
+            //operaciones = JSON.parse(localStorage.getItem('operaciones'))
+            //localStorage.setItem('categorias',JSON.stringify(filtraPorCategoria));
+       // objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
+
    
     })
 
@@ -793,7 +813,7 @@ const totalPorMes = arr => {
 
 }
 }
-totalPorMes(operaciones)
+//totalPorMes(operaciones)
 
 
 
