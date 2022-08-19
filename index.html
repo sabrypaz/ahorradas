@@ -20,7 +20,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- css -->
     <link rel="stylesheet" href="style.css">
-    <title>AhorraADAs</title>
+    <title>AhorrADAs</title>
 </head>
 
 <body>
@@ -180,7 +180,7 @@
 
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categorías</label>
-                        <select class="form-select categorias-select" id="categoria-select" aria-label="Categoria">
+                        <select class="form-select categorias-select categorias-select-operaciones" id="categoria-select" aria-label="Categoria">
                         </select>
                     </div>
 
@@ -225,7 +225,7 @@
 
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categorías</label>
-                        <select class="form-select categorias-select" id="panel-editar-categoria-select"
+                        <select class="form-select categorias-select categorias-select-operaciones" id="panel-editar-categoria-select"
                             aria-label="Categoria">
                         </select>
                     </div>
@@ -268,6 +268,24 @@
             </form>
         </div>
     </div>
+       <!-- ********************************
+           EDITAR CATEGORIA
+******************************** -->
+<div class="container d-none my-5" id="container-categorias-editar">
+    <div class="row justify-content-center">
+        <form class="col-md-8 shadow p-3 mb-5 bg-body rounded" style="--bs-bg-opacity: .7;">
+            <h2 class="mb-3 mt-2">Editar Categoría</h2>
+            <div><h6>Nombre</h6></div>
+            <div class="d-flex flex-row">
+                <input type="text" class="form-control" id="input-agregar-categoria-editada">
+                <label for="input-agregar-categoria-editada"></label>
+                <button type="submit" class="btn btn-outline-secondary btn-operaciones mx-3 active" id="btn-cancelar-categoria-editar">Cancelar</button>
+                <button type="submit" class="btn btn-outline-secondary btn-operaciones mx-3 active" id="btn-agregar-categoria-editar">Agregar</button>
+
+            </div>
+        </form>
+    </div>
+</div>
     <!-- ********************************
             REPORTES
     ******************************** -->
@@ -289,19 +307,19 @@
                 </div>
 
                 <div id="con-reportes">
-                    <div class="d-flex justify-content-center flex-column mx-4">
+                    <div class="d-flex justify-content-center flex-column mx-3">
                         <h4 class="my-5">Resumen</h4>
+
 
                         <div class="row justify-content-start text-start my-3">
                             <div class="col-6">Categoria con mayor ganancia</div>
-                            <div class="col-3 text-end" style="background:rgb(207, 238, 207);"></div>
-                            <div class="col-3 text-end">m</div>
+                            <div class="col-3 text-center" id="id-categoria-mayor-ganancia"></div>
+                            <div class="col-3 text-end text-success" id="id-monto-mayor-ganancia"></div>
                         </div>
-
                         <div class="row justify-content-start text-start my-3">
                             <div class="col-6">Categoria con mayor gasto</div>
-                            <div class="col-3 text-end text-success" style="background:rgb(207, 238, 207);"></div>
-                            <div class="col-3 text-end">m</div>
+                            <div class="col-3 text-center " id="id-categoria-mayor-gasto"></div>
+                            <div class="col-3 text-end text-danger" id="id-monto-mayor-gasto"></div>
                         </div>
                         <div class="row justify-content-start text-start my-3">
                             <div class="col-6">Categoria con mayor balance</div>
@@ -310,13 +328,13 @@
                         </div>
                         <div class="row justify-content-start text-start my-3">
                             <div class="col-6">Mes con mayor ganancia</div>
-                            <div class="col-3 text-end">m</div>
-                            <div class="col-3 text-end">m</div>
+                            <div class="col-3 text-center " id="id-mes-mayor-ganancia"></div>
+                            <div class="col-3 text-end text-success" id="id-mes-manto-ganacia"></div>
                         </div>
                         <div class="row justify-content-start text-start my-3">
                             <div class="col-6">Mes con mayor gasto</div>
-                            <div class="col-3 text-end">m</div>
-                            <div class="col-3 text-end">m</div>
+                            <div class="col-3 text-center " id="id-mes-mayor-gasto"></div>
+                            <div class="col-3 text-end text-danger" id="id-mes-manto-gasto"></div>
                         </div>
                     </div>
 
