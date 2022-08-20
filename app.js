@@ -394,15 +394,15 @@ pintarBalance(operaciones)
 selectTipofiltro.addEventListener('change', e => {
     if(e.target.value !== 'Todos'){
         const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === e.target.value)
-        localStorage.setItem('operacionTipo',arrFiltroTipo)
-        localStorage.setItem('operacionTipo',JSON.stringify(arrFiltroTipo))
+        localStorage.setItem('operacionCategoria',arrFiltroTipo)
+        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroTipo))
         pintarOperaciones(arrFiltroTipo);
     }else{
         pintarOperaciones(operaciones);
     }
 })
 
-operacionTipo = [...operaciones]
+//operacionTipo = [...operaciones]
 
 //********************
 //  FILTRO CATEGORIA
@@ -412,7 +412,7 @@ filtroCategoria.addEventListener('change', e =>{
     if(e.target.value !== 'Todas'){
         const arrFiltroCategoria = operaciones.filter(operaciones => operaciones.categoria === e.target.value)
         localStorage.setItem('operacionCategoria',arrFiltroCategoria)
-        localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroCategoria))
+        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroCategoria))
 
         pintarOperaciones(arrFiltroCategoria);
     }else{
@@ -428,8 +428,8 @@ operacionCategoria = [...operaciones]
 inputFiltroFecha.addEventListener('change', e => {
     if(e.target.valueAsDate !== new Date()){
         const arrFiltroFecha = operaciones.filter(operaciones =>  new Date(operaciones.fecha) > e.target.valueAsDate )
-        localStorage.setItem('operacionFecha',arrFiltroFecha)
-        localStorage.setItem('operacionFecha',JSON.stringify(arrFiltroFecha))
+        localStorage.setItem('operacionCategoria',arrFiltroFecha)
+        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroFecha))
         pintarOperaciones(arrFiltroFecha);
     }else{
         pintarOperaciones(operaciones);
@@ -437,7 +437,7 @@ inputFiltroFecha.addEventListener('change', e => {
 
 })
 
-operacionFecha= [...operaciones]
+//operacionFecha= [...operaciones]
 
 //**************
 // ORDENAR POR
@@ -502,6 +502,8 @@ operacionZa = [...operaciones]
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 //                              CATEGORIAS
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
+
+
 let objetoCategorias = JSON.parse(localStorage.getItem('categorias')) || [
     {
     categoria: 'Comida',
@@ -538,8 +540,10 @@ let objetoCategorias = JSON.parse(localStorage.getItem('categorias')) || [
 
 const generarSelectCategorias = ()=>{
     const selects = document.getElementsByClassName('categorias-select');
+   
     for(let i = 0; i < selects.length; i++){
         const select = selects[i];
+        select.innerHTML =''
         if(select.classList.contains('filtro-categoria')){
             select.innerHTML ='<option value="Todas">Todas</option>'
         }else if (select.classList.contains('categorias-select-operaciones')){
@@ -673,7 +677,6 @@ btnCancelarCategoriaEditar.addEventListener('click', () =>{
 //RESUMEN
 //***********************
 
-//? SI ESTA VACIO SE ROMPE. 
 const resumenReporteMayorGanancia = (operaciones) =>{
     // categoria con mayor ganancia
     const resumenFiltroGanancia = operaciones.filter(operacion =>
@@ -730,52 +733,38 @@ const mesMayorOperacion = arr => {
 
 
 const totalPorCategoria = (operaciones, categorias) =>{
+    
+    let arrSoloConMontos = []
 
     let str = '';
    
     categorias.forEach(categorias => {  
         const filtraPorCategoria =  operaciones.filter(operacion => 
-           operacion.categoria === categorias.categoria)
-       
-        const filtradoGananciaCategoria = filtraPorCategoria.filter(operacion => 
+        operacion.categoria === categorias.categoria)
+        
+           
+        filtraPorCategoria.forEach((operacion)=>{
+            if( operacion.monto !== 0){
+                arrSoloConMontos.push(operacion)
+            }
+
+            const filtradoGananciaCategoria = arrSoloConMontos.filter(operacion => 
             operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto) ,0)
 
-     
-
-        const filtradoGastoCategoria = filtraPorCategoria.filter(operacion => 
+            const filtradoGastoCategoria = arrSoloConMontos.filter(operacion => 
             operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto) ,0)
-            // const categoriaConOperacion =  filtraPorCategoria.filter(operacion => 
-            //  operacion.length !== 0 )
-            //     console.log(categoriaConOperacion )
-        str += `
-            <tr>
-                <td scope="row">${filtraPorCategoria}</td>
-                <td class="text-success ">+$${filtradoGananciaCategoria}</td>
-                <td class="text-danger ">-$${filtradoGastoCategoria}</td>
-                <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
-            </th>` 
-        //     let totalBalance = []
-        //     totalBalance.push([{ 
-        //     categoria: filtraPorCategoria,
-        //     balance: filtradoGananciaCategoria - filtradoGastoCategoria
-        //     }])
-           
-      
-        //   totalBalance.forEach((element) => {
+       
+            str += `
+                <tr>
+                    <td scope="row">${categorias.categoria}</td>
+                    <td class="text-success ">+$${filtradoGananciaCategoria}</td>
+                    <td class="text-danger ">-$${filtradoGastoCategoria}</td>
+                    <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
+                </th>` 
+        
 
-        //     const balance = element[0].balance
-        //    //console.log(element)
-     
-        //})
-      
-       // object.assign(filtraPorCategoria) 
- 
-            //localStorage.setItem('operaciones',JSON.stringify(nuevaOperacionEditada))
-            //operaciones = JSON.parse(localStorage.getItem('operaciones'))
-            //localStorage.setItem('categorias',JSON.stringify(filtraPorCategoria));
-       // objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
+        })
 
-   
     })
 
     document.getElementById('reporte-por-categoria').innerHTML = str
