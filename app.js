@@ -118,8 +118,9 @@ reportes.addEventListener('click', ()=>{
     }
     pintarOperaciones(operaciones);
     totalPorMes(operaciones);
-    resumenReporteMayorGanancia(operaciones);
-    resumenReporteMayorGasto(operaciones)
+    resumenReporte(operaciones)
+    // resumenReporteMayorGanancia(operaciones);
+    // resumenReporteMayorGasto(operaciones)
     mesMayorOperacion(operaciones)
 })
 
@@ -563,6 +564,7 @@ btnAgregarCategoria.addEventListener('click', () => {
 
     pintarPanelCategoria(objetoCategorias);
     generarSelectCategorias(objetoCategorias);
+ 
 });
 
 
@@ -611,9 +613,9 @@ const pintarPanelCategoria = arr =>{
             })
         })
     })  
+   
 };
 
-const agregarCategoriaEditada = (objetoCategorias) =>{
     btnAgregarCategoriaEditar.addEventListener('click', () =>{
         objetoCategorias.forEach((element)=>{
             const id = element.id
@@ -636,12 +638,11 @@ const agregarCategoriaEditada = (objetoCategorias) =>{
 
         localStorage.setItem('categorias',JSON.stringify(agregarCategoriaEditada));
         objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
-       // generarSelectCategorias(objetoCategorias);
+        generarSelectCategorias(objetoCategorias);
         pintarPanelCategoria(objetoCategorias); 
 
     })
-}
-    
+
 
 
 btnCancelarCategoriaEditar.addEventListener('click', () =>{
@@ -658,7 +659,7 @@ btnCancelarCategoriaEditar.addEventListener('click', () =>{
 //RESUMEN
 //***********************
 
-const resumenReporteMayorGanancia = (operaciones) =>{
+const resumenReporte = (operaciones) =>{
     // categoria con mayor ganancia
     const resumenFiltroGanancia = operaciones.filter(operacion =>
         operacion.tipo === 'Ganancia' )
@@ -666,10 +667,7 @@ const resumenReporteMayorGanancia = (operaciones) =>{
     const mayorGanancia = resumenFiltroGanancia.sort(function(a, b){return b.monto - a.monto})
     document.getElementById('id-categoria-mayor-ganancia').innerHTML = `<div class="btn-titulo-categorias p-2">${mayorGanancia[0].categoria}</div> ` 
     document.getElementById('id-monto-mayor-ganancia').innerHTML =  `<div>+$${mayorGanancia[0].monto}</div>`
-};
 
-
-const resumenReporteMayorGasto = (operaciones) =>{
     //CATEGORIA CON MAYOR GASTO
     const resumenFiltroGasto = operaciones.filter(operacion =>
     operacion.tipo === 'Gasto')
@@ -679,6 +677,7 @@ const resumenReporteMayorGasto = (operaciones) =>{
     document.getElementById('id-monto-mayor-gasto').innerHTML =  `<div>-$${mayorGasto[0].monto}</div>`
 
 }; 
+//resumenReporte(operaciones)
 
 const mesMayorOperacion = arr => { 
 
@@ -734,9 +733,25 @@ const totalPorCategoria = (operaciones, categorias) =>{
                     <td class="text-danger ">-$${filtradoGastoCategoria}</td>
                     <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
                 </th>`  
-    
-        })
 
+            let mayorBalance = [];
+            let porBalance = [{ 
+                categoria: categorias.categoria,
+                balance: (filtradoGananciaCategoria - filtradoGastoCategoria),
+            }]
+            mayorBalance.push(porBalance)
+            const nuevo = mayorBalance.filter((element) => element[0].balance )
+            
+            console.log(nuevo)
+            
+            
+            
+            // mayorBalance.forEach((element) => {
+            //        const montoBalance = element[0].balance
+            //        montoBalance.sort(function(a, b){return b > a})
+            // })
+            
+        })
     })
 
     document.getElementById('reporte-por-categoria').innerHTML = str
