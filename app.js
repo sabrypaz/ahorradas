@@ -10,12 +10,12 @@ const conOperaciones = document.getElementById('con-operaciones');
 
 
 const agregarOperacionBtn = document.getElementById('agregar-operacion-btn');
-
-
+// PANEL BALANCE
+const balance = document.getElementById('balance');
+//INPUT FECHAS
 const fechaInput = document.getElementById('fecha-input');
 const fechaInputFiltro = document.getElementById('input-filtro-fecha');
 const panelEditarFechaInput = document.getElementById('panel-editar-fecha-input');
-
 // EDITAR OPERACION
 const containerEditarOperacion = document.getElementById('container-editar-operacion');
 const panelEditarDescripcionInput = document.getElementById('panel-editar-descripcion-input');
@@ -24,47 +24,41 @@ const panelEditarTipoOperacion = document.getElementById('panel-editar-tipo-oper
 const panelEditarCategoriaSelect = document.getElementById('panel-editar-categoria-select');
 const panelEeditarFechaInput = document.getElementById('panel-editar-fecha-input');
 const BtnPanelEditarAgregarOperacion = document.getElementById('panel-editar-agregar-operacion-btn');
-
-// FILTROS
+// PANEL FILTROS
 const selectTipofiltro = document.getElementById('select-tipo-filtro');
 const filtroCategoria = document.getElementById('filtro-categoria');
 const inputFiltroFecha = document.getElementById('input-filtro-fecha');
 const selectOrdenar = document.getElementById('select-ordenar');
-
 // OCULTAR FILTROS
-
 const btnOcultarFiltros = document.getElementById('btn-ocultar-filtros');
 const formFiltros = document.getElementById('form-filtros');
-
-btnOcultarFiltros.addEventListener('click', ()=>{
-    formFiltros.classList.toggle('oculto');   
-})
-
-
 //NUEVA OPERACION
-
-
 const btnNvaOperacion = document.getElementById('btn-nueva-operacion');
 const primeraPagina = document.getElementById('primera-pagina');
 const containerNvaOperacion = document.getElementById('container-nueva-operacion');
 const cardOperaciones = document.getElementById('card-operaciones');
 const btnAgregar = document.getElementById('btn-agregar');
 const btnCancelar = document.getElementById('btn-cancelar');
-
+//EDITAR OPERACION
+const btnPanelEditarCancelar = document.getElementById('panel-editar-btn-cancelar');
 // PANEL CATEGORIA
+const categorias = document.getElementById('categorias');
+const containerCategorias = document.getElementById('container-categorias');
 const categoriaParaEditar = document.getElementById('container-categorias-editar');
 const inputAgregarCategoriaEditada =document.getElementById('input-agregar-categoria-editada');
 const btnCancelarCategoriaEditar = document.getElementById('btn-cancelar-categoria-editar');
 const btnAgregarCategoriaEditar = document.getElementById('btn-agregar-categoria-editar');
-
-
+// PANEL REPORTES
+const reportes = document.getElementById('reportes');
+const containerReportes = document.getElementById('container-reportes');
+const conReportes = document.getElementById('con-reportes') 
+const sinReportes = document.getElementById('sin-reportes')
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
 // *****************
-//    OPERACIONES
+//      VISTAS
 // ****************
 
-let operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
-
-
+// NUEVA OPERACION
 btnNvaOperacion.addEventListener('click', ()=>{
     primeraPagina.style = 'display:none';
     containerNvaOperacion.style = 'display:block';
@@ -72,7 +66,7 @@ btnNvaOperacion.addEventListener('click', ()=>{
     containerReportes.style = 'display:none';
 });
 
-
+// CANCELAR OPERACION
 btnCancelar.addEventListener('click', ()=>{
     containerNvaOperacion.style = 'display:none';
     primeraPagina.style = 'display:block';
@@ -80,13 +74,7 @@ btnCancelar.addEventListener('click', ()=>{
 })
 
 
-
-
-//BALANCE
-
-
-const balance = document.getElementById('balance');
-
+// PANEL BALANCE
 balance.addEventListener('click', ()=>{
     primeraPagina.style = 'display:block';
     cardOperaciones.style = 'display:block';
@@ -96,14 +84,12 @@ balance.addEventListener('click', ()=>{
 
 });
 
-
+//OCULTARFILTROS
+btnOcultarFiltros.addEventListener('click', ()=>{
+    formFiltros.classList.toggle('oculto');   
+})
 
 //CATEGORÍAS
-
-
-const categorias = document.getElementById('categorias');
-const containerCategorias = document.getElementById('container-categorias');
-
 categorias.addEventListener('click', ()=>{
      containerCategorias.style = 'display: block';
      containerNvaOperacion.style = 'display:none';
@@ -115,12 +101,6 @@ categorias.addEventListener('click', ()=>{
 
 
 //REPORTES
-
-const reportes = document.getElementById('reportes');
-const containerReportes = document.getElementById('container-reportes');
-const conReportes = document.getElementById('con-reportes') 
-const sinReportes = document.getElementById('sin-reportes')
-
 reportes.addEventListener('click', ()=>{
     containerReportes.style = 'display:block';
     containerCategorias.style = 'display: none';
@@ -143,13 +123,7 @@ reportes.addEventListener('click', ()=>{
     mesMayorOperacion(operaciones)
 })
 
-
-
-
-
 //EDITAR OPERACION
-const btnPanelEditarCancelar = document.getElementById('panel-editar-btn-cancelar');
-
 btnPanelEditarCancelar.addEventListener('click', () => {
     containerEditarOperacion.style = 'display:none'; 
     containerNvaOperacion.style = 'display:block';
@@ -157,9 +131,15 @@ btnPanelEditarCancelar.addEventListener('click', () => {
     cardOperaciones.style = 'display:block'; 
     containerNvaOperacion.style = 'display:none'; 
 })
-
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
 // *****************
-// SELECT FILTRO 
+//  LOCAL STORAGE
+// *****************
+
+let operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
+//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+// *****************
+//  SELECT FILTRO 
 // *****************
 
  const filtroMonto = [
@@ -200,7 +180,10 @@ const generarOrdenarOperaciones = ()=>{
             select.innerHTML += `<option value=${filtroOrdenar[i]}>${filtroOrdenar[i]}</option>`
         }
 };
-   
+ //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_  
+// *****************
+//     OPERACIONES
+// *****************
 const mostrarOperaciones = (arreglo) => {
     if(!arreglo.length){
         sinOperaciones.classList.remove('d-none');
@@ -390,19 +373,23 @@ pintarBalance(operaciones)
 //****************
 //  FILTRO TIPO
 //****************
+const acumulatFiltro = () => {
+    console.log(selectTipofiltro.value)
+}
+acumulatFiltro()
 
 selectTipofiltro.addEventListener('change', e => {
     if(e.target.value !== 'Todos'){
         const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === e.target.value)
         localStorage.setItem('operacionCategoria',arrFiltroTipo)
         operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroTipo))
-        pintarOperaciones(arrFiltroTipo);
+        pintarOperaciones(arrFiltroTipo );
     }else{
         pintarOperaciones(operaciones);
+        
     }
 })
 
-//operacionTipo = [...operaciones]
 
 //********************
 //  FILTRO CATEGORIA
@@ -413,14 +400,13 @@ filtroCategoria.addEventListener('change', e =>{
         const arrFiltroCategoria = operaciones.filter(operaciones => operaciones.categoria === e.target.value)
         localStorage.setItem('operacionCategoria',arrFiltroCategoria)
         operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroCategoria))
-
         pintarOperaciones(arrFiltroCategoria);
     }else{
         pintarOperaciones(operaciones);
+        
     }
 })
 
-operacionCategoria = [...operaciones]
 
 //*****************
 //  FILTRO FECHA
@@ -437,7 +423,6 @@ inputFiltroFecha.addEventListener('change', e => {
 
 })
 
-//operacionFecha= [...operaciones]
 
 //**************
 // ORDENAR POR
@@ -446,29 +431,29 @@ selectOrdenar.addEventListener('change', e => {
     if(e.target.value === 'Más'){
         const arrFiltroMasReciente = operaciones.sort((a, b) => 
         (new Date(b.fecha) - new Date(a.fecha)))  
-        localStorage.setItem('operacionMas',arrFiltroMasReciente)
-        localStorage.setItem('operacionMas',JSON.stringify(arrFiltroMasReciente))
+        localStorage.setItem('operacionCategoria',arrFiltroMasReciente)
+        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroMasReciente))
         pintarOperaciones(arrFiltroMasReciente)
     }
     if(e.target.value === 'Menos'){
         const arrFiltroMenosReciente = operaciones.sort((a, b) => 
         (new Date(a.fecha) - new Date(b.fecha)))  
-        localStorage.setItem('operacionMenos',arrFiltroMenosReciente )
-        localStorage.setItem('operacionMenos',JSON.stringify(arrFiltroMenosReciente ))
+        localStorage.setItem('operacionCategoria',arrFiltroMenosReciente )
+        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroMenosReciente ))
         pintarOperaciones(arrFiltroMenosReciente )
     }
     if(e.target.value === 'Mayor'){
         const arrFiltroMayorMonto = operaciones.sort((a, b) => 
         (b.monto - a.monto))
-        localStorage.setItem('operacionMayorMonto',arrFiltroMayorMonto)
-        localStorage.setItem('operacionMayorrMonto',JSON.stringify(arrFiltroMayorMonto))
+        localStorage.setItem('operacionCategoria',arrFiltroMayorMonto)
+        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroMayorMonto))
         pintarOperaciones(arrFiltroMayorMonto);
     }
     if(e.target.value === 'Menor'){
         const arrFiltroMenosMonto = operaciones.sort((a, b) => 
         (a.monto - b.monto))
-        localStorage.setItem('operacionMenorMonto',arrFiltroMenosMonto)
-        localStorage.setItem('operacionMenorMonto',JSON.stringify(arrFiltroMenosMonto))
+        localStorage.setItem('operacionCategoria',arrFiltroMenosMonto)
+        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroMenosMonto))
         pintarOperaciones(arrFiltroMenosMonto);
     }
     if(e.target.value === 'A/Z'){
@@ -477,8 +462,8 @@ selectOrdenar.addEventListener('change', e => {
             return -1  
         }
         })
-        localStorage.setItem('operacionAz',arrFiltroOrdenarAz)
-        localStorage.setItem('operacionAz',JSON.stringify(arrFiltroOrdenarAz))
+        localStorage.setItem('operacionCategoria',arrFiltroOrdenarAz)
+        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroOrdenarAz))
         pintarOperaciones(arrFiltroOrdenarAz); 
     }
     if(e.target.value === 'Z/A'){
@@ -487,18 +472,14 @@ selectOrdenar.addEventListener('change', e => {
         return -1 
     }
     })
-        localStorage.setItem('operacionZa',arrFiltroOrdenarZa)
-        localStorage.setItem('operacionZa',JSON.stringify(arrFiltroOrdenarZa))
+        localStorage.setItem('operacionCategoria',arrFiltroOrdenarZa)
+        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroOrdenarZa))
         pintarOperaciones(arrFiltroOrdenarZa); 
     }
 })
+operacionCategoria = [{...operaciones}]
 
-operacionMas = [...operaciones]
-operacionMenos = [...operaciones]
-operacionMayorMonto = [...operaciones]
-operacionMenorMonto = [...operaciones]  
-operacionAz = [...operaciones]
-operacionZa = [...operaciones]
+
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 //                              CATEGORIAS
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
@@ -543,7 +524,7 @@ const generarSelectCategorias = ()=>{
    
     for(let i = 0; i < selects.length; i++){
         const select = selects[i];
-        select.innerHTML =''
+        // select.innerHTML =''
         if(select.classList.contains('filtro-categoria')){
             select.innerHTML ='<option value="Todas">Todas</option>'
         }else if (select.classList.contains('categorias-select-operaciones')){
@@ -683,7 +664,6 @@ const resumenReporteMayorGanancia = (operaciones) =>{
         operacion.tipo === 'Ganancia' )
 
     const mayorGanancia = resumenFiltroGanancia.sort(function(a, b){return b.monto - a.monto})
-//console.log(mayorGanancia[0].categoria)
     document.getElementById('id-categoria-mayor-ganancia').innerHTML = `<div class="btn-titulo-categorias p-2">${mayorGanancia[0].categoria}</div> ` 
     document.getElementById('id-monto-mayor-ganancia').innerHTML =  `<div>+$${mayorGanancia[0].monto}</div>`
 };
@@ -719,9 +699,6 @@ const mesMayorOperacion = arr => {
     document.getElementById('id-mes-mayor-gasto').innerHTML = `${mayorGasto[0].fecha.split('-')[1]}`
     document.getElementById('id-mes-manto-gasto').innerHTML = `-$${mayorGasto[0].monto}`
 
-//console.log(mayorGasto)
-
-
 }
 
 
@@ -732,19 +709,15 @@ const mesMayorOperacion = arr => {
 //***********************
 
 
-const totalPorCategoria = (operaciones, categorias) =>{
-    
-    let arrSoloConMontos = []
-
+const totalPorCategoria = (operaciones, categorias) =>{  
     let str = '';
-   
     categorias.forEach(categorias => {  
+      let arrSoloConMontos = [];  
         const filtraPorCategoria =  operaciones.filter(operacion => 
         operacion.categoria === categorias.categoria)
-        
            
         filtraPorCategoria.forEach((operacion)=>{
-            if( operacion.monto !== 0){
+            if( operacion.monto !== 0 ){
                 arrSoloConMontos.push(operacion)
             }
 
@@ -760,9 +733,8 @@ const totalPorCategoria = (operaciones, categorias) =>{
                     <td class="text-success ">+$${filtradoGananciaCategoria}</td>
                     <td class="text-danger ">-$${filtradoGastoCategoria}</td>
                     <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
-                </th>` 
-        
-
+                </th>`  
+    
         })
 
     })
