@@ -571,6 +571,7 @@ const pintarPanelCategoria = arr =>{
     })
 
     btnEditarCategoria.forEach(btn => {
+
         btn.addEventListener('click', (e)=>{
             containerCategorias.classList.add('d-none');
             categoriaParaEditar.classList.remove('d-none');
@@ -579,23 +580,25 @@ const pintarPanelCategoria = arr =>{
             editarCategorias.forEach((element) =>{
                 id = element.id
                 inputAgregarCategoriaEditada.value = element.categoria
-                
+
+            
             })
+
         })
     })  
    
 };
 
     btnAgregarCategoriaEditar.addEventListener('click', () =>{
-        objetoCategorias.forEach((element)=>{
+      objetoCategorias.forEach((element)=>{
             const id = element.id
-         
+          
         })
           const categoriaEditada = {
-              id: id,
             categoria: inputAgregarCategoriaEditada.value,
+            id: id,
         }
-
+        
         containerCategorias.classList.remove('d-none');
         categoriaParaEditar.classList.add('d-none');
 
@@ -605,11 +608,41 @@ const pintarPanelCategoria = arr =>{
         ? categoriaEditada
         : objetoCategorias
         )
+   
 
         localStorage.setItem('categorias',JSON.stringify(agregarCategoriaEditada));
         objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
         generarSelectCategorias(objetoCategorias);
         pintarPanelCategoria(objetoCategorias); 
+        //pintarPanelCategoria(operaciones); 
+
+
+        operaciones.forEach((element)=> {
+            const id = element.id;
+            const descripcion = element.descripcion;
+            const monto =  element.monto;
+            const tipo =  element.tipo;
+           
+           const  fecha =  element.fecha; 
+
+            //busco el index para que si hay una igual retorna 0
+            const buscaNombreDeCategoria = operaciones.findIndex((operacion)=> operacion.categoria === categoriaEditada.categoria )
+       // si es igual o mayor a 0 que cambie la categoria 
+        if(buscaNombreDeCategoria >= 0){
+            //el objeto solo queda con la categoria nueva.
+           const cambioNombre = operaciones.splice(buscaNombreDeCategoria, 2, 
+            {
+            categoria: categoriaEditada.categoria,
+            })
+
+     localStorage.setItem('operaciones',JSON.stringify(operaciones));
+
+        }
+       
+
+
+        })
+   
 
     })
 
