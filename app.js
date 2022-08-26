@@ -26,7 +26,7 @@ const panelEeditarFechaInput = document.getElementById('panel-editar-fecha-input
 const BtnPanelEditarAgregarOperacion = document.getElementById('panel-editar-agregar-operacion-btn');
 // PANEL FILTROS
 const selectTipofiltro = document.getElementById('select-tipo-filtro');
-const filtroCategoria = document.getElementById('filtro-categoria');
+const selectCategoria = document.getElementById('filtro-categoria');
 const inputFiltroFecha = document.getElementById('input-filtro-fecha');
 const selectOrdenar = document.getElementById('select-ordenar');
 // OCULTAR FILTROS
@@ -122,6 +122,8 @@ reportes.addEventListener('click', ()=>{
     // resumenReporteMayorGanancia(operaciones);
     // resumenReporteMayorGasto(operaciones)
     mesMayorOperacion(operaciones)
+    totalPorCategoria(operaciones, objetoCategorias)
+    //totalPorCategoria(objetoCategorias)
 })
 
 //EDITAR OPERACION
@@ -136,8 +138,16 @@ btnPanelEditarCancelar.addEventListener('click', () => {
 // *****************
 //  LOCAL STORAGE
 // *****************
+const manipularOperaciones = () => {
+    return JSON.parse(localStorage.getItem('operaciones')) || [];
 
-let operaciones = JSON.parse(localStorage.getItem('operaciones')) || [];
+}
+
+manipularOperaciones()
+let operaciones = manipularOperaciones();
+
+
+
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
 // *****************
 //  SELECT FILTRO 
@@ -223,7 +233,6 @@ agregarOperacionBtn.addEventListener('click', () => {
     localStorage.setItem('operaciones', JSON.stringify(operaciones))
     pintarOperaciones(operaciones)
     pintarBalance(operaciones)
-
 });
 
 const pintarOperaciones = arr =>{
@@ -316,6 +325,7 @@ const nuevaOperacionpanelEditar = () =>{
         mostrarOperaciones(operaciones);
         pintarOperaciones(operaciones);
         pintarBalance(operaciones)
+      
     })
 };
 
@@ -366,120 +376,80 @@ const pintarBalance = (arr) => {
     pintarTotalColor(totalBalance)
     mostrarOperaciones(operaciones);
     pintarOperaciones(operaciones);
-
+   
 }
 pintarBalance(operaciones)
 
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
 //****************
-//  FILTRO TIPO
+//  FILTROS
 //****************
-const acumulatFiltro = () => {
-    console.log(selectTipofiltro.value)
-}
-acumulatFiltro()
+const acumularFiltro = () => {
+const filtroPorTipo =  selectTipofiltro.value;
+const filtroCategoria = selectCategoria.value;
+const filtroFecha = inputFiltroFecha.value;
+const filtroOrdenar = selectOrdenar.value;
 
-selectTipofiltro.addEventListener('change', e => {
-    if(e.target.value !== 'Todos'){
-        const arrFiltroTipo = operaciones.filter(operaciones => operaciones.tipo === e.target.value)
-        localStorage.setItem('operacionCategoria',arrFiltroTipo)
-        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroTipo))
-        pintarOperaciones(arrFiltroTipo );
-    }else{
-        pintarOperaciones(operaciones);
-        
+let operaciones = manipularOperaciones();
+
+    if(filtroPorTipo  !== 'Todos'){
+       operaciones = operaciones.filter(operaciones => 
+        operaciones.tipo === filtroPorTipo)
+
     }
-})
+    if(filtroCategoria !== 'Todas'){
+        operaciones = operaciones.filter(operaciones => 
+            operaciones.categoria === filtroCategoria)
+    
+     }
+    if(filtroFecha !== new Date()){
+         operaciones = operaciones.filter(operaciones =>  
+           (new Date(operaciones.fecha) >= new Date(filtroFecha)))
 
-
-//********************
-//  FILTRO CATEGORIA
-//********************
-
-filtroCategoria.addEventListener('change', e =>{
-    if(e.target.value !== 'Todas'){
-        const arrFiltroCategoria = operaciones.filter(operaciones => operaciones.categoria === e.target.value)
-        localStorage.setItem('operacionCategoria',arrFiltroCategoria)
-        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroCategoria))
-        pintarOperaciones(arrFiltroCategoria);
-    }else{
-        pintarOperaciones(operaciones);
-        
-    }
-})
-
-
-//*****************
-//  FILTRO FECHA
-//*****************
-inputFiltroFecha.addEventListener('change', e => {
-    if(e.target.valueAsDate !== new Date()){
-        const arrFiltroFecha = operaciones.filter(operaciones =>  new Date(operaciones.fecha) > e.target.valueAsDate )
-        localStorage.setItem('operacionCategoria',arrFiltroFecha)
-        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroFecha))
-        pintarOperaciones(arrFiltroFecha);
-    }else{
-        pintarOperaciones(operaciones);
-    }
-
-})
-
-
-//**************
-// ORDENAR POR
-//**************
-selectOrdenar.addEventListener('change', e => {
-    if(e.target.value === 'Más'){
-        const arrFiltroMasReciente = operaciones.sort((a, b) => 
+     }
+    if(filtroOrdenar === 'Más'){
+        operaciones = operaciones.sort((a, b) =>
         (new Date(b.fecha) - new Date(a.fecha)))  
-        localStorage.setItem('operacionCategoria',arrFiltroMasReciente)
-        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroMasReciente))
-        pintarOperaciones(arrFiltroMasReciente)
-    }
-    if(e.target.value === 'Menos'){
-        const arrFiltroMenosReciente = operaciones.sort((a, b) => 
+
+    } 
+    if(filtroOrdenar === 'Menos'){
+        operaciones = operaciones.sort((a, b) =>
         (new Date(a.fecha) - new Date(b.fecha)))  
-        localStorage.setItem('operacionCategoria',arrFiltroMenosReciente )
-        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroMenosReciente ))
-        pintarOperaciones(arrFiltroMenosReciente )
+
     }
-    if(e.target.value === 'Mayor'){
-        const arrFiltroMayorMonto = operaciones.sort((a, b) => 
+    if(filtroOrdenar === 'Mayor'){
+        operaciones = operaciones.sort((a, b) => 
         (b.monto - a.monto))
-        localStorage.setItem('operacionCategoria',arrFiltroMayorMonto)
-        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroMayorMonto))
-        pintarOperaciones(arrFiltroMayorMonto);
+    
     }
-    if(e.target.value === 'Menor'){
-        const arrFiltroMenosMonto = operaciones.sort((a, b) => 
+    if(filtroOrdenar === 'Menor'){
+        operaciones = operaciones.sort((a, b) => 
         (a.monto - b.monto))
-        localStorage.setItem('operacionCategoria',arrFiltroMenosMonto)
-        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroMenosMonto))
-        pintarOperaciones(arrFiltroMenosMonto);
-    }
-    if(e.target.value === 'A/Z'){
-        const arrFiltroOrdenarAz  = operaciones.sort((a, b) => {
+
+     }
+    if(filtroOrdenar === 'A/Z'){
+        operaciones = operaciones.sort((a, b) => {
             if (a.descripcion.toLowerCase() < b.descripcion.toLowerCase()){
             return -1  
         }
         })
-        localStorage.setItem('operacionCategoria',arrFiltroOrdenarAz)
-        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroOrdenarAz))
-        pintarOperaciones(arrFiltroOrdenarAz); 
     }
-    if(e.target.value === 'Z/A'){
-        const arrFiltroOrdenarZa  = operaciones.sort((a, b) => {
+    if(filtroOrdenar === 'Z/A'){
+        operaciones = operaciones.sort((a, b) => {
     if (a.descripcion.toLowerCase() > b.descripcion.toLowerCase()){
         return -1 
     }
     })
-        localStorage.setItem('operacionCategoria',arrFiltroOrdenarZa)
-        operacionCategoria = localStorage.setItem('operacionCategoria',JSON.stringify(arrFiltroOrdenarZa))
-        pintarOperaciones(arrFiltroOrdenarZa); 
-    }
-})
-operacionCategoria = [{...operaciones}]
 
+    }   
+     pintarOperaciones(operaciones); 
+
+}
+
+selectTipofiltro.addEventListener('change', acumularFiltro)
+selectCategoria.addEventListener('change', acumularFiltro)
+inputFiltroFecha.addEventListener('change', acumularFiltro)
+selectOrdenar.addEventListener('change', acumularFiltro)
 
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 //                              CATEGORIAS
@@ -742,7 +712,7 @@ const totalPorCategoria = (operaciones, categorias) =>{
             mayorBalance.push(porBalance)
             const nuevo = mayorBalance.filter((element) => element[0].balance )
             
-            console.log(nuevo)
+            //console.log(nuevo)
             
             
             
@@ -758,7 +728,7 @@ const totalPorCategoria = (operaciones, categorias) =>{
     pintarOperaciones(operaciones);
 
 }
-totalPorCategoria(operaciones, objetoCategorias)
+
 
 //******************
 // TOTALES POR MES
@@ -805,7 +775,7 @@ const inicializar = () => {
     generarOrdenarOperaciones();
     mostrarOperaciones(operaciones);
     pintarOperaciones(operaciones);
-    agregarCategoriaEditada(objetoCategorias)
+    totalPorCategoria(operaciones, objetoCategorias)
 
 }
 
