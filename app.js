@@ -233,6 +233,7 @@ agregarOperacionBtn.addEventListener('click', () => {
     localStorage.setItem('operaciones', JSON.stringify(operaciones))
     pintarOperaciones(operaciones)
     pintarBalance(operaciones)
+    pintarPanelCategoria(operaciones)
 });
 
 const pintarOperaciones = arr =>{
@@ -546,9 +547,9 @@ const pintarPanelCategoria = arr =>{
         const {id, categoria} = objetoCategoria;
         str += `
             <div class="d-flex bd-highlight mb-3">
-            <div class="me-auto"><span class="p-2 bd-highligh btn-titulo-categorias">${categoria}</span></div>
+            <div class="me-auto"><span class="p-2 bd-highligh btn-titulo-categorias" >${categoria}</span></div>
             <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none link-secondary" data-id=${id}>Editar</button>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none link-secondary" data-id=${id}>Eliminar</button>  
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none link-secondary" value="${categoria}" data-id=${id}>Eliminar</button>  
         </div>` 
     });
             
@@ -561,14 +562,32 @@ const pintarPanelCategoria = arr =>{
 
     btnEliminarCategoria.forEach(btn =>{
         btn.addEventListener('click', (e) =>{
-        const eliminarCategoria = objetoCategorias.filter(categoria => categoria.id !== e.target.dataset.id)
-        localStorage.setItem('categorias',JSON.stringify(eliminarCategoria));
-        objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
-        pintarPanelCategoria(objetoCategorias);
-        generarSelectCategorias(objetoCategorias)
+            //busca el nombre de la categoria para luego buscar la operacion con el mismo nombre
+            const nombreCategoria = e.target.value
+            //elimino la categoria en el panel categoria y en los selects
+            const eliminarCategoria = objetoCategorias.filter(categoria => categoria.id !== e.target.dataset.id);
+            localStorage.setItem('categorias',JSON.stringify(eliminarCategoria));
+            objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
+            pintarPanelCategoria(objetoCategorias);
+            generarSelectCategorias(objetoCategorias)
+    
+            //elemina las operaciones con la misma categoria elimada
+            operaciones.forEach((element) => {
+            const filtraNombreCategoriaYOperacion = operaciones.filter((operacion) => operacion.categoria !== nombreCategoria);
+            localStorage.setItem('operaciones',JSON.stringify(filtraNombreCategoriaYOperacion));
+            operaciones = JSON.parse(localStorage.getItem('operaciones'));
+            pintarOperaciones(operaciones);
+            mostrarOperaciones(operaciones);
+            pintarBalance(operaciones)
+            })
+
+        })
 
     })
-    })
+
+
+
+
 
     btnEditarCategoria.forEach(btn => {
 
@@ -614,7 +633,7 @@ const pintarPanelCategoria = arr =>{
         objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
         generarSelectCategorias(objetoCategorias);
         pintarPanelCategoria(objetoCategorias); 
-        //pintarPanelCategoria(operaciones); 
+       // pintarPanelCategoria(operaciones); 
 
 
         operaciones.forEach((element)=> {
@@ -628,7 +647,9 @@ const pintarPanelCategoria = arr =>{
             //busco el index para que si hay una igual retorna 0
             const buscaNombreDeCategoria = operaciones.findIndex((operacion)=> operacion.categoria === categoriaEditada.categoria )
        // si es igual o mayor a 0 que cambie la categoria 
-        if(buscaNombreDeCategoria >= 0){
+       console.log(buscaNombreDeCategoria)
+
+       if(buscaNombreDeCategoria >= 0){
             //el objeto solo queda con la categoria nueva.
            const cambioNombre = operaciones.splice(buscaNombreDeCategoria, 2, 
             {
@@ -640,10 +661,8 @@ const pintarPanelCategoria = arr =>{
         }
        
 
-
         })
    
-
     })
 
 
