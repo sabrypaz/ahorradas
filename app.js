@@ -233,6 +233,7 @@ agregarOperacionBtn.addEventListener('click', () => {
     localStorage.setItem('operaciones', JSON.stringify(operaciones))
     pintarOperaciones(operaciones)
     pintarBalance(operaciones)
+    pintarPanelCategoria(operaciones)
 });
 
 const pintarOperaciones = arr =>{
@@ -546,9 +547,9 @@ const pintarPanelCategoria = arr =>{
         const {id, categoria} = objetoCategoria;
         str += `
             <div class="d-flex bd-highlight mb-3">
-            <div class="me-auto"><span class="p-2 bd-highligh btn-titulo-categorias">${categoria}</span></div>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none link-secondary" data-id=${id}>Editar</button>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none link-secondary" data-id=${id}>Eliminar</button>  
+            <div class="me-auto"><span class="p-2 bd-highligh btn-titulo-categorias" >${categoria}</span></div>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none link-secondary" value="${categoria}" data-id=${id}>Editar</button>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none link-secondary" value="${categoria}" data-id=${id}>Eliminar</button>  
         </div>` 
     });
             
@@ -561,18 +562,35 @@ const pintarPanelCategoria = arr =>{
 
     btnEliminarCategoria.forEach(btn =>{
         btn.addEventListener('click', (e) =>{
-        const eliminarCategoria = objetoCategorias.filter(categoria => categoria.id !== e.target.dataset.id)
-        localStorage.setItem('categorias',JSON.stringify(eliminarCategoria));
-        objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
-        pintarPanelCategoria(objetoCategorias);
-        generarSelectCategorias(objetoCategorias)
+            //busca el nombre de la categoria para luego buscar la operacion con el mismo nombre
+            const nombreCategoria = e.target.value
+            //elimino la categoria en el panel categoria y en los selects
+            const eliminarCategoria = objetoCategorias.filter(categoria => categoria.id !== e.target.dataset.id);
+            localStorage.setItem('categorias',JSON.stringify(eliminarCategoria));
+            objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
+            pintarPanelCategoria(objetoCategorias);
+            generarSelectCategorias(objetoCategorias)
+    
+            //elemina las operaciones con la misma categoria elimada
+            operaciones.forEach((element) => {
+            const filtraNombreCategoriaYOperacion = operaciones.filter((operacion) => operacion.categoria !== nombreCategoria);
+            localStorage.setItem('operaciones',JSON.stringify(filtraNombreCategoriaYOperacion));
+            operaciones = JSON.parse(localStorage.getItem('operaciones'));
+            pintarOperaciones(operaciones);
+            mostrarOperaciones(operaciones);
+            pintarBalance(operaciones)
+            })
 
-    })
+        })
+
     })
 
     btnEditarCategoria.forEach(btn => {
 
         btn.addEventListener('click', (e)=>{
+            const nombreCategoria = e.target.value
+           // console.log(nombreCategoria)
+
             containerCategorias.classList.add('d-none');
             categoriaParaEditar.classList.remove('d-none');
             const editarCategorias = objetoCategorias.filter(categoria => categoria.id === e.target.dataset.id)
@@ -580,78 +598,109 @@ const pintarPanelCategoria = arr =>{
             editarCategorias.forEach((element) =>{
                 id = element.id
                 inputAgregarCategoriaEditada.value = element.categoria
-
-            
             })
+            operaciones.forEach((element)=> { 
+            //aca encuentro las operaciones con la misma categoria
+            const filtraNombreCategoriaYOperacion = operaciones.filter((operacion) => operacion.categoria === nombreCategoria);
+
+            if(filtraNombreCategoriaYOperacion[0].categoria === nombreCategoria){
+                 element.categoria = inputAgregarCategoriaEditada.value 
+
+            }
+            localStorage.setItem('operaciones',JSON.stringify(operaciones));
+            operaciones = JSON.parse(localStorage.getItem('operaciones'));
+            pintarOperaciones(operaciones);
+            mostrarOperaciones(operaciones);
 
         })
+
+
+        })               
+
+
+        btnAgregarCategoriaEditar.addEventListener('click', (e) =>{
+            objetoCategorias.forEach((element)=>{
+                const id = element.id
+
+    
+            })
+            const categoriaEditada = {
+                categoria: inputAgregarCategoriaEditada.value,
+                id: id,
+            }
+    
+            //este es el nuevo valor de la categoria
+            //console.log(inputAgregarCategoriaEditada.value)
+    
+            containerCategorias.classList.remove('d-none');
+            categoriaParaEditar.classList.add('d-none');
+
+            const agregarCategoriaEditada = objetoCategorias.map((objetoCategorias) =>
+                objetoCategorias.id === id
+                ? categoriaEditada
+                : objetoCategorias
+            )
+                localStorage.setItem('categorias',JSON.stringify(agregarCategoriaEditada));
+                objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
+                generarSelectCategorias(objetoCategorias);
+                pintarPanelCategoria(objetoCategorias); 
+    
+            })
+    
+
+
+
+
+
     })  
    
-};
 
-    btnAgregarCategoriaEditar.addEventListener('click', () =>{
-      objetoCategorias.forEach((element)=>{
-            const id = element.id
-          
-        })
-          const categoriaEditada = {
-            categoria: inputAgregarCategoriaEditada.value,
-            id: id,
-        }
-        
+
+
+
+    btnCancelarCategoriaEditar.addEventListener('click', () =>{
         containerCategorias.classList.remove('d-none');
         categoriaParaEditar.classList.add('d-none');
-
-
-        const agregarCategoriaEditada = objetoCategorias.map((objetoCategorias) =>
-        objetoCategorias.id === id
-        ? categoriaEditada
-        : objetoCategorias
-        )
-   
-
-        localStorage.setItem('categorias',JSON.stringify(agregarCategoriaEditada));
-        objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
-        generarSelectCategorias(objetoCategorias);
-        pintarPanelCategoria(objetoCategorias); 
-        //pintarPanelCategoria(operaciones); 
-
-
-        operaciones.forEach((element)=> {
-            const id = element.id;
-            const descripcion = element.descripcion;
-            const monto =  element.monto;
-            const tipo =  element.tipo;
-           
-           const  fecha =  element.fecha; 
-
-            //busco el index para que si hay una igual retorna 0
-            const buscaNombreDeCategoria = operaciones.findIndex((operacion)=> operacion.categoria === categoriaEditada.categoria )
-       // si es igual o mayor a 0 que cambie la categoria 
-        if(buscaNombreDeCategoria >= 0){
-            //el objeto solo queda con la categoria nueva.
-           const cambioNombre = operaciones.splice(buscaNombreDeCategoria, 2, 
-            {
-            categoria: categoriaEditada.categoria,
-            })
-
-     localStorage.setItem('operaciones',JSON.stringify(operaciones));
-
-        }
-       
-
-
-        })
-   
-
     })
 
+};
 
 
-btnCancelarCategoriaEditar.addEventListener('click', () =>{
-    containerCategorias.classList.remove('d-none');
-    categoriaParaEditar.classList.add('d-none');
-})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
