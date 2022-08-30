@@ -588,7 +588,7 @@ const pintarPanelCategoria = arr =>{
     btnEditarCategoria.forEach(btn => {
 
         btn.addEventListener('click', (e)=>{
-            const nombreCategoria = e.target.value
+            //const nombreCategoria = e.target.value
            // console.log(nombreCategoria)
 
             containerCategorias.classList.add('d-none');
@@ -599,21 +599,6 @@ const pintarPanelCategoria = arr =>{
                 id = element.id
                 inputAgregarCategoriaEditada.value = element.categoria
             })
-            operaciones.forEach((element)=> { 
-            //aca encuentro las operaciones con la misma categoria
-            const filtraNombreCategoriaYOperacion = operaciones.filter((operacion) => operacion.categoria === nombreCategoria);
-
-            if(filtraNombreCategoriaYOperacion[0].categoria === nombreCategoria){
-                 element.categoria = inputAgregarCategoriaEditada.value 
-
-            }
-            localStorage.setItem('operaciones',JSON.stringify(operaciones));
-            operaciones = JSON.parse(localStorage.getItem('operaciones'));
-            pintarOperaciones(operaciones);
-            mostrarOperaciones(operaciones);
-
-        })
-
 
         })               
 
@@ -644,19 +629,46 @@ const pintarPanelCategoria = arr =>{
                 objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
                 generarSelectCategorias(objetoCategorias);
                 pintarPanelCategoria(objetoCategorias); 
+
+            // ESTO ES PARA EDITAR LA CATEGORIA EN LA OPERACION - PERO ME ESTA EDITANDO TADAS LAS OPERACIONES
+            // operaciones.forEach((element)=> { 
+            
+            //     //aca encuentro las operaciones con la misma categoria
+            //     const filtraNombreCategoriaYOperacion = operaciones.filter((operacion) => operacion.categoria === categoriaEditada.categoria);
+            //         // ACA LE QUIERO DECIR QUE SI LA CATEGORIA ES = CAMBIAR LA OPERACION
+            //         if(filtraNombreCategoriaYOperacion.categoria === categoriaEditada.categoria){
+            //             //filtraNombreCategoriaYOperacion.categoria = inputAgregarCategoriaEditada.value
+            //             const operacionCategoriaEditada = {
+            //                         id: element.id,
+            //                         monto: element.monto,
+            //                         descripcion: element.descripcion,
+            //                         tipo: element.tipo,
+            //                         categoria: inputAgregarCategoriaEditada.value,
+            //                         fecha: element.fecha,
+            //             }
+                        
+            //             const operacionCambio = operaciones.map((operacion) =>
+            //                 operacion.id === operacionCategoriaEditada.id
+            //                 ? operacionCategoriaEditada
+            //                 : operacion
+            //             )
+          
+            //             //localStorage.setItem('operaciones',JSON.stringify(operaciones));
+            //             //operaciones = JSON.parse(localStorage.getItem('operaciones'));
+                            
+            //             mostrarOperaciones(operaciones);
+            //             pintarOperaciones(operaciones);
+            //             pintarBalance(operaciones);             
     
-            })
+            //         }
+
+            // })   
+
     
-
-
-
-
+        })
 
     })  
    
-
-
-
 
     btnCancelarCategoriaEditar.addEventListener('click', () =>{
         containerCategorias.classList.remove('d-none');
@@ -664,37 +676,6 @@ const pintarPanelCategoria = arr =>{
     })
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
