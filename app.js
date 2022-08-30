@@ -117,11 +117,11 @@ reportes.addEventListener('click', ()=>{
 
     }
     pintarOperaciones(operaciones);
-    totalPorMes(operaciones);
-    resumenReporte(operaciones)
+    // totalPorMes(operaciones);
+   // resumenReporte(operaciones)
     // resumenReporteMayorGanancia(operaciones);
     // resumenReporteMayorGasto(operaciones)
-    mesMayorOperacion(operaciones)
+  //  mesMayorOperacion(operaciones)
     totalPorCategoria(operaciones, objetoCategorias)
     //totalPorCategoria(objetoCategorias)
 })
@@ -688,50 +688,50 @@ const pintarPanelCategoria = arr =>{
 //                    ******************
 //                      PANEL REPORTES
 //                    ******************
-//***********************
-//RESUMEN
-//***********************
+// //***********************
+// //RESUMEN
+// //***********************
 
-const resumenReporte = (operaciones) =>{
-    // categoria con mayor ganancia
-    const resumenFiltroGanancia = operaciones.filter(operacion =>
-        operacion.tipo === 'Ganancia' )
+// const resumenReporte = (operaciones) =>{
+//     // categoria con mayor ganancia
+//     const resumenFiltroGanancia = operaciones.filter(operacion =>
+//         operacion.tipo === 'Ganancia' )
 
-    const mayorGanancia = resumenFiltroGanancia.sort(function(a, b){return b.monto - a.monto})
-    document.getElementById('id-categoria-mayor-ganancia').innerHTML = `<div class="btn-titulo-categorias p-2">${mayorGanancia[0].categoria}</div> ` 
-    document.getElementById('id-monto-mayor-ganancia').innerHTML =  `<div>+$${mayorGanancia[0].monto}</div>`
+//     const mayorGanancia = resumenFiltroGanancia.sort(function(a, b){return b.monto - a.monto})
+//     document.getElementById('id-categoria-mayor-ganancia').innerHTML = `<div class="btn-titulo-categorias p-2">${mayorGanancia[0].categoria}</div> ` 
+//     document.getElementById('id-monto-mayor-ganancia').innerHTML =  `<div>+$${mayorGanancia[0].monto}</div>`
 
-    //CATEGORIA CON MAYOR GASTO
-    const resumenFiltroGasto = operaciones.filter(operacion =>
-    operacion.tipo === 'Gasto')
+//     //CATEGORIA CON MAYOR GASTO
+//     const resumenFiltroGasto = operaciones.filter(operacion =>
+//     operacion.tipo === 'Gasto')
 
-    const mayorGasto = resumenFiltroGasto.sort(function(a, b){return b.monto - a.monto})
-    document.getElementById('id-categoria-mayor-gasto').innerHTML = `<div class="btn-titulo-categorias p-2">${mayorGasto[0].categoria}</div> ` 
-    document.getElementById('id-monto-mayor-gasto').innerHTML =  `<div>-$${mayorGasto[0].monto}</div>`
+//     const mayorGasto = resumenFiltroGasto.sort(function(a, b){return b.monto - a.monto})
+//     document.getElementById('id-categoria-mayor-gasto').innerHTML = `<div class="btn-titulo-categorias p-2">${mayorGasto[0].categoria}</div> ` 
+//     document.getElementById('id-monto-mayor-gasto').innerHTML =  `<div>-$${mayorGasto[0].monto}</div>`
 
-}; 
-//resumenReporte(operaciones)
+// }; 
+// //resumenReporte(operaciones)
 
-const mesMayorOperacion = arr => { 
+// // const mesMayorOperacion = arr => { 
 
-    const mayorMonto = operaciones.sort((a, b) => 
-    (b.monto - a.monto))
+// //     const mayorMonto = operaciones.sort((a, b) => 
+// //     (b.monto - a.monto))
 
-    const mayorGanancia = mayorMonto.filter((operacion) => 
-    operacion.tipo === 'Ganancia')
+// //     const mayorGanancia = mayorMonto.filter((operacion) => 
+// //     operacion.tipo === 'Ganancia')
 
-    const mayorGasto = mayorMonto.filter((operacion) => 
-    operacion.tipo === 'Gasto')
-
-
-    document.getElementById('id-mes-mayor-ganancia').innerHTML = `${mayorGanancia[0].fecha.split('-')[1]}`
-    document.getElementById('id-mes-manto-ganacia').innerHTML = `+$${mayorGanancia[0].monto}`
+// //     const mayorGasto = mayorMonto.filter((operacion) => 
+// //     operacion.tipo === 'Gasto')
 
 
-    document.getElementById('id-mes-mayor-gasto').innerHTML = `${mayorGasto[0].fecha.split('-')[1]}`
-    document.getElementById('id-mes-manto-gasto').innerHTML = `-$${mayorGasto[0].monto}`
+// //     document.getElementById('id-mes-mayor-ganancia').innerHTML = `${mayorGanancia[0].fecha.split('-')[1]}`
+// //     document.getElementById('id-mes-manto-ganacia').innerHTML = `+$${mayorGanancia[0].monto}`
 
-}
+
+// //     document.getElementById('id-mes-mayor-gasto').innerHTML = `${mayorGasto[0].fecha.split('-')[1]}`
+// //     document.getElementById('id-mes-manto-gasto').innerHTML = `-$${mayorGasto[0].monto}`
+
+// // }
 
 
 
@@ -739,90 +739,115 @@ const mesMayorOperacion = arr => {
 //***********************
 // TOTALES POR CATEGORIA
 //***********************
-
-
-const totalPorCategoria = (operaciones, categorias) =>{  
+const totalPorCategoria = (operaciones, objetoCategoria) =>{  
+    // let total = 0;
     let str = '';
-    categorias.forEach(categorias => {  
-      let arrSoloConMontos = [];  
-        const filtraPorCategoria =  operaciones.filter(operacion => 
-        operacion.categoria === categorias.categoria)
-           
-        filtraPorCategoria.forEach((operacion)=>{
-            if( operacion.monto !== 0 ){
-                arrSoloConMontos.push(operacion)
-            }
 
-            const filtradoGananciaCategoria = arrSoloConMontos.filter(operacion => 
+    const conBalance = objetoCategoria.map(categoria => {  
+
+        const filtraPorCategoria =  operaciones.filter(operacion => 
+        operacion.categoria === categoria.categoria)
+
+        // if(filtraPorCategoria.length > 0){
+        //     total = filtraPorCategoria.reduce((count, current) => count + Number(current.monto), 0)
+     //   }
+
+            const filtradoGananciaCategoria = filtraPorCategoria.filter(operacion => 
             operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto) ,0)
 
-            const filtradoGastoCategoria = arrSoloConMontos.filter(operacion => 
+            const filtradoGastoCategoria = filtraPorCategoria.filter(operacion => 
             operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto) ,0)
-       
-            str += `
-                <tr>
-                    <td scope="row">${categorias.categoria}</td>
-                    <td class="text-success ">+$${filtradoGananciaCategoria}</td>
-                    <td class="text-danger ">-$${filtradoGastoCategoria}</td>
-                    <td  id="total-mes-id">$${(filtradoGananciaCategoria - filtradoGastoCategoria)}</td>   
-                </th>`  
+            
+            return {
+                ...objetoCategoria,
+                categoria: categoria.categoria,
+                ganancia: filtradoGananciaCategoria,
+                gasto: filtradoGastoCategoria,
+                balance: filtradoGananciaCategoria - filtradoGastoCategoria
+            }
+    
 
-            let mayorBalance = [];
-            let porBalance = [{ 
-                categoria: categorias.categoria,
-                balance: (filtradoGananciaCategoria - filtradoGastoCategoria),
-            }]
-            mayorBalance.push(porBalance)
-            const nuevo = mayorBalance.filter((element) => element[0].balance )
-            
-            //console.log(nuevo)
-            
-            
-            
-            // mayorBalance.forEach((element) => {
-            //        const montoBalance = element[0].balance
-            //        montoBalance.sort(function(a, b){return b > a})
-            // })
-            
-        })
+    })
+
+    conBalance.forEach((element) => {
+        str += `
+             <tr>
+                <td scope="row">${element.categoria}</td>
+                <td class="text-success ">+$${element.ganancia}</td>
+                <td class="text-danger ">-$${element.gasto}</td>
+                <td  id="total-mes-id">$${(element.balance)}</td>   
+            </th>`  
+                  
     })
 
     document.getElementById('reporte-por-categoria').innerHTML = str
+
+
+
+    const categoriaMayorGacancia = conBalance.filter((operacion) => (operacion.ganancia)).sort(function(a, b){return b.ganancia - a.ganancia})
+    document.getElementById('id-categoria-mayor-ganancia').innerHTML = `<div class="btn-titulo-categorias p-2">${categoriaMayorGacancia[0].categoria}</div> ` 
+    document.getElementById('id-monto-mayor-ganancia').innerHTML =  `<div>+$${categoriaMayorGacancia[0].ganancia}</div>`
+
+    const categoriaMayorGasto = conBalance.filter((operacion) => (operacion.gasto)).sort(function(a, b){return b.gasto - a.gasto})
+    document.getElementById('id-categoria-mayor-gasto').innerHTML = `<div class="btn-titulo-categorias p-2">${categoriaMayorGasto[0].categoria}</div> ` 
+    document.getElementById('id-monto-mayor-gasto').innerHTML =  `<div>-$${categoriaMayorGasto[0].gasto}</div>`
+            
+    const categoriaMayorBalance = conBalance.filter((operacion) => (operacion.balance)).sort(function(a, b){return b.balance - a.balance})
+    document.getElementById('id-categoria-mayor-balance').innerHTML = `<div class="btn-titulo-categorias p-2">${categoriaMayorBalance[0].categoria}</div> ` 
+    document.getElementById('id-monto-mayor-balance').innerHTML =  `<div>$${categoriaMayorBalance[0].balance}</div>`
+
     pintarOperaciones(operaciones);
 
 }
 
 
-//******************
-// TOTALES POR MES
-//******************
-const totalPorMes = arr => { 
-    let str = ''
-    const doceMeses = [...new Set(arr.map(operacion => operacion.fecha.split('-')[1]))]
-    for (let i = 0; i < doceMeses.length; i++) {
-    //une las operaciones en un objeto por mes
-    const objetoPorMes = arr.filter(operacion => 
-        operacion.fecha.split('-')[1] === doceMeses[i])
-        const filtradoGanancia = objetoPorMes.filter(operacion => 
-            operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto), 0)
-        const filtradoGasto = objetoPorMes.filter(operacion => 
-            operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto), 0)
-
-    str += `
-    <tr>
-        <td scope="row">${objetoPorMes[0].fecha.split('-')[1]}</td>
-        <td class="text-success" >+$${filtradoGanancia}</td>
-        <td class="text-danger ">-$${filtradoGasto}</td>
-        <td>$${(filtradoGanancia - filtradoGasto)}</td>  
-    </th>` 
-
-    document.getElementById('reporte-por-mes').innerHTML = str
 
 
+// //******************
+// // TOTALES POR MES
+// //******************
+// const totalPorMes = arr => { 
+//     let str = ''
+//     const doceMeses = [...new Set(arr.map(operacion => operacion.fecha.split('-')[1]))]
+//     for (let i = 0; i < doceMeses.length; i++) {
+//     //une las operaciones en un objeto por mes
+//     const objetoPorMes = arr.filter(operacion => 
+//         operacion.fecha.split('-')[1] === doceMeses[i])
+//         const filtradoGanancia = objetoPorMes.filter(operacion => 
+//             operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto), 0)
+//         const filtradoGasto = objetoPorMes.filter(operacion => 
+//             operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto), 0)
 
-}
-}
-//totalPorMes(operaciones)
+//     str += `
+//     <tr>
+//         <td scope="row">${objetoPorMes[0].fecha.split('-')[1]}</td>
+//         <td class="text-success" >+$${filtradoGanancia}</td>
+//         <td class="text-danger ">-$${filtradoGasto}</td>
+//         <td>$${(filtradoGanancia - filtradoGasto)}</td>  
+//     </th>` 
+
+//     document.getElementById('reporte-por-mes').innerHTML = str
+
+//     const mayorMonto = operaciones.sort((a, b) => 
+//     (b.monto - a.monto))
+
+//     const mayorGanancia = mayorMonto.filter((operacion) => 
+//     operacion.tipo === 'Ganancia')
+
+//     const mayorGasto = mayorMonto.filter((operacion) => 
+//     operacion.tipo === 'Gasto')
+
+
+//     document.getElementById('id-mes-mayor-ganancia').innerHTML = `${mayorGanancia[0].fecha.split('-')[1]}`
+//     document.getElementById('id-mes-manto-ganacia').innerHTML = `+$${mayorGanancia[0].monto}`
+
+
+//     document.getElementById('id-mes-mayor-gasto').innerHTML = `${mayorGasto[0].fecha.split('-')[1]}`
+//     document.getElementById('id-mes-manto-gasto').innerHTML = `-$${mayorGasto[0].monto}`
+
+// }
+// }
+// //totalPorMes(operaciones)
 
 
 
