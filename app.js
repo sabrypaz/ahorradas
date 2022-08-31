@@ -1,14 +1,13 @@
 
+//OPERACIONES
 const descripcionInput = document.getElementById('descripcion-input');
 const montoInput = document.getElementById('monto-input');
 const tipoOperacion = document.getElementById('tipo-operacion');
 const categoriaSelect = document.getElementById('categoria-select');
-
+//CON/SIN OPERACIONES
 const sinOperaciones = document.getElementById('sin-operaciones');
 const conOperaciones = document.getElementById('con-operaciones');
-
-
-
+// AGREGAR OPERACIONES
 const agregarOperacionBtn = document.getElementById('agregar-operacion-btn');
 // PANEL BALANCE
 const balance = document.getElementById('balance');
@@ -48,12 +47,14 @@ const categoriaParaEditar = document.getElementById('container-categorias-editar
 const inputAgregarCategoriaEditada =document.getElementById('input-agregar-categoria-editada');
 const btnCancelarCategoriaEditar = document.getElementById('btn-cancelar-categoria-editar');
 const btnAgregarCategoriaEditar = document.getElementById('btn-agregar-categoria-editar');
+const inputAgregarCategoria = document.getElementById('input-agregar-categoria');
+const btnAgregarCategoria = document.getElementById('btn-agregar-categoria');
 // PANEL REPORTES
 const reportes = document.getElementById('reportes');
 const containerReportes = document.getElementById('container-reportes');
-const conReportes = document.getElementById('con-reportes') 
-const sinReportes = document.getElementById('sin-reportes')
-//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
+const conReportes = document.getElementById('con-reportes');
+const sinReportes = document.getElementById('sin-reportes');
+
 // *****************
 //      VISTAS
 // ****************
@@ -72,7 +73,6 @@ btnCancelar.addEventListener('click', ()=>{
     primeraPagina.style = 'display:block';
     cardOperaciones.style = 'display:block';
 })
-
 
 // PANEL BALANCE
 balance.addEventListener('click', ()=>{
@@ -99,7 +99,6 @@ categorias.addEventListener('click', ()=>{
      pintarPanelCategoria(objetoCategorias)
 });
 
-
 //REPORTES
 reportes.addEventListener('click', ()=>{
     containerReportes.style = 'display:block';
@@ -118,13 +117,9 @@ reportes.addEventListener('click', ()=>{
     }
     pintarOperaciones(operaciones);
     totalPorMes(operaciones);
-   // resumenReporte(operaciones)
-    // resumenReporteMayorGanancia(operaciones);
-    // resumenReporteMayorGasto(operaciones)
-  //  mesMayorOperacion(operaciones)
-    totalPorCategoria(operaciones, objetoCategorias)
-    //totalPorCategoria(objetoCategorias)
-})
+    totalPorCategoria(operaciones, objetoCategorias);
+    
+});
 
 //EDITAR OPERACION
 btnPanelEditarCancelar.addEventListener('click', () => {
@@ -134,10 +129,10 @@ btnPanelEditarCancelar.addEventListener('click', () => {
     cardOperaciones.style = 'display:block'; 
     containerNvaOperacion.style = 'display:none'; 
 })
-//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
-// *****************
-//  LOCAL STORAGE
-// *****************
+
+// ****************************
+//  LOCAL STORAGE OPERACIONES
+// *****************************
 const manipularOperaciones = () => {
     return JSON.parse(localStorage.getItem('operaciones')) || [];
 
@@ -146,9 +141,6 @@ const manipularOperaciones = () => {
 manipularOperaciones()
 let operaciones = manipularOperaciones();
 
-
-
-//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
 // *****************
 //  SELECT FILTRO 
 // *****************
@@ -159,7 +151,6 @@ let operaciones = manipularOperaciones();
 ];
 
 
-
 const filtroOrdenar = [
     'Más reciente',
     'Menos reciente',
@@ -167,7 +158,7 @@ const filtroOrdenar = [
     'Menor monto',
     'A/Z',
     'Z/A'
-]
+];
 
 
 const generarMonto = ()=>{
@@ -191,7 +182,7 @@ const generarOrdenarOperaciones = ()=>{
             select.innerHTML += `<option value=${filtroOrdenar[i]}>${filtroOrdenar[i]}</option>`
         }
 };
- //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_  
+ 
 // *****************
 //     OPERACIONES
 // *****************
@@ -332,7 +323,6 @@ const nuevaOperacionpanelEditar = () =>{
 
 nuevaOperacionpanelEditar(operaciones)
 
-//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
 //**************
 // BALANCE
 //**************
@@ -381,7 +371,6 @@ const pintarBalance = (arr) => {
 }
 pintarBalance(operaciones)
 
-//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_
 //****************
 //  FILTROS
 //****************
@@ -445,17 +434,16 @@ let operaciones = manipularOperaciones();
     }   
      pintarOperaciones(operaciones); 
 
-}
+};
 
-selectTipofiltro.addEventListener('change', acumularFiltro)
-selectCategoria.addEventListener('change', acumularFiltro)
-inputFiltroFecha.addEventListener('change', acumularFiltro)
-selectOrdenar.addEventListener('change', acumularFiltro)
+selectTipofiltro.addEventListener('change', acumularFiltro);
+selectCategoria.addEventListener('change', acumularFiltro);
+inputFiltroFecha.addEventListener('change', acumularFiltro);
+selectOrdenar.addEventListener('change', acumularFiltro);
 
-//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
-//                              CATEGORIAS
-//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
-
+//****************
+//  CATEGORIAS
+//****************
 
 let objetoCategorias = JSON.parse(localStorage.getItem('categorias')) || [
     {
@@ -489,14 +477,11 @@ let objetoCategorias = JSON.parse(localStorage.getItem('categorias')) || [
 // GENERAR SELECTS CATEGORIA
 //*****************************
 
-// ME FALTA QUE SE ACTUALICE LOS SELECT CUANDO EDITO CATEGORIA
-
 const generarSelectCategorias = ()=>{
     const selects = document.getElementsByClassName('categorias-select');
    
     for(let i = 0; i < selects.length; i++){
         const select = selects[i];
-        // select.innerHTML =''
         if(select.classList.contains('filtro-categoria')){
             select.innerHTML ='<option value="Todas">Todas</option>'
         }else if (select.classList.contains('categorias-select-operaciones')){
@@ -514,9 +499,6 @@ const generarSelectCategorias = ()=>{
 //******************
 // PANEL CATEGORIA
 //******************
-
-const inputAgregarCategoria = document.getElementById('input-agregar-categoria');
-const btnAgregarCategoria = document.getElementById('btn-agregar-categoria');
 
 btnAgregarCategoria.addEventListener('click', () => {
     if(inputAgregarCategoria.value.trim().length === 0){
@@ -679,15 +661,9 @@ const pintarPanelCategoria = arr =>{
 
 
 
-
-
-
-
-
-//*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
-//                    ******************
-//                      PANEL REPORTES
-//                    ******************
+// ******************
+//  PANEL REPORTES
+// ******************
 //***********************
 // TOTALES POR CATEGORIA
 //***********************
@@ -730,7 +706,7 @@ const totalPorCategoria = (operaciones, objetoCategoria) =>{
     document.getElementById('reporte-por-categoria').innerHTML = str
 
 
-
+    //PINTA CATEGORIA MAYOR GANANCIA - GASTO - BALANCE
     const categoriaMayorGacancia = conBalance.filter((operacion) => (operacion.ganancia)).sort(function(a, b){return b.ganancia - a.ganancia})
     document.getElementById('id-categoria-mayor-ganancia').innerHTML = `<div class="btn-titulo-categorias p-2">${categoriaMayorGacancia[0].categoria}</div> ` 
     document.getElementById('id-monto-mayor-ganancia').innerHTML =  `<div>+$${categoriaMayorGacancia[0].ganancia}</div>`
@@ -745,7 +721,7 @@ const totalPorCategoria = (operaciones, objetoCategoria) =>{
 
     pintarOperaciones(operaciones);
 
-}
+};
 
 
 
@@ -788,21 +764,18 @@ const totalPorMes = arr => {
       
     }
 
+    //PINTA MES MAYOR GANANCIA Y GASTO
     const MesMayorGanancia = totalesPorMeses.filter((operacion) => operacion.ganancia).sort(function(a, b){return b.ganancia - a.gananacia})
-
     document.getElementById('id-mes-mayor-ganancia').innerHTML = `${MesMayorGanancia[0].mes.split('/')[0]}`
     document.getElementById('id-mes-manto-ganacia').innerHTML = `+$${MesMayorGanancia[0].ganancia}`
 
-
     const MesMayorGasto = totalesPorMeses.filter((operacion) => operacion.gasto).sort(function(a, b){return b.gasto - a.gasto})
-
-
     document.getElementById('id-mes-mayor-gasto').innerHTML = `${MesMayorGasto[0].mes.split('/')[0]}`
     document.getElementById('id-mes-manto-gasto').innerHTML = `-$${MesMayorGasto[0].gasto}`
 
 
 
-pintarOperaciones(operaciones);
+    pintarOperaciones(operaciones);
 }
 
 
