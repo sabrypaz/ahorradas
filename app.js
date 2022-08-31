@@ -754,28 +754,17 @@ const totalPorCategoria = (operaciones, objetoCategoria) =>{
 // TOTALES POR MES
 //******************
 const totalPorMes = arr => { 
+    let totalesPorMeses = []
     let str = ''
     const doceMeses = [...new Set(arr.map(operacion => `${new Date(operacion.fecha).getMonth() + 1}/${new Date(operacion.fecha).getFullYear()}`)),].sort();
-
-        
-        
-
-        
-       /// operacion.fecha.split('-')[1]))]
-
-
-
-
-
-
     for (let i = 0; i < doceMeses.length; i++) {
-    // //une las operaciones en un objeto por mes
     const objetoPorMes = arr.filter(operacion => 
         `${new Date(operacion.fecha).getMonth() + 1}/${new Date(operacion.fecha).getFullYear()}` === doceMeses[i])
   
         const filtradoGanancia = objetoPorMes.filter(operacion => 
             operacion.tipo === 'Ganancia').reduce((count, current) => count + Number(current.monto), 0)
-        const filtradoGasto = objetoPorMes.filter(operacion => 
+        
+            const filtradoGasto = objetoPorMes.filter(operacion => 
             operacion.tipo === 'Gasto').reduce((count, current) => count + Number(current.monto), 0)
 
     str += `
@@ -786,32 +775,35 @@ const totalPorMes = arr => {
         <td>$${(filtradoGanancia - filtradoGasto)}</td>  
     </th>` 
 
-    document.getElementById('reporte-por-mes').innerHTML = str
+    document.getElementById('reporte-por-mes').innerHTML = str;
 
-console.log(filtradoGanancia)
+    const nuevoObjeto = {
+        mes: doceMeses[i],
+        ganancia: filtradoGanancia,
+        gasto: filtradoGasto,
+        balance: filtradoGanancia - filtradoGasto,
+      };
+      totalesPorMeses.push(nuevoObjeto);
+    
+      
+    }
+
+    const MesMayorGanancia = totalesPorMeses.filter((operacion) => operacion.ganancia).sort(function(a, b){return b.ganancia - a.gananacia})
+
+    document.getElementById('id-mes-mayor-ganancia').innerHTML = `${MesMayorGanancia[0].mes.split('/')[0]}`
+    document.getElementById('id-mes-manto-ganacia').innerHTML = `+$${MesMayorGanancia[0].ganancia}`
 
 
-    const mayorMonto = operaciones.sort((a, b) => 
-    (b.monto - a.monto))
-
-    const mayorGanancia = mayorMonto.filter((operacion) => 
-    operacion.tipo === 'Ganancia')
-
-    const mayorGasto = mayorMonto.filter((operacion) => 
-    operacion.tipo === 'Gasto')
+    const MesMayorGasto = totalesPorMeses.filter((operacion) => operacion.gasto).sort(function(a, b){return b.gasto - a.gasto})
 
 
-    document.getElementById('id-mes-mayor-ganancia').innerHTML = `${mayorGanancia[0].fecha.split('-')[1]}`
-    document.getElementById('id-mes-manto-ganacia').innerHTML = `+$${mayorGanancia[0].monto}`
+    document.getElementById('id-mes-mayor-gasto').innerHTML = `${MesMayorGasto[0].mes.split('/')[0]}`
+    document.getElementById('id-mes-manto-gasto').innerHTML = `-$${MesMayorGasto[0].gasto}`
 
 
-    document.getElementById('id-mes-mayor-gasto').innerHTML = `${mayorGasto[0].fecha.split('-')[1]}`
-    document.getElementById('id-mes-manto-gasto').innerHTML = `-$${mayorGasto[0].monto}`
 
-}
 pintarOperaciones(operaciones);
 }
-
 
 
 
