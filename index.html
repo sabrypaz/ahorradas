@@ -14,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- ID -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"
         integrity="sha512-Bcog7KQsuePA92aZHcQfeAp3w4BiUKHgihhKJLsSVVU67s7KspPbywP7nTMZtJ8YOn//vLCeWvYnb00KryziDA=="
@@ -28,21 +29,23 @@
     <!-- NAV -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
         <div class="container-fluid nav-container p-3">
-            <a class="navbar-brand nav-title text-white" href="#">
+            <a aria-hidden="true" class="navbar-brand nav-title text-white" href="#">
                 <i class="fa-solid fa-wallet"></i>
                 AhorrADAs</a>
-            <button class="navbar-toggler collapsed navbar-brand" id="navbar-toggler" type="button"
+            <button aria-hidden="true" class="navbar-toggler collapsed navbar-brand" id="navbar-toggler" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse nav-flex" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a id="balance" class="nav-link my-nav-link" aria-current="page" href="#"><i
-                            class="fa-solid fa-chart-line"></i> Balance</a>
-                    <a id="categorias" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-folder-tree"></i>
+                    <a id="balance" class="nav-link my-nav-link" aria-describedby="balance " aria-current="page"
+                        href="#"><i aria-hidden="true" class="fa-solid fa-chart-line"></i> Balance</a>
+                    <a id="categorias" class="nav-link my-nav-link" aria-describedby="categorias" href="#"><i
+                            aria-hidden="true" class="fa-solid fa-folder-tree"></i>
                         Categorías</a>
-                    <a id="reportes" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-chart-pie"></i>
+                    <a id="reportes" class="nav-link my-nav-link" aria-describedby="reportes" href="#"><i
+                            aria-hidden="true" class="fa-solid fa-chart-pie"></i>
                         Reportes</a>
                 </div>
             </div>
@@ -55,7 +58,7 @@
             BALANCE
 ******************************** -->
                 <div class="card col shadow p-3 mb-5 bg-body rounded card-style" style="--bs-bg-opacity: .7;">
-                    <h3 class="card-title">Balance</h3>
+                    <h3 class="card-title" aria-describedby="balance">Balance</h3>
                     <div id="balance-id">
                     </div>
                 </div>
@@ -66,12 +69,13 @@
                     <div class="card row shadow p-3 mb-5 bg-body rounded card-style" style="--bs-bg-opacity: .7;">
                         <div class="container-filtros-ocultar d-flex justify-content-between">
                             <div>
-                                <h3 class="card-title">Filtros</h3>
+                                <h3 class="card-title" aria-describedby="filtros">Filtros</h3>
                             </div>
                             <div>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item btn-ocultar-filtros" id="btn-ocultar-filtros"><a
-                                            class="text-decoration-none link-secondary" href="#">Ocultar filtros</a>
+                                            class="text-decoration-none link-secondary"
+                                            aria-describedby="ocultar filtros" href="#">Ocultar filtros</a>
                                     </li>
                                 </ol>
                             </div>
@@ -107,13 +111,13 @@
             <!-- ********************************
             OPERACIONES
 ******************************** -->
-            <div class="my-card-body col m-2" style="width: 10rem;" id="card-operaciones">
+            <div class="my-card-body col m-2 overflow-hidden" style="width: 10rem;" id="card-operaciones">
                 <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style container-operaciones-uno"
                     style="--bs-bg-opacity: .7;">
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Operaciones</h3>
+                        <h3 class="card-title container-operaciones-titulo">Operaciones</h3>
                         <button type="button" id="btn-nueva-operacion"
-                            class="btn btn-outline-secondary btn-operaciones active"><i
+                            class="btn btn-outline-secondary btn-operaciones active container-operaciones-btn"><i
                                 class="fa-solid fa-square-plus"></i>
                             Nueva
                             operación</button>
@@ -132,7 +136,7 @@
                     <div class="box-operaciones-dos d-none" id="con-operaciones">
                         <table class="table table-borderless">
                             <thead>
-                                <tr>
+                                <tr class="tabla-responsive">
                                     <th scope="col">Descripción</th>
                                     <th scope="col">Categoría</th>
                                     <th scope="col">Fecha</th>
@@ -140,7 +144,7 @@
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody class="tabla-operaciones" id="tabla-operaciones"></tbody>
+                            <tbody class="tabla-operaciones tabla-responsive" id="tabla-operaciones"></tbody>
                         </table>
                     </div>
                 </div>
@@ -159,22 +163,23 @@
                     <h2 class="mb-5 mt-2">Nueva operación</h2>
                     <div class="mb-3">
                         <label for="descripcion-input" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" id="descripcion-input"
+                        <input type="text" class="form-control" aria-label="descripcion" id="descripcion-input"
                             aria-describedby="descripcion de operacion" required>
                     </div>
                     <div class="mb-3">
                         <label for="monto" class="form-label">Monto</label>
-                        <input type="number" value="0" class="form-control" id="monto-input" required>
+                        <input type="number" value="0" aria-label="monto" class="form-control" id="monto-input"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="tipo" class="form-label">Tipo</label>
-                        <select class="form-select select-monto" aria-label="Tipo" id="tipo-operacion">
+                        <select class="form-select select-monto" aria-label="tipo" id="tipo-operacion">
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categorías</label>
                         <select class="form-select categorias-select categorias-select-operaciones"
-                            id="categoria-select" aria-label="Categoria">
+                            id="categoria-select" aria-label="categoria">
                         </select>
                     </div>
                     <div class="mb-3">
@@ -183,9 +188,9 @@
                     </div>
                     <div class="d-flex justify-content-end mt-5">
                         <button type="submit" class="btn btn-light mx-2 btn-outline-secondary btn-operaciones"
-                            id="btn-cancelar">Cancelar</button>
+                            id="btn-cancelar" aria-label="cancelar">Cancelar</button>
                         <button type="submit" class="btn btn-outline-secondary btn-operaciones active"
-                            id="agregar-operacion-btn">Agregar</button>
+                            id="agregar-operacion-btn" aria-label="agregar">Agregar</button>
                     </div>
                 </form>
             </div>
@@ -207,18 +212,19 @@
                             aria-describedby="descripcion de operacion" required>
                     </div>
                     <div class="mb-3">
-                        <label for="monto" class="form-label">Monto</label>
+                        <label for="monto" class="form-label" aria-describedby="monto">Monto</label>
                         <input type="number" value="0" class="form-control" id="panel-editar-monto-input" required>
                     </div>
                     <div class="mb-3">
                         <label for="tipo" class="form-label">Tipo</label>
-                        <select class="form-select select-monto" aria-label="Tipo" id="panel-editar-tipo-operacion">
+                        <select class="form-select select-monto" aria-describedby="tipo"
+                            id="panel-editar-tipo-operacion">
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categorías</label>
                         <select class="form-select categorias-select categorias-select-operaciones"
-                            id="panel-editar-categoria-select" aria-label="Categoria">
+                            id="panel-editar-categoria-select" aria-describedby="categoria">
                         </select>
                     </div>
                     <div class="mb-3">
@@ -228,9 +234,11 @@
                     </div>
                     <div class="d-flex justify-content-end mt-5">
                         <button type="submit" class="btn btn-light mx-2 btn-outline-secondary btn-operaciones"
-                            id="panel-editar-btn-cancelar">Cancelar</button>
+                            id="panel-editar-btn-cancelar"
+                            aria-describedby="boton cancela la operacion">Cancelar</button>
                         <button type="submit" class="btn btn-outline-secondary btn-operaciones active"
-                            id="panel-editar-agregar-operacion-btn">Agregar</button>
+                            id="panel-editar-agregar-operacion-btn"
+                            aria-describedby="boton agrega operacion">Agregar</button>
                     </div>
                 </form>
             </div>
@@ -250,7 +258,7 @@
                     <input type="text" class="form-control" id="input-agregar-categoria">
                     <label for="input-agregar-categoria"></label>
                     <button type="submit" class="btn btn-outline-secondary btn-operaciones mx-3 active"
-                        id="btn-agregar-categoria">Agregar</button>
+                        id="btn-agregar-categoria" aria-describedby="buton agregar">Agregar</button>
                 </div>
                 <br>
                 <div id="pintar-categorias"></div>
@@ -267,18 +275,18 @@
                 <div>
                     <h6>Nombre</h6>
                 </div>
-                <div id="panel-para-editar-categoria"></div> 
-                 <div class="d-flex flex-row">
+                <div id="panel-para-editar-categoria"></div>
+                <div class="d-flex flex-row">
                     <input type="text" class="form-control" id="input-agregar-categoria-editada">
-                    <label for="input-agregar-categoria-editada"></label>
+                    <label for="input-agregar-categoria-editada" aria-describedby="agregar categoria"></label>
                     <button type="submit" class="btn btn-outline-secondary btn-operaciones mx-3 active"
-                        id="btn-cancelar-categoria-editar">Cancelar</button>
+                        id="btn-cancelar-categoria-editar" aria-describedby="boton cancelar">Cancelar</button>
                     <button type="submit" class="btn btn-outline-secondary btn-operaciones mx-3 active"
-                        id="btn-agregar-categoria-editar" >Agregar</button>
+                        id="btn-agregar-categoria-editar" aria-describedby="boton agregar">Agregar</button>
                 </div>
             </form>
         </div>
-    </div> 
+    </div>
     <!-- ********************************
             REPORTES
     ******************************** -->
@@ -302,29 +310,36 @@
                     <div class="d-flex justify-content-center flex-column mx-4">
                         <h4>Resumen</h4>
                         <div class="row justify-content-start text-start my-4">
-                            <div class="col-6">Categoria con mayor ganancia</div>
-                            <div class="col-3 text-center" id="id-categoria-mayor-ganancia"></div>
-                            <div class="col-3 text-end text-success" id="id-monto-mayor-ganancia"></div>
+                            <div class="col-6 tabla-responsive-reportes">Categoria con mayor ganancia</div>
+                            <div class="col-3 text-center tabla-responsive-reportes" id="id-categoria-mayor-ganancia">
+                            </div>
+                            <div class="col-3 text-end text-success tabla-responsive-reportes"
+                                id="id-monto-mayor-ganancia"></div>
                         </div>
                         <div class="row justify-content-start text-start my-3">
-                            <div class="col-6">Categoria con mayor gasto</div>
-                            <div class="col-3 text-center " id="id-categoria-mayor-gasto"></div>
-                            <div class="col-3 text-end text-danger" id="id-monto-mayor-gasto"></div>
+                            <div class="col-6 tabla-responsive-reportes">Categoria con mayor gasto</div>
+                            <div class="col-3 text-center tabla-responsive-reportes" id="id-categoria-mayor-gasto">
+                            </div>
+                            <div class="col-3 text-end text-danger tabla-responsive-reportes" id="id-monto-mayor-gasto">
+                            </div>
                         </div>
                         <div class="row justify-content-start text-start my-3">
-                            <div class="col-6">Categoria con mayor balance</div>
-                            <div class="col-3 text-end text-center" id="id-categoria-mayor-balance"></div>
-                            <div class="col-3 text-end" id="id-monto-mayor-balance"></div>
+                            <div class="col-6 tabla-responsive-reportes">Categoria con mayor balance</div>
+                            <div class="col-3 text-end text-center tabla-responsive-reportes"
+                                id="id-categoria-mayor-balance"></div>
+                            <div class="col-3 text-end tabla-responsive-reportes" id="id-monto-mayor-balance"></div>
                         </div>
                         <div class="row justify-content-start text-start my-3">
-                            <div class="col-6">Mes con mayor ganancia</div>
-                            <div class="col-3 text-center " id="id-mes-mayor-ganancia"></div>
-                            <div class="col-3 text-end text-success" id="id-mes-manto-ganacia"></div>
+                            <div class="col-6 tabla-responsive-reportes">Mes con mayor ganancia</div>
+                            <div class="col-3 text-center tabla-responsive-reportes" id="id-mes-mayor-ganancia"></div>
+                            <div class="col-3 text-end text-success tabla-responsive-reportes"
+                                id="id-mes-manto-ganacia"></div>
                         </div>
                         <div class="row justify-content-start text-start my-3">
-                            <div class="col-6">Mes con mayor gasto</div>
-                            <div class="col-3 text-center " id="id-mes-mayor-gasto"></div>
-                            <div class="col-3 text-end text-danger" id="id-mes-manto-gasto"></div>
+                            <div class="col-6 tabla-responsive-reportes">Mes con mayor gasto</div>
+                            <div class="col-3 text-center tabla-responsive-reportes" id="id-mes-mayor-gasto"></div>
+                            <div class="col-3 text-end text-danger tabla-responsive-reportes" id="id-mes-manto-gasto">
+                            </div>
                         </div>
                     </div>
                     <br>
@@ -332,14 +347,14 @@
                         <h4>Totales por categorías</h4>
                         <table class="table table-borderless table-success table-striped">
                             <thead>
-                                <tr>
+                                <tr class="tabla-responsive-reportes">
                                     <th scope="col">Categoria</th>
                                     <th scope="col">Ganancias</th>
                                     <th scope="col">Gastos</th>
                                     <th scope="col">Balance</th>
                                 </tr>
                             </thead>
-                            <tbody id="reporte-por-categoria"></tbody>
+                            <tbody class="tabla-responsive-reportes" id="reporte-por-categoria"></tbody>
                         </table>
                     </div>
                     <br>
@@ -347,14 +362,14 @@
                         <h4>Totales por mes</h4>
                         <table class="table table-borderless table-success table-striped">
                             <thead>
-                                <tr>
+                                <tr class="tabla-responsive-reportes">
                                     <th scope="col">Mes</th>
                                     <th scope="col">Ganancias</th>
                                     <th scope="col">Gastos</th>
                                     <th scope="col">Balance</th>
                                 </tr>
                             </thead>
-                            <tbody id="reporte-por-mes"></tbody>
+                            <tbody class="tabla-responsive-reportes" id="reporte-por-mes"></tbody>
                         </table>
                     </div>
                 </div>
