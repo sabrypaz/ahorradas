@@ -64,6 +64,7 @@ btnNvaOperacion.addEventListener('click', ()=>{
     containerNvaOperacion.style = 'display:block';
     cardOperaciones.style = 'display:none';
     containerReportes.style = 'display:none';
+    categoriaParaEditar.style = 'display:none';
 });
 
 // CANCELAR OPERACION
@@ -71,6 +72,7 @@ btnCancelar.addEventListener('click', ()=>{
     containerNvaOperacion.style = 'display:none';
     primeraPagina.style = 'display:block';
     cardOperaciones.style = 'display:block';
+    categoriaParaEditar.style = 'display:none';
 })
 
 // PANEL BALANCE
@@ -80,7 +82,7 @@ balance.addEventListener('click', ()=>{
     containerNvaOperacion.style = 'display: none';
     containerCategorias.style = 'display: none';
     containerReportes.style = 'display:none';
-    categoriaParaEditar.classList.toggle('d-none');
+    categoriaParaEditar.style = 'display:none';
 
 });
 
@@ -96,6 +98,7 @@ categorias.addEventListener('click', ()=>{
      primeraPagina.style = 'display:none';
      cardOperaciones.style = 'display:none';
      containerReportes.style = 'display:none';
+     categoriaParaEditar.style = 'display:none';
      pintarPanelCategoria(objetoCategorias)
 });
 
@@ -106,6 +109,7 @@ reportes.addEventListener('click', ()=>{
     containerNvaOperacion.style = 'display:none';
     primeraPagina.style = 'display:none';
     cardOperaciones.style = 'display:none';
+    categoriaParaEditar.style = 'display:none';
     if(operaciones.length <= 2){
         conReportes.style ='display:none';
         sinReportes.style = 'display:block';
@@ -127,7 +131,8 @@ btnPanelEditarCancelar.addEventListener('click', () => {
     containerNvaOperacion.style = 'display:block';
     primeraPagina.style = 'display:block';
     cardOperaciones.style = 'display:block'; 
-    containerNvaOperacion.style = 'display:none'; 
+    containerNvaOperacion.style = 'display:none';
+    categoriaParaEditar.style = 'display:none';
 })
 
 // ****************************
@@ -567,14 +572,14 @@ const pintarPanelCategoria = arr =>{
     })
 
     btnCancelarCategoriaEditar.addEventListener('click', () =>{
-        containerCategorias.classList.remove('d-none');
-        categoriaParaEditar.classList.add('d-none');
+        containerCategorias.style = 'display:block';
+        categoriaParaEditar.style = 'display:none';
     })
 
     btnEditarCategoria.forEach(btn => {
         btn.addEventListener('click', (e)=>{
-            containerCategorias.classList.add('d-none');
-            categoriaParaEditar.classList.remove('d-none');
+            containerCategorias.style = 'display:none';
+            categoriaParaEditar.style = 'display:block';
             const editarCategorias = objetoCategorias.filter(categoria => categoria.id === e.target.dataset.id)
 
             editarCategorias.forEach((element) =>{
@@ -617,9 +622,9 @@ btnAgregarCategoriaEditar.addEventListener('click', (e) =>{
         if (posicion >= 0) {
             operaciones[posicion].categoria = inputAgregarCategoriaEditada.value;
             localStorage.setItem('operaciones',JSON.stringify(operaciones));
-        }
-        pintarOperaciones(operaciones);
-    });
+            }
+            pintarOperaciones(operaciones);
+          });
 
 })     
 
