@@ -54,6 +54,15 @@ const containerReportes = document.getElementById('container-reportes');
 const conReportes = document.getElementById('con-reportes');
 const sinReportes = document.getElementById('sin-reportes');
 
+// ********************
+//      MODO OSCURO
+// ********************
+document.getElementById('flexSwitchCheckDefault').addEventListener('click', () =>{
+    document.getElementById('modo-oscuro-body').classList.toggle('dark'); 
+    document.getElementById('modo-oscuro').classList.toggle('dark'); 
+
+})
+
 // *****************
 //      VISTAS
 // ****************

@@ -24,14 +24,18 @@
     <title>AhorrADAs</title>
 </head>
 
-<body>
+<body class="principal" id="modo-oscuro-body">
 
     <!-- NAV -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
-        <div class="container-fluid nav-container p-3">
+        <div class="container-fluid nav-container p-3 modo-oscuro">
             <a aria-hidden="true" class="navbar-brand nav-title text-white" href="#">
                 <i class="fa-solid fa-wallet"></i>
                 AhorrADAs</a>
+            <div class="form-check form-switch">
+                <input class="form-check-input dark-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+            </div>
             <button aria-hidden="true" class="navbar-toggler collapsed navbar-brand" id="navbar-toggler" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +43,7 @@
             </button>
             <div class="collapse navbar-collapse nav-flex" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a id="balance" class="nav-link my-nav-link" aria-describedby="balance " aria-current="page"
+                    <a id="balance" class="nav-link my-nav-link" aria-describedby="balance" aria-current="page"
                         href="#"><i aria-hidden="true" class="fa-solid fa-chart-line"></i> Balance</a>
                     <a id="categorias" class="nav-link my-nav-link" aria-describedby="categorias" href="#"><i
                             aria-hidden="true" class="fa-solid fa-folder-tree"></i>
@@ -345,9 +349,9 @@
                     <br>
                     <div class="d-flex justify-content-center flex-column mx-4">
                         <h4>Totales por categorías</h4>
-                        <table class="table table-borderless table-success table-striped">
+                        <table class="table table-borderless table-striped">
                             <thead>
-                                <tr class="tabla-responsive-reportes">
+                                <tr class="tabla-responsive-reportes bg-secondary bg-opacity-25">
                                     <th scope="col">Categoria</th>
                                     <th scope="col">Ganancias</th>
                                     <th scope="col">Gastos</th>
@@ -360,9 +364,9 @@
                     <br>
                     <div class="d-flex justify-content-center flex-column mx-4">
                         <h4>Totales por mes</h4>
-                        <table class="table table-borderless table-success table-striped">
+                        <table class="table table-borderless table-striped bg-transparent">
                             <thead>
-                                <tr class="tabla-responsive-reportes">
+                                <tr class="tabla-responsive-reportes bg-secondary bg-opacity-25">
                                     <th scope="col">Mes</th>
                                     <th scope="col">Ganancias</th>
                                     <th scope="col">Gastos</th>
