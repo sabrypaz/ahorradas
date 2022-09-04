@@ -21,7 +21,7 @@ const panelEditarMontoInput = document.getElementById('panel-editar-monto-input'
 const panelEditarTipoOperacion = document.getElementById('panel-editar-tipo-operacion');
 const panelEditarCategoriaSelect = document.getElementById('panel-editar-categoria-select');
 const panelEeditarFechaInput = document.getElementById('panel-editar-fecha-input');
-const BtnPanelEditarAgregarOperacion = document.getElementById('panel-editar-agregar-operacion-btn');
+const btnPanelEditarAgregarOperacion = document.getElementById('panel-editar-agregar-operacion-btn');
 // PANEL FILTROS
 const selectTipofiltro = document.getElementById('select-tipo-filtro');
 const selectCategoria = document.getElementById('filtro-categoria');
@@ -301,7 +301,7 @@ const operacionEditar = arr =>{
 
 // AGREGA UNA NUEVA OPERACION
 const nuevaOperacionpanelEditar = () =>{
-    BtnPanelEditarAgregarOperacion.addEventListener('click', () => {
+    btnPanelEditarAgregarOperacion.addEventListener('click', () => {
         operaciones.forEach((element)=>{
             const id = element.id
          
