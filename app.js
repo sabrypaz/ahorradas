@@ -617,8 +617,8 @@ const editCategory = (category) => {
 btnAgregarCategoriaEditar.addEventListener('click', (e) =>{
     objetoCategorias[resultado.i].categoria = inputAgregarCategoriaEditada.value
     
-    containerCategorias.classList.remove('d-none');
-    categoriaParaEditar.classList.add('d-none');
+    containerCategorias.style = 'display:block';
+    categoriaParaEditar.style = 'display:none';
     
     localStorage.setItem('categorias', JSON.stringify(objetoCategorias));
     objetoCategorias = JSON.parse(localStorage.getItem('categorias'));
