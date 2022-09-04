@@ -108,28 +108,80 @@ body {
         RESPONSIVE
 ************************/
 
-@media (min-width:820px) and (max-width: 1700px) {
+@media (min-width:1200px) and (max-width: 1700px) {
     .nav-flex {
         display: flex;
         justify-content: flex-end;
     }
 }
 
+
+
+@media (min-width:820px) and (max-width: 1199px) {
+    .nav-flex {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .responsive-flex {
+        display: flex;
+        flex-direction: column !important;
+    }
+
+}
+
+
 @media (min-width:420px) and (max-width: 819px) {
-    .container-operaciones-titulo {
+    .responsive-flex {
+        display: flex;
+        flex-direction: column !important;
+    }
+
+    .responsive-titulo {
+        font-size: 1.4em;
+
+    }
+
+    .responsive-btn {
+        font-size: 1em;
+
+    }
+
+    .responsive-categorias {
         font-size: 0.9em;
     }
 
-    .container-operaciones-btn {
-        font-size: 0.7em;
+    .responsive-btn-op {
+        padding: 0px !important;
     }
+
+    .tabla-responsive {
+        font-size: 0.8em;
+
+    }
+
+    .responsive-categorias-op {
+        font-size: 1em;
+        padding: 0px !important;
+
+    }
+
+    .responsive-contenido {
+        font-size: 0.8em;
+
+    }
+
+    .tabla-responsive-reportes {
+        font-size: 0.9em;
+    }
+
 }
 
 
 @media (min-width:100px) and (max-width: 419px) {
 
     .responsive-titulo {
-        font-size: 0.9em;
+        font-size: 1em;
 
     }
 
@@ -138,8 +190,27 @@ body {
 
     }
 
+    .responsive-categorias {
+        font-size: 0.5em;
+    }
+
+    .responsive-op {
+        font-size: 1.5em;
+        padding: 0px !important;
+    }
+
+    .responsive-btn-op {
+        padding: 0px !important;
+    }
+
     .tabla-responsive {
-        font-size: 0.6em;
+        font-size: 0.5em;
+
+    }
+
+    .responsive-contenido {
+        font-size: 0.8em;
+
     }
 
     .tabla-responsive-reportes {

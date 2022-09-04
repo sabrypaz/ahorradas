@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="imagenes/BS.png">
+    <link rel="shortcut icon" href="./assets/icons8-caja-de-dinero-64.png">
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -56,7 +56,7 @@
         </div>
     </nav>
     <div id="primera-pagina">
-        <main class="container d-flex flex-wrap bd-highlight my-4">
+        <main class="container d-flex flex-wrap bd-highlight my-4 responsive-flex ">
             <div class="my-card-body row m-2">
                 <!-- ********************************
             BALANCE
@@ -115,13 +115,13 @@
             <!-- ********************************
             OPERACIONES
 ******************************** -->
-            <div class="my-card-body col m-2 overflow-hidden" style="width: 10rem;" id="card-operaciones">
+            <div class="my-card-body col m-2 overflow-hidden" id="card-operaciones">
                 <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style container-operaciones-uno"
                     style="--bs-bg-opacity: .7;">
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title container-operaciones-titulo">Operaciones</h3>
+                        <h3 class="card-title container-operaciones-titulo responsive-titulo">Operaciones</h3>
                         <button type="button" id="btn-nueva-operacion"
-                            class="btn btn-outline-secondary btn-operaciones active container-operaciones-btn"><i
+                            class="btn btn-outline-secondary btn-operaciones active container-operaciones-btn responsive-btn"><i
                                 class="fa-solid fa-square-plus"></i>
                             Nueva
                             operación</button>
@@ -251,7 +251,7 @@
     <!-- ********************************
             CATEGORIAS
 ******************************** -->
-    <div class="container oculto my-5" id="container-categorias">
+    <div class="container oculto my-5 " id="container-categorias">
         <div class="row justify-content-center">
             <form class="col-md-8 shadow p-3 mb-5 bg-body rounded" style="--bs-bg-opacity: .7;">
                 <h2 class="mb-5 mt-2">Categorías</h2>
