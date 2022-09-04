@@ -1,15 +1,5 @@
 # AhorrADAs
 
-¿No sabes administrar tus finanzas?  ¿No sabes cuánto dinero te ingresa o sale al mes? 
-
-![meme](https://media.giphy.com/media/APqEbxBsVlkWSuFpth/giphy-downsized-large.gif)
-
-o simplemente quieres llevar un mejor control, *más dinámico y eficiente...* 
-
-![meme](https://media.giphy.com/media/111ebonMs90YLu/giphy.gif)
-
-pues **AhorrADAs** es justo lo que necesitas...
-
 ## ¿Que podés hacer con AhorrADAs? 
 
 - Agregar, editar y/o eliminar operaciones monetarias.
@@ -30,3 +20,14 @@ Nunca antes fue tan divertido llevar las cuentas 👉🏻 [belu-sanchez.github.i
 - GITHUB
 
 El guadardo de operaciones se realiza con **localStorage**
+
+Además el proyecto se encuentra en desarrollo con base de datos de **Firebase**  👉🏻 [ahorradas-rama-firebae.vercel.app/](https://ahorradas-rama-firebae.vercel.app/)
+
+Hasta el momento puedes:
+- Cargar las operaciones en la base de datos
+- Pintar las operaciones en el panel de operaciones
+- Borrar las operaciones
+
+![alt pseudocodigo](https://github.com/Belu-Sanchez/ahorradas/blob/main/assets/imagenes-readme/pseudocodigo-y-diagrama-de-flujo_Mesa%20de%20trabajo%201.jpg)
+
+![alt pseudocodigo imagen del proyecto](https://github.com/Belu-Sanchez/ahorradas/blob/main/assets/imagenes-readme/pseudocodigo-imagen_Mesa%20de%20trabajo%201.png)
