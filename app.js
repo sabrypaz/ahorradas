@@ -245,13 +245,13 @@ const pintarOperaciones = arr =>{
     let str = '';
     arr.forEach((operacion) => {
         const {id, descripcion, categoria, fecha, monto, tipo} = operacion;
-        str = str + `<tr>
-            <td scope="row">${descripcion}</td>
-            <td><span class="btn-titulo-categorias p-2">${categoria}</span></td>
+        str = str + `<tr class="responsive-contenido">
+            <td scope="row"class="responsive-op">${descripcion}</td>
+            <td><span class="btn-titulo-categorias p-2 responsive-categorias-op">${categoria}</span></td>
             <td>${fecha}</td>
             <td class="fw-bold ${tipo === 'Ganancia'?'ganancia':'gasto'}">$${monto}</td>
-            <td><a class="btn-editar p-2 text-decoration-none link-secondary" data-id=${id} href="#">Editar</a>
-            <a class="btn-borrar p-2 text-decoration-none link-secondary" data-id=${id} href="#">Borrar</a>
+            <td><a class="btn-editar p-2 text-decoration-none link-secondary responsive-btn-op" data-id=${id} href="#">Editar</a>
+            <a class="btn-borrar p-2 text-decoration-none link-secondary responsive-btn-op" data-id=${id} href="#">Borrar</a>
             </td>
         </th>` 
       
@@ -693,15 +693,15 @@ const totalPorCategoria = (operaciones, objetoCategoria) =>{
 
     //PINTA CATEGORIA MAYOR GANANCIA - GASTO - BALANCE
     const categoriaMayorGacancia = conBalance.filter((operacion) => (operacion.ganancia)).sort(function(a, b){return b.ganancia - a.ganancia})
-    document.getElementById('id-categoria-mayor-ganancia').innerHTML = `<div class="btn-titulo-categorias p-2">${categoriaMayorGacancia[0].categoria}</div> ` 
+    document.getElementById('id-categoria-mayor-ganancia').innerHTML = `<div class="btn-titulo-categorias p-2 responsive-categorias">${categoriaMayorGacancia[0].categoria}</div> ` 
     document.getElementById('id-monto-mayor-ganancia').innerHTML =  `<div>+$${categoriaMayorGacancia[0].ganancia}</div>`
 
     const categoriaMayorGasto = conBalance.filter((operacion) => (operacion.gasto)).sort(function(a, b){return b.gasto - a.gasto})
-    document.getElementById('id-categoria-mayor-gasto').innerHTML = `<div class="btn-titulo-categorias p-2">${categoriaMayorGasto[0].categoria}</div> ` 
+    document.getElementById('id-categoria-mayor-gasto').innerHTML = `<div class="btn-titulo-categorias p-2 responsive-categorias">${categoriaMayorGasto[0].categoria}</div> ` 
     document.getElementById('id-monto-mayor-gasto').innerHTML =  `<div>-$${categoriaMayorGasto[0].gasto}</div>`
             
     const categoriaMayorBalance = conBalance.filter((operacion) => (operacion.balance)).sort(function(a, b){return b.balance - a.balance})
-    document.getElementById('id-categoria-mayor-balance').innerHTML = `<div class="btn-titulo-categorias p-2">${categoriaMayorBalance[0].categoria}</div> ` 
+    document.getElementById('id-categoria-mayor-balance').innerHTML = `<div class="btn-titulo-categorias p-2 responsive-categorias">${categoriaMayorBalance[0].categoria}</div> ` 
     document.getElementById('id-monto-mayor-balance').innerHTML =  `<div>$${categoriaMayorBalance[0].balance}</div>`
 
     pintarOperaciones(operaciones);
