@@ -543,7 +543,7 @@ const pintarPanelCategoria = arr =>{
         str += `
             <div class="d-flex bd-highlight mb-3">
             <div class="me-auto"><span class="p-2 bd-highligh btn-titulo-categorias" >${categoria}</span></div>
-            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none link-secondary" onclick="editCategory('${id}') "data-id=${id}>Editar</button>
+            <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-editar text-decoration-none link-secondary" onclick="editarCategoria('${id}') "data-id=${id}>Editar</button>
             <button type="button" class="p-2 bd-highlight btn btn-link btn-categoria-eliminar text-decoration-none link-secondary" value="${categoria}" data-id=${id}>Eliminar</button>  
         </div>` 
     });
@@ -603,18 +603,22 @@ const pintarPanelCategoria = arr =>{
  
 }
 
+// CREO UNA LET VACIA PARA GUARDAR LA INFORMACION CUANDO EL USUARIO HACE CLICK EN EL BTN EDITAR CATEGORIA onclick="editarCategoria('${id}')
 
 let resultado;
-const editCategory = (category) => {
-  const index = objetoCategorias.findIndex((elem) => elem.id === category);
+const editarCategoria = (categoria) => {
+    //guardo en posicion 0 (index) la categoria que quiero editar
+  const index = objetoCategorias.findIndex((elem) => elem.id === categoria);
+  // aca igualo el valor de la categoria a editar
   inputAgregarCategoriaEditada.value = objetoCategorias[index].categoria
+ // entonces guardo en resultado la categoria en posicion 0 y el valor de categoria en la que se hizo click
   resultado = { i: index, valor: inputAgregarCategoriaEditada.value };
   return resultado;
+ 
 };
 
-
-
 btnAgregarCategoriaEditar.addEventListener('click', (e) =>{
+    //aca igualo el valor de let resultado por el que quiero cambiar 
     objetoCategorias[resultado.i].categoria = inputAgregarCategoriaEditada.value
     
     containerCategorias.style = 'display:block';
@@ -626,22 +630,20 @@ btnAgregarCategoriaEditar.addEventListener('click', (e) =>{
     pintarPanelCategoria(objetoCategorias); 
 
     operaciones.forEach(() => {
+        //recorro las operaciones y busco las que tienen el mismo nombre de categoria y valor(nombre) que let resultado (cuando se hizo el click) 
+        // y lo guardo en posicion 0
         const posicion = operaciones.findIndex(
         (operation) => operation.categoria === resultado.valor);
+
+        //como la guarde en posiscion 0 (Index) le digo que la cambie por el nuevo valor del input.
         if (posicion >= 0) {
             operaciones[posicion].categoria = inputAgregarCategoriaEditada.value;
             localStorage.setItem('operaciones',JSON.stringify(operaciones));
-            }
-            pintarOperaciones(operaciones);
-          });
+        }
+        pintarOperaciones(operaciones);
+    });
 
 })     
-
-
-
-
-
-
 
 
 // ******************
@@ -707,8 +709,6 @@ const totalPorCategoria = (operaciones, objetoCategoria) =>{
 };
 
 
-
-
 //******************
 // TOTALES POR MES
 //******************
@@ -760,8 +760,6 @@ const totalPorMes = arr => {
 
     pintarOperaciones(operaciones);
 }
-
-
 
 
 //*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
