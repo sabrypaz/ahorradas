@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="imagenes/BS.png">
+    <link rel="shortcut icon" href="./assets/icons8-caja-de-dinero-64.png">
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -14,78 +14,73 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- ID -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"
         integrity="sha512-Bcog7KQsuePA92aZHcQfeAp3w4BiUKHgihhKJLsSVVU67s7KspPbywP7nTMZtJ8YOn//vLCeWvYnb00KryziDA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- css -->
     <link rel="stylesheet" href="style.css">
-    <title>AhorraADAs</title>
+    <title>AhorrADAs</title>
 </head>
 
-<body>
-
+<body class="principal" id="modo-oscuro-body">
 
     <!-- NAV -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
-        <div class="container-fluid nav-container p-3">
-            <a class="navbar-brand nav-title text-white" href="#">
+        <div class="container-fluid nav-container p-3 modo-oscuro">
+            <a aria-hidden="true" class="navbar-brand nav-title text-white" href="#">
                 <i class="fa-solid fa-wallet"></i>
                 AhorrADAs</a>
-            <button class="navbar-toggler collapsed navbar-brand" id="navbar-toggler" type="button"
+            <div class="form-check form-switch">
+                <input class="form-check-input dark-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+            </div>
+            <button aria-hidden="true" class="navbar-toggler collapsed navbar-brand" id="navbar-toggler" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse nav-flex" id="navbarNavAltMarkup">
-                <div class="navbar-nav ">
-                    <a id="balance" class="nav-link my-nav-link" aria-current="page" href="#"><i
-                            class="fa-solid fa-chart-line"></i> Balance</a>
-                    <a id="categorias" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-folder-tree"></i>
+                <div class="navbar-nav">
+                    <a id="balance" class="nav-link my-nav-link" aria-describedby="balance" aria-current="page"
+                        href="#"><i aria-hidden="true" class="fa-solid fa-chart-line"></i> Balance</a>
+                    <a id="categorias" class="nav-link my-nav-link" aria-describedby="categorias" href="#"><i
+                            aria-hidden="true" class="fa-solid fa-folder-tree"></i>
                         Categorías</a>
-                    <a id="reportes" class="nav-link my-nav-link" href="#"><i class="fa-solid fa-chart-pie"></i>
+                    <a id="reportes" class="nav-link my-nav-link" aria-describedby="reportes" href="#"><i
+                            aria-hidden="true" class="fa-solid fa-chart-pie"></i>
                         Reportes</a>
                 </div>
             </div>
         </div>
     </nav>
     <div id="primera-pagina">
-        <main class="container d-flex flex-wrap bd-highlight my-4">
-
+        <main class="container d-flex flex-wrap bd-highlight my-4 responsive-flex ">
             <div class="my-card-body row m-2">
                 <!-- ********************************
             BALANCE
 ******************************** -->
-                <div class="card col shadow p-3 mb-5 bg-body rounded card-style">
-                    <h5 class="card-title">Balance</h5>
+                <div class="card col shadow p-3 mb-5 bg-body rounded card-style" style="--bs-bg-opacity: .7;">
+                    <h3 class="card-title" aria-describedby="balance">Balance</h3>
                     <div id="balance-id">
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text">Ganancias</p>
-                            <div class="text-success">+$0</div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text">Gastos</p>
-                            <div class="text-danger">-$0</div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text">Total</p>
-                            <div class="fw-bold">$0</div>
-                        </div>
                     </div>
                 </div>
                 <!-- ********************************
             FILTROS
 ******************************** -->
                 <div class="card-filtros">
-                    <div class="card row shadow p-3 mb-5 bg-body rounded card-style">
+                    <div class="card row shadow p-3 mb-5 bg-body rounded card-style" style="--bs-bg-opacity: .7;">
                         <div class="container-filtros-ocultar d-flex justify-content-between">
                             <div>
-                                <h5 class="card-title">Filtros</h5>
+                                <h3 class="card-title" aria-describedby="filtros">Filtros</h3>
                             </div>
                             <div>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item btn-ocultar-filtros" id="btn-ocultar-filtros"><a
-                                            class="text-decoration-none" href="#">Ocultar filtros</a></li>
+                                            class="text-decoration-none link-secondary"
+                                            aria-describedby="ocultar filtros" href="#">Ocultar filtros</a>
+                                    </li>
                                 </ol>
                             </div>
                         </div>
@@ -93,15 +88,13 @@
                             <div class="mb-3">
                                 <label for="select-tipo-filtro" class="form-label">Tipo</label>
                                 <select type="select" class="form-select select-monto-filtro select-monto"
-                                    id="select-tipo-filtro" aria-describedby="">
-
+                                    id="select-tipo-filtro" aria-describedby="select por tipo gasto y ganancia">
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="select-filtro-categoria" class="form-label">Categoría</label>
+                                <label for="filtro-categoria" class="form-label">Categoría</label>
                                 <select type="select" class="form-select categorias-select filtro-categoria"
-                                    id="filtro-categoria" aria-describedby="">
-
+                                    id="filtro-categoria" aria-describedby="select por categoria">
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -112,7 +105,7 @@
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Ordenar por</label>
                                 <select type="select" class="form-select select-ordenar" id="select-ordenar"
-                                    aria-describedby="">
+                                    aria-describedby="select ordenar operaciones">
                                 </select>
                             </div>
                         </form>
@@ -122,20 +115,20 @@
             <!-- ********************************
             OPERACIONES
 ******************************** -->
-
-            <div class="my-card-body col m-2" style="width: 10rem;" id="card-operaciones">
-                <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style container-operaciones-uno">
-
+            <div class="my-card-body col m-2 overflow-hidden" id="card-operaciones">
+                <div class="card card-operaciones shadow p-3 mb-5 bg-body rounded card-style container-operaciones-uno"
+                    style="--bs-bg-opacity: .7;">
                     <div class="d-flex justify-content-between">
-                        <h2 class="card-title">Operaciones</h2>
+                        <h3 class="card-title container-operaciones-titulo responsive-titulo">Operaciones</h3>
                         <button type="button" id="btn-nueva-operacion"
-                            class="btn btn-outline-success btn-operaciones"><i class="fa-solid fa-square-plus"></i>
+                            class="btn btn-outline-secondary btn-operaciones active container-operaciones-btn responsive-btn"><i
+                                class="fa-solid fa-square-plus"></i>
                             Nueva
                             operación</button>
                     </div>
                     <div class="box-operaciones-uno" id="sin-operaciones">
                         <div class="d-flex justify-content-center card-operaciones-img">
-                            <img src="./imagenes/operaciones-modo-claro.svg" alt="imagen de operaciones"
+                            <img src="./assets/imagenes/operaciones.svg" alt="imagen de operaciones"
                                 class="imagen-operaciones">
                         </div>
                         <div class="operaciones-textos text-center m-3">
@@ -143,10 +136,11 @@
                             <p>Cambia los filtros o agrega operaciones</p>
                         </div>
                     </div>
+
                     <div class="box-operaciones-dos d-none" id="con-operaciones">
                         <table class="table table-borderless">
                             <thead>
-                                <tr>
+                                <tr class="tabla-responsive">
                                     <th scope="col">Descripción</th>
                                     <th scope="col">Categoría</th>
                                     <th scope="col">Fecha</th>
@@ -154,17 +148,12 @@
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
-
-                            <tbody class="tabla-operaciones" id="tabla-operaciones"></tbody>
-
-
+                            <tbody class="tabla-operaciones tabla-responsive" id="tabla-operaciones"></tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
     </div>
-
     </main>
     </div>
     <!-- ********************************
@@ -173,160 +162,131 @@
     <div class="container oculto my-5" id="container-nueva-operacion">
         <div class="row justify-content-center">
             <div class="col-md-8">
-
-                <form class="shadow p-3 mb-5 bg-body rounded card-style" name="myform" novalidate>
+                <form class="shadow p-3 mb-5 bg-body rounded card-style" name="myform" style="--bs-bg-opacity: .7;"
+                    novalidate>
                     <h2 class="mb-5 mt-2">Nueva operación</h2>
                     <div class="mb-3">
                         <label for="descripcion-input" class="form-label">Descripción</label>
-                        <input type="text" class="form-control" id="descripcion-input"
+                        <input type="text" class="form-control" aria-label="descripcion" id="descripcion-input"
                             aria-describedby="descripcion de operacion" required>
                     </div>
-
                     <div class="mb-3">
                         <label for="monto" class="form-label">Monto</label>
-                        <input type="number" value="0" class="form-control" id="monto-input" required>
+                        <input type="number" value="0" aria-label="monto" class="form-control" id="monto-input"
+                            required>
                     </div>
-
                     <div class="mb-3">
                         <label for="tipo" class="form-label">Tipo</label>
-                        <select class="form-select select-monto" aria-label="Tipo" id="tipo-operacion">
+                        <select class="form-select select-monto" aria-label="tipo" id="tipo-operacion">
                         </select>
                     </div>
-
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categorías</label>
-                        <select class="form-select categorias-select" id="categoria-select" aria-label="Categoria">
+                        <select class="form-select categorias-select categorias-select-operaciones"
+                            id="categoria-select" aria-label="categoria">
                         </select>
                     </div>
-
                     <div class="mb-3">
                         <label for="fecha-inpu" class="form-label">Fecha</label>
-                        <input type="date" class="form-control fecha-input" id="fecha-input"
-                            aria-describedby="fecha">
+                        <input type="date" class="form-control fecha-input" id="fecha-input" aria-describedby="fecha">
                     </div>
-
                     <div class="d-flex justify-content-end mt-5">
-                        <button type="submit" class="btn btn-light mx-2" id="btn-cancelar">Cancelar</button>
-                        <button type="submit" class="btn btn-success" id="agregar-operacion-btn">Agregar</button>
+                        <button type="submit" class="btn btn-light mx-2 btn-outline-secondary btn-operaciones"
+                            id="btn-cancelar" aria-label="cancelar">Cancelar</button>
+                        <button type="submit" class="btn btn-outline-secondary btn-operaciones active"
+                            id="agregar-operacion-btn" aria-label="agregar">Agregar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-        <!-- ********************************
+    <!-- ********************************
            - EDITAR OPERACION
 ******************************** -->
-<div class="container oculto my-5" id="container-editar-operacion">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="container oculto my-5" id="container-editar-operacion">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
 
-            <form class="shadow p-3 mb-5 bg-body rounded card-style" name="myform" novalidate>
-                <h2 class="mb-5 mt-2">Editar operación</h2>
-                <div class="mb-3">
-                    <label for="descripcion-input" class="form-label">Descripción</label>
-                    <input type="text" class="form-control" id="panel-editar-descripcion-input"
-                        aria-describedby="descripcion de operacion" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="monto" class="form-label">Monto</label>
-                    <input type="number" value="0" class="form-control" id="panel-editar-monto-input" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="tipo" class="form-label">Tipo</label>
-                    <select class="form-select select-monto" aria-label="Tipo" id="panel-editar-tipo-operacion">
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="categoria" class="form-label">Categorías</label>
-                    <select class="form-select categorias-select" id="panel-editar-categoria-select" aria-label="Categoria">
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="fecha-inpu" class="form-label">Fecha</label>
-                    <input type="date" value="" class="form-control fecha-input" id="panel-editar-fecha-input"
-                        aria-describedby="fecha">
-                </div>
-
-                <div class="d-flex justify-content-end mt-5">
-                    <button type="submit" class="btn btn-light mx-2" id="panel-editar-btn-cancelar">Cancelar</button>
-                    <button type="submit" class="btn btn-success" id="panel-editar-agregar-operacion-btn">Agregar</button>
-                </div>
-            </form>
+                <form class="shadow p-3 mb-5 bg-body rounded card-style" name="myform" style="--bs-bg-opacity: .7;"
+                    novalidate>
+                    <h2 class="mb-5 mt-2">Editar operación</h2>
+                    <div class="mb-3">
+                        <label for="descripcion-input" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="panel-editar-descripcion-input"
+                            aria-describedby="descripcion de operacion" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="monto" class="form-label" aria-describedby="monto">Monto</label>
+                        <input type="number" value="0" class="form-control" id="panel-editar-monto-input" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <select class="form-select select-monto" aria-describedby="tipo"
+                            id="panel-editar-tipo-operacion">
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categorías</label>
+                        <select class="form-select categorias-select categorias-select-operaciones"
+                            id="panel-editar-categoria-select" aria-describedby="categoria">
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fecha-inpu" class="form-label">Fecha</label>
+                        <input type="date" value="" class="form-control fecha-input" id="panel-editar-fecha-input"
+                            aria-describedby="fecha">
+                    </div>
+                    <div class="d-flex justify-content-end mt-5">
+                        <button type="submit" class="btn btn-light mx-2 btn-outline-secondary btn-operaciones"
+                            id="panel-editar-btn-cancelar"
+                            aria-describedby="boton cancela la operacion">Cancelar</button>
+                        <button type="submit" class="btn btn-outline-secondary btn-operaciones active"
+                            id="panel-editar-agregar-operacion-btn"
+                            aria-describedby="boton agrega operacion">Agregar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
     <!-- ********************************
             CATEGORIAS
 ******************************** -->
-    <div class="container oculto my-5" id="container-categorias">
+    <div class="container oculto my-5 " id="container-categorias">
         <div class="row justify-content-center">
-            <form class="col-md-8 shadow p-3 mb-5 bg-body rounded">
+            <form class="col-md-8 shadow p-3 mb-5 bg-body rounded" style="--bs-bg-opacity: .7;">
                 <h2 class="mb-5 mt-2">Categorías</h2>
                 <div>
                     <label for="nombre" class="form-label">Nombre</label>
                 </div>
                 <div class="d-flex flex-row">
-                    <input type="text" class="form-control" id="btn-agregar">
-                    <button type="button" class="btn btn-success mx-3" id="btn-agregar">Agregar</button>
+                    <input type="text" class="form-control" id="input-agregar-categoria">
+                    <label for="input-agregar-categoria"></label>
+                    <button type="submit" class="btn btn-outline-secondary btn-operaciones mx-3 active"
+                        id="btn-agregar-categoria" aria-describedby="buton agregar">Agregar</button>
                 </div>
                 <br>
-                <div class="d-flex bd-highlight mb-3">
-                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Comida</div>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-comida-editar text-decoration-none"
-                        id="btn-cat-comida-edita">Editar</button>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-comida-eliminar text-decoration-none"
-                        id="btn-cat-comida-eliminar">Eliminar</button>
+                <div id="pintar-categorias"></div>
+            </form>
+        </div>
+    </div>
+    <!-- ********************************
+           EDITAR CATEGORIA
+******************************** -->
+    <div class="container oculto my-5" id="container-categorias-editar">
+        <div class="row justify-content-center">
+            <form class="col-md-8 shadow p-3 mb-5 bg-body rounded" style="--bs-bg-opacity: .7;">
+                <h2 class="mb-3 mt-2">Editar Categoría</h2>
+                <div>
+                    <h6>Nombre</h6>
                 </div>
-                <div class="d-flex bd-highlight mb-3">
-                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Servicios</div>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-servicios-editar text-decoration-none"
-                        id="btn-cat-servicios-edita">Editar</button>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-servicios-eliminar text-decoration-none"
-                        id="btn-cat-servicios-eliminar">Eliminar</button>
-                </div>
-                <div class="d-flex bd-highlight mb-3">
-                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Salida</div>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-salidas-editar text-decoration-none"
-                        id="btn-cat-salidas-edita">Editar</button>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-salidas-eliminar text-decoration-none"
-                        id="btn-cat-salidas-eliminar">Eliminar</button>
-                </div>
-                <div class="d-flex bd-highlight mb-3">
-                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Educación</div>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-educacion-editar text-decoration-none"
-                        id="btn-cat-educacion-edita">Editar</button>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-educacion-eliminar text-decoration-none"
-                        id="btn-cat-educacion-eliminar">Eliminar</button>
-                </div>
-                <div class="d-flex bd-highlight mb-3">
-                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Transporte</div>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-transporte-editar text-decoration-none"
-                        id="btn-cat-transporte-edita">Editar</button>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-transporte-eliminar text-decoration-none"
-                        id="btn-cat-transporte-eliminar">Eliminar</button>
-                </div>
-                <div class="d-flex bd-highlight mb-3">
-                    <div class="me-auto p-2 bd-highligh btn-titulo-categorias">Trabajo</div>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-trabajo-editar text-decoration-none"
-                        id="btn-cat-trabajo-edita">Editar</button>
-                    <button type="button"
-                        class="p-2 bd-highlight btn btn-link btn-cat-trabajo-eliminar text-decoration-none"
-                        id="btn-cat-trabajo-eliminar">Eliminar</button>
+                <div id="panel-para-editar-categoria"></div>
+                <div class="d-flex flex-row">
+                    <input type="text" class="form-control" id="input-agregar-categoria-editada">
+                    <label for="input-agregar-categoria-editada" aria-describedby="agregar categoria"></label>
+                    <button type="submit" class="btn btn-outline-secondary btn-operaciones mx-3 active"
+                        id="btn-cancelar-categoria-editar" aria-describedby="boton cancelar">Cancelar</button>
+                    <button type="submit" class="btn btn-outline-secondary btn-operaciones mx-3 active"
+                        id="btn-agregar-categoria-editar" aria-describedby="boton agregar">Agregar</button>
                 </div>
             </form>
         </div>
@@ -336,26 +296,91 @@
     ******************************** -->
     <div class="container oculto my-5" id="container-reportes">
         <div class="row justify-content-center">
-            <div class=" col-md-8 shadow p-3 mb-5 bg-body rounded">
+            <div class=" col-md-8 shadow p-3 mb-5 bg-body rounded" style="--bs-bg-opacity: .7;">
                 <h2>Reportes</h2>
-                <div id="sin-reportes" class="d-flex justify-content-center flex-column">
-                    <figure class="d-flex justify-content-center">
-                        <img src="imagenes/sinReportes.svg" style="width:50%" alt="imagen sin reportes">
-                    </figure>
-                    <div class="operaciones-insuficientes text-center">
-                        <h4>Operaciones insuficientes</h4>
-                        <p>Prueba agregando más operaciones</p>
+                <br>
+                <div id="sin-reportes">
+                    <div class="d-flex justify-content-center flex-column">
+                        <figure class="d-flex justify-content-center">
+                            <img src="./assets/imagenes/sinReportes.svg" style="width:50%" alt="imagen sin reportes">
+                        </figure>
+                        <div class="operaciones-insuficientes text-center">
+                            <h4>Operaciones insuficientes</h4>
+                            <p>Prueba agregando más operaciones</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="con-reportes">
+                    <div class="d-flex justify-content-center flex-column mx-4">
+                        <h4>Resumen</h4>
+                        <div class="row justify-content-start text-start my-4">
+                            <div class="col-6 tabla-responsive-reportes">Categoria con mayor ganancia</div>
+                            <div class="col-3 text-center tabla-responsive-reportes" id="id-categoria-mayor-ganancia">
+                            </div>
+                            <div class="col-3 text-end text-success tabla-responsive-reportes"
+                                id="id-monto-mayor-ganancia"></div>
+                        </div>
+                        <div class="row justify-content-start text-start my-3">
+                            <div class="col-6 tabla-responsive-reportes">Categoria con mayor gasto</div>
+                            <div class="col-3 text-center tabla-responsive-reportes" id="id-categoria-mayor-gasto">
+                            </div>
+                            <div class="col-3 text-end text-danger tabla-responsive-reportes" id="id-monto-mayor-gasto">
+                            </div>
+                        </div>
+                        <div class="row justify-content-start text-start my-3">
+                            <div class="col-6 tabla-responsive-reportes">Categoria con mayor balance</div>
+                            <div class="col-3 text-end text-center tabla-responsive-reportes"
+                                id="id-categoria-mayor-balance"></div>
+                            <div class="col-3 text-end tabla-responsive-reportes" id="id-monto-mayor-balance"></div>
+                        </div>
+                        <div class="row justify-content-start text-start my-3">
+                            <div class="col-6 tabla-responsive-reportes">Mes con mayor ganancia</div>
+                            <div class="col-3 text-center tabla-responsive-reportes" id="id-mes-mayor-ganancia"></div>
+                            <div class="col-3 text-end text-success tabla-responsive-reportes"
+                                id="id-mes-manto-ganacia"></div>
+                        </div>
+                        <div class="row justify-content-start text-start my-3">
+                            <div class="col-6 tabla-responsive-reportes">Mes con mayor gasto</div>
+                            <div class="col-3 text-center tabla-responsive-reportes" id="id-mes-mayor-gasto"></div>
+                            <div class="col-3 text-end text-danger tabla-responsive-reportes" id="id-mes-manto-gasto">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-center flex-column mx-4">
+                        <h4>Totales por categorías</h4>
+                        <table class="table table-borderless table-striped">
+                            <thead>
+                                <tr class="tabla-responsive-reportes bg-secondary bg-opacity-25">
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Ganancias</th>
+                                    <th scope="col">Gastos</th>
+                                    <th scope="col">Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tabla-responsive-reportes" id="reporte-por-categoria"></tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="d-flex justify-content-center flex-column mx-4">
+                        <h4>Totales por mes</h4>
+                        <table class="table table-borderless table-striped bg-transparent">
+                            <thead>
+                                <tr class="tabla-responsive-reportes bg-secondary bg-opacity-25">
+                                    <th scope="col">Mes</th>
+                                    <th scope="col">Ganancias</th>
+                                    <th scope="col">Gastos</th>
+                                    <th scope="col">Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tabla-responsive-reportes" id="reporte-por-mes"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-
-
+    </div>
 
 
 

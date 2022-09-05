@@ -1,7 +1,23 @@
 :root {
-    --color-primario: rgb(126, 189, 154);
-    --color-focus: rgb(67, 166, 112);
-    --color-titulo-cat: rgb(212, 244, 227);
+    --color-primario: rgb(127, 179, 213);
+    --color-body: rgb(214, 234, 248);
+    --color-image: linear-gradient(-90deg, rgb(214, 234, 248), rgb(171, 235, 198), rgb(252, 243, 207));
+    --color-focus: rgb(115, 198, 182);
+    --color-titulo-cat: rgb(127, 179, 213);
+}
+
+.dark {
+    --color-primario: rgb(67, 72, 88);
+    --color-focus: rgb(74, 70, 100);
+    --color-titulo-cat: rgb(171, 163, 173);
+    --color-body: rgb(7, 10, 47);
+    --color-image: linear-gradient(-90deg, rgb(0, 0, 0), rgb(22, 25, 42), rgb(2, 8, 50));
+    --color-text: white;
+}
+
+body {
+    background-color: var(--color-body);
+    background-image: var(--color-image);
 }
 
 * {
@@ -18,6 +34,7 @@
     padding: 0.2em;
     font-size: 1.7em;
     border-radius: 5px;
+
 }
 
 .my-nav-link {
@@ -31,6 +48,10 @@
 .my-nav-link:hover,
 .my-nav-lin:focus {
     background-color: var(--color-focus);
+}
+
+.dark-input:checked {
+    background-color: rgb(0, 0, 0);
 }
 
 /* **************
@@ -54,7 +75,7 @@
        CATEGORIAS
 *************** */
 
-.btn-titulo-categorias{
+.btn-titulo-categorias {
     background-color: var(--color-titulo-cat);
 }
 
@@ -62,11 +83,11 @@
         PARA JS
 *************** */
 
-.oculto{
+.oculto {
     display: none;
 }
 
-.ganancia{
+.ganancia {
     color: green;
 }
 
@@ -74,8 +95,9 @@
     content: '+';
 
 }
-.gasto{
-    color:red;
+
+.gasto {
+    color: red;
 }
 
 .gasto::before {
@@ -86,9 +108,112 @@
         RESPONSIVE
 ************************/
 
-@media (min-width:820px) and (max-width: 1700px){
-    .nav-flex{
+@media (min-width:1200px) and (max-width: 1700px) {
+    .nav-flex {
         display: flex;
         justify-content: flex-end;
+    }
+}
+
+
+
+@media (min-width:820px) and (max-width: 1199px) {
+    .nav-flex {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .responsive-flex {
+        display: flex;
+        flex-direction: column !important;
+    }
+
+}
+
+
+@media (min-width:420px) and (max-width: 819px) {
+    .responsive-flex {
+        display: flex;
+        flex-direction: column !important;
+    }
+
+    .responsive-titulo {
+        font-size: 1.4em;
+
+    }
+
+    .responsive-btn {
+        font-size: 1em;
+
+    }
+
+    .responsive-categorias {
+        font-size: 0.9em;
+    }
+
+    .responsive-btn-op {
+        padding: 0px !important;
+    }
+
+    .tabla-responsive {
+        font-size: 0.8em;
+
+    }
+
+    .responsive-categorias-op {
+        font-size: 1em;
+        padding: 0px !important;
+
+    }
+
+    .responsive-contenido {
+        font-size: 0.8em;
+
+    }
+
+    .tabla-responsive-reportes {
+        font-size: 0.9em;
+    }
+
+}
+
+
+@media (min-width:100px) and (max-width: 419px) {
+
+    .responsive-titulo {
+        font-size: 1em;
+
+    }
+
+    .responsive-btn {
+        font-size: 0.7em;
+
+    }
+
+    .responsive-categorias {
+        font-size: 0.5em;
+    }
+
+    .responsive-op {
+        font-size: 1.5em;
+        padding: 0px !important;
+    }
+
+    .responsive-btn-op {
+        padding: 0px !important;
+    }
+
+    .tabla-responsive {
+        font-size: 0.5em;
+
+    }
+
+    .responsive-contenido {
+        font-size: 0.8em;
+
+    }
+
+    .tabla-responsive-reportes {
+        font-size: 0.9em;
     }
 }
